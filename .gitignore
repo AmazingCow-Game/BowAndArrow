@@ -1,0 +1,11 @@
+# This should be enabled later.
+*.png
+
+# This is to ignore ever.
+*.xnb
+*.dll
+*.exe
+*.exe.*
+*.mgcontent
+
+
