@@ -1,0 +1,34 @@
+﻿<Properties StartupItem="com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="com.amazingcow.BowAndArrow/Game/Levels/Level1.cs">
+    <Files>
+      <File FileName="com.amazingcow.BowAndArrow/Game/Enemies/Enemy.cs" Line="31" Column="1" />
+      <File FileName="com.amazingcow.BowAndArrow/Game/Levels/Level1.cs" Line="18" Column="20" />
+      <File FileName="com.amazingcow.BowAndArrow/Game/Enemies/RedBalloon.cs" Line="12" Column="10" />
+      <File FileName="com.amazingcow.BowAndArrow/GameFramework/GameManager.cs" Line="44" Column="10" />
+      <File FileName="com.amazingcow.BowAndArrow/GameFramework/Sprite.cs" Line="19" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="com.amazingcow.BowAndArrow" expanded="True">
+            <Node name="com.amazingcow.BowAndArrow" expanded="True">
+              <Node name="Content" expanded="True" />
+              <Node name="Game" expanded="True">
+                <Node name="Enemies" expanded="True" />
+                <Node name="Levels" expanded="True">
+                  <Node name="Level1.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="GameFramework" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
