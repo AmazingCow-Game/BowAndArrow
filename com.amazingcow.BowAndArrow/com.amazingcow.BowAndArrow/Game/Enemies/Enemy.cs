@@ -1,5 +1,5 @@
 ﻿#region Usings
-//System 
+//System
 using System;
 //XNA
 using Microsoft.Xna.Framework;
@@ -11,10 +11,32 @@ namespace com.amazingcow.BowAndArrow
 {
     public abstract class Enemy : GameObject
     {
-        #region Public Methods 
-        public abstract bool CheckCollisionPlayer(Archer archer);
-        public abstract bool CheckCollisionArrow(Arrow arrow);
-        #endregion //Public Methods 
+        #region CTOR
+        public Enemy(Vector2 position, Vector2 speed,
+                     float msToChangeTexture) :
+            base(position, speed, msToChangeTexture)
+        {
+            //Empty...
+        }
+        #endregion //CTOR
+
+
+        #region Public Methods
+        public virtual bool CheckCollisionPlayer(Archer archer)
+        {
+            //Assumes that this Enemy cannot collide with player.
+            return false;
+        }
+
+        public virtual bool CheckCollisionArrow(Arrow arrow)
+        {
+            //Arrow doesn't hit anything but alive ones.
+            if(CurrentState != State.Alive)
+                return false;
+
+            return this.HitBox.Contains(arrow.HeadPoint);
+        }
+        #endregion //Public Methods
     }
 }
 

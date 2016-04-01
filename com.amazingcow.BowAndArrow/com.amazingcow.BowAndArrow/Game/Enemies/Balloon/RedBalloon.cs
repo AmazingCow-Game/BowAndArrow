@@ -10,23 +10,19 @@ namespace com.amazingcow.BowAndArrow
 {
     public class RedBalloon : Balloon
     {
-        #region Constants 
+        #region Constants
         public const int kSpeedRedBalloon = -40;
         #endregion
 
 
         #region CTOR
-        public RedBalloon() : 
-            base()
+        public RedBalloon(Vector2 position) :
+            base(position, new Vector2(0, kSpeedRedBalloon))
         {
-            //Init the Sprites.
-            _spriteList.Add(new Sprite("ballon"));
-            _spriteList.Add(new Sprite("ballon_dead"));
-
-            CurrentSprite = _spriteList[kSpriteIndexAlive];
-
-            //Init the Speed.
-            Speed = new Vector2(0, kSpeedRedBalloon);
+            //Initialize the textures...
+            var resMgr = ResourcesManager.Instance;
+            AliveTexturesList.Add(resMgr.GetTexture("ballon"));
+            DyingTexturesList.Add(resMgr.GetTexture("ballon_dead"));
         }
         #endregion //CTOR
     }

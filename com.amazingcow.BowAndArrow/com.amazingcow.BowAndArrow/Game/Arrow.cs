@@ -10,53 +10,55 @@ namespace com.amazingcow.BowAndArrow
 {
     public class Arrow : GameObject
     {
-
-        #region Public Properties 
-        public override Vector2 Position
+        #region Public Properties
+        public Vector2 HeadPoint
         {
-            get { return CurrentSprite.Position;  }
-            set { CurrentSprite.Position = value; }
+            get
+            {
+                return new Vector2(BoundingBox.Right,
+                                   Position.Y);
+            }
         }
-        #endregion //Public Properties 
+        #endregion //Public Properties
 
 
-                                 
-        public Arrow()
+
+        public Arrow(Vector2 position) :
+            base(position,
+                 new Vector2(100, 0),
+                 0)
         {
-            CurrentSprite = new Sprite("arrow");
-            Speed = new Vector2(50, 0);
+            //Init the textures.
+            AliveTexturesList.Add(ResourcesManager.Instance.GetTexture("arrow"));
         }
 
 
         #region Update / Draw
         public override void Update(GameTime gt)
         {
-            //Balloon is already dead - Don't need to do anything else.
+            //Arrow is already dead - Don't need to do anything else.
             if(CurrentState == State.Dead)
                 return;
 
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
+
+            //Check if Arrow went out of screen.
+            var windowWidth = GameManager.Instance.GraphicsDevice.Viewport.Width;
+            if(Position.X >= windowWidth)
+                CurrentState = State.Dead;
         }
-
-        public override void Draw(GameTime gt)
-        {
-            if(CurrentState == State.Dead)
-                return;
-
-            CurrentSprite.Draw(gt);
-        }
-        #endregion //Update / Draw 
+        #endregion //Update / Draw
 
 
-        #region Public Methods 
+        #region Public Methods
         public override void Kill()
         {
             //Already Dead - Don't do anything else...
             if(CurrentState != State.Alive)
                 return;
         }
-        #endregion //Public Methods 
+        #endregion //Public Methods
 
     }
 }
