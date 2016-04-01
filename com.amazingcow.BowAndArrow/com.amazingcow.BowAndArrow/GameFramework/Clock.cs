@@ -10,7 +10,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Constants 
-        public const double kRepeatForever = double.MaxValue;
+        public const int kRepeatForever = -1;
         #endregion //Constants
 
 
@@ -43,7 +43,7 @@ namespace com.amazingcow.BowAndArrow
             if(!IsEnabled)
                 return;
 
-            if(TickCount >= RepeatCount)
+            if(TickCount >= RepeatCount && RepeatCount != kRepeatForever)
                 return;
 
             _updateTime -= dt;
