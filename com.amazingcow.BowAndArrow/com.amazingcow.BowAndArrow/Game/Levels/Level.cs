@@ -28,7 +28,6 @@ namespace com.amazingcow.BowAndArrow
         {
             CurrentState = State.Intro;
             Enemies      = new List<Enemy>();
-            Player       = new Archer();
             PlayerArrows = new List<Arrow>();
         }
 
