@@ -13,10 +13,10 @@ namespace com.amazingcow.BowAndArrow
 {
     public class ResourcesManager
     {
-        #region iVars 
+        #region iVars
         ContentManager _contentManager;
 
-        Dictionary<String, Texture2D> _texturesDict;   
+        Dictionary<String, Texture2D> _texturesDict;
         #endregion
 
 
@@ -24,19 +24,19 @@ namespace com.amazingcow.BowAndArrow
         private static ResourcesManager s_instance;
         public static ResourcesManager Instance
         {
-            get 
+            get
             {
                 if(s_instance == null)
                     s_instance = new ResourcesManager();
                 return s_instance;
-            }    
+            }
         }
         #endregion //Singleton
 
 
-        #region CTOR        
+        #region CTOR
         private ResourcesManager()
-        {       
+        {
             //Empty...
             _contentManager = GameManager.Instance.Content;
             _texturesDict   = new Dictionary<String, Texture2D>();
@@ -44,7 +44,7 @@ namespace com.amazingcow.BowAndArrow
         #endregion //CTOR
 
 
-        #region Public Methods 
+        #region Public Methods
         public Texture2D GetTexture(String name)
         {
             if(_texturesDict.ContainsKey(name))
@@ -55,7 +55,7 @@ namespace com.amazingcow.BowAndArrow
 
             return texture;
         }
-        #endregion //Public Methods 
+        #endregion //Public Methods
     }
 }
 
