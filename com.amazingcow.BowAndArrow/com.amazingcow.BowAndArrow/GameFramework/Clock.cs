@@ -4,17 +4,17 @@ namespace com.amazingcow.BowAndArrow
 {
     public class Clock
     {
-        #region Events 
+        #region Events
         public event EventHandler<EventArgs> OnTick;
-        #endregion //Events 
+        #endregion //Events
 
 
-        #region Constants 
+        #region Constants
         public const int kRepeatForever = -1;
         #endregion //Constants
 
 
-        #region Public Properties 
+        #region Public Properties
         public float Interval     { get; set;         }
         public int   RepeatCount  { get; set;         }
         public int   TickCount    { get; private set; }
@@ -22,9 +22,9 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Public Properties
 
 
-        #region iVars 
+        #region iVars
         private float _updateTime;
-        #endregion //iVars 
+        #endregion //iVars
 
 
         #region CTOR
@@ -33,6 +33,7 @@ namespace com.amazingcow.BowAndArrow
             Interval    = interval;
             RepeatCount = repeat;
             TickCount   = 0;
+            IsEnabled   = false;
         }
         #endregion //CTOR
 
@@ -55,11 +56,11 @@ namespace com.amazingcow.BowAndArrow
                 if(OnTick != null)
                     OnTick(this, EventArgs.Empty);
             }
-        }       
+        }
         #endregion //Update
 
 
-        #region Start / Stop 
+        #region Start / Stop
         public void Start()
         {
             TickCount   = 0;
@@ -72,7 +73,7 @@ namespace com.amazingcow.BowAndArrow
         {
             IsEnabled = false;
         }
-        #endregion //Start / Stop 
+        #endregion //Start / Stop
     }
 }
 
