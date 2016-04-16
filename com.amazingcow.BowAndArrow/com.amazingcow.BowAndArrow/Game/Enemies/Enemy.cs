@@ -37,6 +37,7 @@ namespace com.amazingcow.BowAndArrow
             return this.HitBox.Contains(arrow.HeadPoint);
         }
         #endregion //Public Methods
-    }
-}
+
+    }//class Enemy
+}//namespace com.amazingcow.BowAndArrow
 
