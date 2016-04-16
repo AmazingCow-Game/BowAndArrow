@@ -24,7 +24,7 @@ namespace com.amazingcow.BowAndArrow
         #region Public Properties
         public SpriteBatch CurrentSpriteBatch { get; private set; }
         public Level       CurrentLevel       { get; private set; }
-        public Random      RandomNumGem       { get; private set; }
+        public Random      RandomNumGen       { get; private set; }
         #endregion //Public Properties
 
 
@@ -40,16 +40,22 @@ namespace com.amazingcow.BowAndArrow
         #region CTOR
         public GameManager()
         {
+        	//Init the iVars...
+			_clearColor    = Color.CornflowerBlue;
             _graphics     = new GraphicsDeviceManager(this);
-            RandomNumGem  = new Random(10);
 
+            //Init the Properties...
             Content.RootDirectory = "Content";
-
-            IsMouseVisible = true;
-            _clearColor    = Color.CornflowerBlue;
+			RandomNumGen  		  = new Random(10); //COWTODO: 
+            IsMouseVisible 		  = true;
+			IsFixedTimeStep       = true;
 
             //COWTODO: Make a "real" Singleton.
             s_instance = this;
+
+            //Setup the graphics...        
+            _graphics.PreferredBackBufferWidth  = 800; //COWTODO:
+            _graphics.PreferredBackBufferHeight = 600; //COWTODO:
         }
         #endregion //CTOR
 
@@ -58,8 +64,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void LoadContent()
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
-
-            ChangeLevel(new Level1());
+			ChangeLevel(new Level1());
         }
         #endregion //Init / Load
 
@@ -74,7 +79,7 @@ namespace com.amazingcow.BowAndArrow
                 Exit();
             }
 
-
+            InputHandler.Instance.Update();
             CurrentLevel.Update(gameTime);
 
             //COWTODO: Implement the correctly handling...
@@ -82,18 +87,16 @@ namespace com.amazingcow.BowAndArrow
                 _clearColor = Color.Red;
             else
                 _clearColor = Color.CornflowerBlue;
-
+                         
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(_clearColor);
-
-            CurrentSpriteBatch.Begin();
-
-            CurrentLevel.Draw(gameTime);
-
+                       
+            CurrentSpriteBatch.Begin(SpriteSortMode.Deferred);
+            	CurrentLevel.Draw(gameTime);
             CurrentSpriteBatch.End();
 
             base.Draw(gameTime);
