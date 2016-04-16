@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="com.amazingcow.BowAndArrow.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Game/Enemies/Balloon/Balloon.cs">
+    <Files>
+      <File FileName="Game/Enemies/Balloon/Balloon.cs" Line="14" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

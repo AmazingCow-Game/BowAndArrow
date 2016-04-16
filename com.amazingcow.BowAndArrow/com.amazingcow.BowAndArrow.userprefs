@@ -1,30 +1,17 @@
 ﻿<Properties StartupItem="com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="com.amazingcow.BowAndArrow/Game/Archer.cs">
-    <Files>
-      <File FileName="com.amazingcow.BowAndArrow/Game/Enemies/Balloon/Balloon.cs" Line="67" Column="43" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Enemies/Enemy.cs" Line="12" Column="42" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Levels/Level1.cs" Line="106" Column="31" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Arrow.cs" Line="16" Column="7" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Archer.cs" Line="65" Column="49" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Levels/Level.cs" Line="30" Column="46" />
-      <File FileName="com.amazingcow.BowAndArrow/GameFramework/GameManager.cs" Line="1" Column="1" />
-      <File FileName="com.amazingcow.BowAndArrow/GameFramework/GameObject.cs" Line="88" Column="63" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="com.amazingcow.BowAndArrow" expanded="True">
             <Node name="com.amazingcow.BowAndArrow" expanded="True">
-              <Node name="Content" expanded="True" />
               <Node name="Game" expanded="True">
-                <Node name="Enemies" expanded="True">
-                  <Node name="Balloon" expanded="True" />
-                </Node>
                 <Node name="Levels" expanded="True" />
-                <Node name="Archer.cs" selected="True" />
               </Node>
-              <Node name="GameFramework" expanded="True" />
+              <Node name="GameFramework" expanded="True">
+                <Node name="GameObject.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
