@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 //Xna
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 #endregion //Usings
 
 
@@ -13,6 +12,8 @@ namespace com.amazingcow.BowAndArrow
     public class Balloon : Enemy
     {
         #region Constants
+        public  const int kBalloonWidth        = 25;
+        public  const int kBalloonHeight       = 39;
         private const int kBalloonStringHeight = 12;
         #endregion
 
@@ -21,7 +22,8 @@ namespace com.amazingcow.BowAndArrow
         public override Rectangle HitBox
         {
             get {
-                return new Rectangle(BoundingBox.X, BoundingBox.Y,
+                return new Rectangle(BoundingBox.X,
+                                     BoundingBox.Y,
                                      BoundingBox.Width,
                                      BoundingBox.Height - kBalloonStringHeight);
             }
@@ -85,6 +87,6 @@ namespace com.amazingcow.BowAndArrow
         }
         #endregion //Public Methods
 
-    }
-}
+    }//Class Balloon
+}//namespace com.amazingcow.BowAndArrow
 
