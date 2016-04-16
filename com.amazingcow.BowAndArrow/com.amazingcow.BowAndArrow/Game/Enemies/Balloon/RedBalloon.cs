@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 #endregion //Usings
 
+
 namespace com.amazingcow.BowAndArrow
 {
     public class RedBalloon : Balloon
@@ -25,6 +26,7 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("ballon_dead"));
         }
         #endregion //CTOR
-    }
-}
+
+    }//class RedBalloon
+}//namespace com.amazingcow.BowAndArrow
 
