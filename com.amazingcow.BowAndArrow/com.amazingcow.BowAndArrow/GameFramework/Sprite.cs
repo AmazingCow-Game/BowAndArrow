@@ -4,15 +4,12 @@ using System;
 //XNA
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Threading;
-
-
 #endregion //Usings
 
 
 namespace com.amazingcow.BowAndArrow
 {
-    public class Sprite 
+    public class Sprite
     {
         #region Public Properties
         public Texture2D     Texture     { get; set; }
@@ -23,11 +20,11 @@ namespace com.amazingcow.BowAndArrow
         public Color         TintColor   { get; set; }
         public SpriteEffects Effects     { get; set; }
         public int           ZIndex      { get; set; }
-        public Rectangle     BoundingBox 
-        { 
-            get { 
-                return new Rectangle((int)Position.X, 
-                                     (int)Position.Y, 
+        public Rectangle     BoundingBox
+        {
+            get {
+                return new Rectangle((int)Position.X,
+                                     (int)Position.Y,
                                      Texture.Bounds.Width,
                                      Texture.Bounds.Height);
             }
@@ -35,7 +32,7 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Public Properties
 
 
-        #region 
+        #region
         public Sprite(String name)
         {
             Texture    = ResourcesManager.Instance.GetTexture(name);
@@ -50,13 +47,13 @@ namespace com.amazingcow.BowAndArrow
         #endregion
 
 
-        #region IDrawable 
+        #region IDrawable
         public void Draw(GameTime gameTime)
         {
             GameManager.Instance.CurrentSpriteBatch.Draw(
                 Texture,
                 Position,
-                null, 
+                null,
                 null,
                 Origin,
                 Rotation,
