@@ -3,7 +3,6 @@
 using System;
 //XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
@@ -15,13 +14,6 @@ namespace com.amazingcow.BowAndArrow
         //COWTODO: Check the correct values.
         private const int kMaxButterfliesCount = 15;
         #endregion //Constants
-
-        #region CTOR
-        public Level3()
-            : base()
-        {
-        }
-        #endregion //CTOR
 
 
         #region Init
@@ -59,6 +51,7 @@ namespace com.amazingcow.BowAndArrow
             Papers.Add(new Paper("GameOver", ""));
         }
         #endregion //Init
+
 
         #region Helper Methods
         protected override void LevelCompleted()

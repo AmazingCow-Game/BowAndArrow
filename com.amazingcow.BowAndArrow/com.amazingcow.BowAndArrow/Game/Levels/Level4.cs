@@ -3,7 +3,6 @@
 using System;
 //XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
@@ -15,13 +14,6 @@ namespace com.amazingcow.BowAndArrow
         //COWTODO: Check the correct values.
         private const int kMaxSlimesCount = 15;
         #endregion //Constants
-
-        #region CTOR
-        public Level4()
-            : base()
-        {
-        }
-        #endregion //CTOR
 
 
         #region Init

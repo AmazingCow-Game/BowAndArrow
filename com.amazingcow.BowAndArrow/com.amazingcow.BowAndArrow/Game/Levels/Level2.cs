@@ -3,7 +3,6 @@
 using System;
 //XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
@@ -16,13 +15,6 @@ namespace com.amazingcow.BowAndArrow
         private const int kMaxYellowBalloonsCount = 5;
         private const int kMaxRedBalloonsCount    = 15;
         #endregion //Constants
-
-        #region CTOR
-        public Level2()
-            : base()
-        {
-        }
-        #endregion //CTOR
 
 
         #region Init
@@ -51,7 +43,7 @@ namespace com.amazingcow.BowAndArrow
                 Enemies.Add(balloon);
             }
 
-            ///YellowBalloons.
+            //YellowBalloons.
             for(int i = 0; i < kMaxRedBalloonsCount; ++i)
             {
                 var x = rndGen.Next(minBalloonX, maxBalloonX);
@@ -74,6 +66,7 @@ namespace com.amazingcow.BowAndArrow
             Papers.Add(new Paper("GameOver", ""));
         }
         #endregion //Init
+
 
         #region Helper Methods
         protected override void LevelCompleted()

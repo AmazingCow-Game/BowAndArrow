@@ -1,7 +1,4 @@
 ﻿#region Usings
-//System
-using System;
-using System.Collections.Generic;
 //Xna
 using Microsoft.Xna.Framework;
 #endregion //Usings

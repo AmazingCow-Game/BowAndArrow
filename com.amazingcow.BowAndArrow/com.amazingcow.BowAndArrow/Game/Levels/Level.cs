@@ -5,8 +5,6 @@ using System.Collections.Generic;
 //XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
-
 #endregion //Usings
 
 
@@ -54,7 +52,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region CTOR
-        public Level()
+        protected Level()
         {
             CurrentState = State.Intro;
 

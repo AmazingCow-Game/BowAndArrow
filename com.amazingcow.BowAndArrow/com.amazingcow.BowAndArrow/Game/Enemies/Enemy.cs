@@ -1,9 +1,6 @@
 ﻿#region Usings
-//System
-using System;
 //XNA
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 #endregion //Usings
 
 
