@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 #endregion //Usings
 
 
-namespace com.amazingcow.BowAndArrow
+namespace cow.amazingcow.BowAndArrow
 {
     public class Butterfly : Enemy
     {
@@ -91,16 +91,11 @@ namespace com.amazingcow.BowAndArrow
 
             var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
 
-            //On State.Alive -> If Butterfly goes up of top of window
-            //reset it to the bottom of the window.
-            if(CurrentState == State.Alive &&
-               BoundingBox.Bottom <= 0)
-            {
+            if(BoundingBox.Bottom <= 0)
                 Position = new Vector2(Position.X, windowHeight);
-            }
         }
         #endregion //Private Methods
 
-    }//Class Balloon
+    }//Class Butterfly
 }//namespace com.amazingcow.BowAndArrow
 
