@@ -40,6 +40,9 @@ namespace com.amazingcow.BowAndArrow
 
         public List<Paper> Papers
         { get; protected set; }
+
+        public int AliveEnemies
+        { get; protected set; }
         #endregion //Public Properties
 
 
