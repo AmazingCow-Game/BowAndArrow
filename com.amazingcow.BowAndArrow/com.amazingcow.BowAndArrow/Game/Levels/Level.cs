@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
-namespace com.amazingcow.BowAndArrow
+namespace cow.amazingcow.BowAndArrow
 {
     public abstract class Level
     {
@@ -84,6 +84,25 @@ namespace com.amazingcow.BowAndArrow
 
         #region Helper Methods
         protected abstract void LevelCompleted();
+
+        private void CheckGameOver()
+        {
+            if(Player.CurrentState == GameObject.State.Dying &&
+               Player.ArrowsCount  == 0 &&
+               PlayerArrows.Count  == 0)
+            {
+                CurrentState = State.GameOver;
+            }
+            else if(Player.CurrentState == GameObject.State.Dead)
+            {
+                CurrentState = State.GameOver;
+            }
+        }
+        private void CheckVictory()
+        {
+            if(AliveEnemies == 0)
+                LevelCompleted();
+        }
         #endregion
 
 
@@ -174,7 +193,12 @@ namespace com.amazingcow.BowAndArrow
                 arrow.Update(gt);
             }
 
-            //Check collision.
+            //Player.
+            Player.Update(gt);
+
+
+            //Check collisions.
+            //Enemies -> Arrows
             foreach(var enemy in Enemies)
             {
                 foreach(var arrow in PlayerArrows)
@@ -184,21 +208,19 @@ namespace com.amazingcow.BowAndArrow
                 }
             }
 
-            //Player.
-            Player.Update(gt);
-
-
-            //Check the GameOver.
-            if(Player.CurrentState == GameObject.State.Dying &&
-               Player.ArrowsCount  == 0 &&
-               PlayerArrows.Count  == 0)
+            //Enemies -> Player
+            foreach(var enemy in Enemies)
             {
-                CurrentState = State.GameOver;
+                if(enemy.CheckCollisionPlayer(Player))
+                {
+                    enemy.Kill();
+                    Player.Hit();
+                }
             }
 
-            //Check Victory
-            if(AliveEnemies == 0)
-                LevelCompleted();
+            CheckGameOver();
+            CheckVictory();
+
         }
 
         protected virtual void UpdatePaused(GameTime gt)
@@ -285,6 +307,8 @@ namespace com.amazingcow.BowAndArrow
         {
             var gameObj = sender as Enemy;
             gameObj.OnStateChangeDead -= OnEnemyStateChangeDead;
+
+            --AliveEnemies;
         }
 
         //Arrow Callbacks.
