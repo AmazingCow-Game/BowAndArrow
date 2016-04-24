@@ -13,7 +13,7 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         public const int kSpeedMinYellonBalloon = 45;
-        public const int kSpeedMaxYellowBallon  = 55;
+        public const int kSpeedMaxYellowBalloon = 55;
         #endregion
 
 
@@ -28,7 +28,7 @@ namespace com.amazingcow.BowAndArrow
 
             //Init the Speed...
             int ySpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinYellonBalloon,
-                                                                kSpeedMaxYellowBallon);
+                                                                kSpeedMaxYellowBalloon);
             Speed = new Vector2(0, -ySpeed);
         }
         #endregion //CTOR
