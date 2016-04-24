@@ -25,7 +25,7 @@ namespace com.amazingcow.BowAndArrow
             Unarmed //Bow hasn't an arrow.
         }
 
-        public const int kMaxArrowsCount = 2;
+        public const int kMaxArrowsCount = 20;
 
         private const int kChangeStateInterval = 200;
         #endregion //Enums
@@ -87,8 +87,7 @@ namespace com.amazingcow.BowAndArrow
             //Update the timers.
             _changeStateClock.Update(gt.ElapsedGameTime.Milliseconds);
 
-
-            var mouseState = Mouse.GetState();
+            var mouseState = InputHandler.Instance.CurrentMouseState;
 
             //Change the Bow State.
             if(mouseState.RightButton == ButtonState.Pressed)
@@ -163,7 +162,6 @@ namespace com.amazingcow.BowAndArrow
                 }
             }
 
-
             CurrentBowState     = BowState.Unarmed;
             CurrentTextureIndex = (int)CurrentBowState;
 
@@ -187,28 +185,22 @@ namespace com.amazingcow.BowAndArrow
 
         private void CalculateMovementSpeed()
         {
-            var mouseState = Mouse.GetState();
-            var keyboardState = Keyboard.GetState();
+            var mouseState = InputHandler.Instance.CurrentMouseState;
 
             Speed = Vector2.Zero;
-            if(keyboardState.IsKeyDown(Keys.Down))
-                Speed = new Vector2(0,  200);
-            if(keyboardState.IsKeyDown(Keys.Up))
-                Speed = new Vector2(0, -200);
-            /*
+
+            //Archer only move when button is pressed.
             if(mouseState.LeftButton != ButtonState.Pressed)
                 return;
 
-            var targetY      = mouseState.Y;
-            var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
+            var mouseY      = mouseState.Y;
+            var boundingBox = this.BoundingBox;
 
-            if(targetY >= 0 && targetY <= windowHeight)
-            {
-                var bb = this.BoundingBox;
-                if(bb.Y >= 0 && bb.Bottom <= windowHeight)
-                        Speed = new Vector2(0, 200 * ((targetY < bb.Y) ? -1 : 1));
-            }
-            */
+            //COWTODO: Remove the magic numbers.
+            if(mouseY - 20 < boundingBox.Top)
+                Speed = new Vector2(0, -100);
+            if(mouseY + 20 > boundingBox.Bottom)
+                Speed = new Vector2(0, 100);
         }
         #endregion //Helper Methods
 
