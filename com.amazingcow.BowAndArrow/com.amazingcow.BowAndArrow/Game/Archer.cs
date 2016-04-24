@@ -102,7 +102,6 @@ namespace com.amazingcow.BowAndArrow
 
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
-            Position = new Vector2((int)Position.X, (int)Position.Y);
         }
         #endregion //Update / Draw
 
