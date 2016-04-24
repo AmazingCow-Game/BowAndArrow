@@ -40,20 +40,20 @@ namespace com.amazingcow.BowAndArrow
         #region CTOR
         public GameManager()
         {
-        	//Init the iVars...
-			_clearColor    = Color.CornflowerBlue;
+            //Init the iVars...
+            _clearColor    = Color.CornflowerBlue;
             _graphics     = new GraphicsDeviceManager(this);
 
             //Init the Properties...
             Content.RootDirectory = "Content";
-			RandomNumGen  		  = new Random(10); //COWTODO: 
-            IsMouseVisible 		  = true;
-			IsFixedTimeStep       = true;
+            RandomNumGen          = new Random(10); //COWTODO:
+            IsMouseVisible        = true;
+            IsFixedTimeStep       = true;
 
             //COWTODO: Make a "real" Singleton.
             s_instance = this;
 
-            //Setup the graphics...        
+            //Setup the graphics...
             _graphics.PreferredBackBufferWidth  = 800; //COWTODO:
             _graphics.PreferredBackBufferHeight = 600; //COWTODO:
         }
@@ -64,7 +64,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void LoadContent()
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
-			ChangeLevel(new Level1());
+            ChangeLevel(new Level1());
         }
         #endregion //Init / Load
 
@@ -80,6 +80,7 @@ namespace com.amazingcow.BowAndArrow
             }
 
             InputHandler.Instance.Update();
+
             CurrentLevel.Update(gameTime);
 
             //COWTODO: Implement the correctly handling...
@@ -87,16 +88,16 @@ namespace com.amazingcow.BowAndArrow
                 _clearColor = Color.Red;
             else
                 _clearColor = Color.CornflowerBlue;
-                         
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             _graphics.GraphicsDevice.Clear(_clearColor);
-                       
+
             CurrentSpriteBatch.Begin(SpriteSortMode.Deferred);
-            	CurrentLevel.Draw(gameTime);
+                CurrentLevel.Draw(gameTime);
             CurrentSpriteBatch.End();
 
             base.Draw(gameTime);
