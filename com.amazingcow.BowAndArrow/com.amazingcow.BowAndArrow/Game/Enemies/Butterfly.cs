@@ -1,1 +1,106 @@
-﻿/*#region Usings//Systemusing System;using System.Collections.Generic;//Xnausing Microsoft.Xna.Framework;#endregion //Usingsnamespace com.amazingcow.BowAndArrow{    public class Butterfly : Enemy    {        #region Public Properties         public override Vector2 Position        {            get { return CurrentSprite.Position; }            set             {                  foreach(var sprite in _spriteList)                    sprite.Position = value;             }        }        #endregion //Public Properties         #region Constants         private const int kSpriteIndexAlive = 0;        private const int kSpriteIndexDying = 1;        private const int kSpriteIndexSize  = 2;        #endregion        #region iVars         List<Sprite> _spriteList;        #endregion //iVars        #region CTOR        public Butterfly() :             base()        {            //             _spriteList = new List<Sprite>(kSpriteIndexSize);            _spriteList.Add(new Sprite("butterfly_bubled"));            _spriteList.Add(new Sprite("butterfly"));            CurrentSprite = _spriteList[kSpriteIndexAlive];        }        #endregion //CTOR        #region Update / Draw        public override void Update(GameTime gt)        {            //Ballon is already dead - Don't need to do anything else.            if(CurrentState == State.Dead)                return;            //Update the position.            Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));            var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;            var windowWidth  = GameManager.Instance.GraphicsDevice.Viewport.Width;            //On State.Alive -> If Balloon goes up of top of window             //reset it to the bottom of the window.            if(CurrentState == State.Alive &&               Position.Y + CurrentSprite.BoundingBox.Height <= 0)             {                Position = new Vector2(Position.X, windowHeight);            }            //On State.Dying -> If Balloon goes down of the window's            //bottom, set the state to died.            else if(CurrentState == State.Dying &&                    Position.Y >= windowHeight)            {                Speed        = Vector2.Zero;                CurrentState = State.Dead;            }        }        public override void Draw(GameTime gt)        {            if(CurrentState == State.Dead)                return;            CurrentSprite.Draw(gt);        }        #endregion //Update / Draw        #region Public Methods         public override void Kill()        {            if(CurrentState != State.Alive)                return;            CurrentState  = State.Dying;            CurrentSprite = _spriteList[kSpriteIndexDying];            Speed = new Vector2(-20, -80);        }        #endregion //Public Methods     }}*/
+﻿#region Usings
+//System
+using System;
+using System.Collections.Generic;
+//Xna
+using Microsoft.Xna.Framework;
+#endregion //Usings
+
+
+namespace com.amazingcow.BowAndArrow
+{
+    public class Butterfly : Enemy
+    {
+        #region Constants
+        public const int kSpeedMinButterfly = 35;
+        public const int kSpeedMaxButterfly = 45;
+        public const int kButterflyWidth    = 32;
+        #endregion
+
+
+        #region Public Properties
+        #endregion //Public Properties
+
+
+        #region CTOR
+        public Butterfly(Vector2 position)
+            : base(position, Vector2.Zero, 0)
+        {
+            //Initialize the textures...
+            var resMgr = ResourcesManager.Instance;
+            AliveTexturesList.Add(resMgr.GetTexture("butterfly_bubled"));
+            DyingTexturesList.Add(resMgr.GetTexture("butterfly"));
+
+            //Init the Speed...
+            int ySpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinButterfly,
+                                                                kSpeedMaxButterfly);
+            Speed = new Vector2(0, -ySpeed);
+        }
+        #endregion //CTOR
+
+
+        #region Update / Draw
+        public override void Update(GameTime gt)
+        {
+            //Butterfly is already dead - Don't need to do anything else.
+            if(CurrentState == State.Dead)
+                return;
+
+            if(CurrentState == State.Dying)
+                MoveDying(gt);
+            else
+                MoveAlive(gt);
+        }
+        #endregion //Update / Draw
+
+
+        #region Public Methods
+        public override void Kill()
+        {
+            //Already Dead - Don't do anything else...
+            if(CurrentState != State.Alive)
+                return;
+
+            //Set the state and the sprite for dying
+            //and make the balloon fall with more speed.
+            CurrentState  = State.Dying;
+
+            var rndGen = GameManager.Instance.RandomNumGen;
+
+            //Makes go towards the Top Left of screen.
+            Speed = new Vector2(-rndGen.Next(kSpeedMinButterfly, kSpeedMaxButterfly),
+                                -rndGen.Next(kSpeedMinButterfly, kSpeedMaxButterfly));
+        }
+        #endregion //Public Methods
+
+
+        #region Private Methods
+        private void MoveDying(GameTime gt)
+        {
+            //Update the position.
+            Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
+
+            if(BoundingBox.Bottom <= 0)
+                CurrentState = State.Dead;;
+        }
+
+        private void MoveAlive(GameTime gt)
+        {
+            //Update the position.
+            Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
+
+            var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
+
+            //On State.Alive -> If Butterfly goes up of top of window
+            //reset it to the bottom of the window.
+            if(CurrentState == State.Alive &&
+               BoundingBox.Bottom <= 0)
+            {
+                Position = new Vector2(Position.X, windowHeight);
+            }
+        }
+        #endregion //Private Methods
+
+    }//Class Balloon
+}//namespace com.amazingcow.BowAndArrow
+
