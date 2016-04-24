@@ -14,4 +14,18 @@ Global
 		{FD701C41-ABE6-4343-A3E4-A74B5A2145BB}.Release|x86.ActiveCfg = Release|x86
 		{FD701C41-ABE6-4343-A3E4-A74B5A2145BB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = com.amazingcow.BowAndArrow\com.amazingcow.BowAndArrow.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.EolMarker = Unix
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.AfterDelegateDeclarationParameterComma = True
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+	EndGlobalSection
 EndGlobal
