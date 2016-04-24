@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
-namespace cow.amazingcow.BowAndArrow
+namespace com.amazingcow.BowAndArrow
 {
     public class Archer : GameObject
     {

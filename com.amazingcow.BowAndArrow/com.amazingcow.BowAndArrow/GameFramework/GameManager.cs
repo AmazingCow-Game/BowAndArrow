@@ -64,7 +64,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void LoadContent()
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
-            ChangeLevel(new Level1());
+            ChangeLevel(new Level4());
         }
         #endregion //Init / Load
 
