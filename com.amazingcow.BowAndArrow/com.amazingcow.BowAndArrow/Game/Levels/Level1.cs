@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
+
 namespace com.amazingcow.BowAndArrow
 {
     public class Level1 : Level
@@ -15,39 +16,19 @@ namespace com.amazingcow.BowAndArrow
         //COWTODO: Check the correct values.
         private const int kMaxBalloonsCount   = 15;
         private const int kMaxArrowsCount     = 15;
+
         private const int kPaperIndexIntro    =  0;
         private const int kPaperIndexPaused   =  1;
         private const int kPaperIndexGameOver =  2;
         #endregion //Constants
 
-        Action mouseLeftClick;
 
         #region CTOR
         public Level1() :
             base()
         {
-            ActionStep step = new ActionStep();
-            step.Button =1;
-            step.State = ButtonState.Pressed;
 
-            ActionStep step2 = new ActionStep();
-            step2.Button =1;
-            step2.State = ButtonState.Released;
-
-            mouseLeftClick = new Action();
-            mouseLeftClick.Steps.Add(step);
-            mouseLeftClick.Steps.Add(step2);
-            mouseLeftClick.OnTrigger += MouseLeftClick_OnTrigger;
-
-
-            InputHandler.Instance.Actions.Add(mouseLeftClick);
         }
-
-        void MouseLeftClick_OnTrigger (object sender, EventArgs e)
-        {
-            Debug.WriteLine("Mouse 1 clicked");
-        }
-
         #endregion //CTOR
 
 
@@ -65,14 +46,29 @@ namespace com.amazingcow.BowAndArrow
 
         private void UpdateIntro(GameTime gt)
         {
-            //COWTODO: Make the mouse click.
-            var mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed)
+            var prev = InputHandler.Instance.PreviousMouseState;
+            var curr = InputHandler.Instance.CurrentMouseState;
+
+            if(prev.LeftButton == ButtonState.Pressed &&
+               curr.LeftButton == ButtonState.Pressed)
+            {
                 CurrentState = State.Playing;
+            }
         }
 
         private void UpdatePlaying(GameTime gt)
         {
+
+            var prev = InputHandler.Instance.PreviousKeyboardState;
+            var curr = InputHandler.Instance.CurrentKeyboardState;
+
+
+            if(prev.IsKeyDown(Keys.Space) && curr.IsKeyUp(Keys.Space))
+            {
+                CurrentState = State.Paused;
+                return;
+            }
+
             //Enemies.
             for(int i = Enemies.Count - 1; i >= 0; --i)
             {
@@ -99,7 +95,6 @@ namespace com.amazingcow.BowAndArrow
                 arrow.Update(gt);
             }
 
-
             //Check collision.
             foreach(var enemy in Enemies)
             {
@@ -112,11 +107,31 @@ namespace com.amazingcow.BowAndArrow
 
             //Player.
             Player.Update(gt);
+
+
+            //Check the GameOver.
+            if(Player.CurrentState == GameObject.State.Dying &&
+               Player.ArrowsCount  == 0 &&
+               PlayerArrows.Count  == 0)
+            {
+                CurrentState = State.GameOver;
+            }
+
+            //Check Victory
+            if(AliveEnemies == 0)
+            {
+                GameManager.Instance.ChangeLevel(new Level1());
+            }
+
         }
 
         private void UpdatePaused(GameTime gt)
         {
+            var prev = InputHandler.Instance.PreviousKeyboardState;
+            var curr = InputHandler.Instance.CurrentKeyboardState;
 
+            if(prev.IsKeyDown(Keys.Space) && curr.IsKeyUp(Keys.Space))
+                CurrentState = State.Playing;
         }
 
         private void UpdateGameOver(GameTime gt)
@@ -171,25 +186,26 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Game Objects Callbacks
+        //Player Callbacks.
         void OnPlayerShootArrow(object sender, EventArgs e)
         {
             var arrow = new Arrow(Player.ArrowPosition);
             arrow.OnStateChangeDead += OnArrowStateChangedDead;
 
             PlayerArrows.Add(arrow);
-
-            //Debug.WriteLine("Arrows Count: {0}", Player.ArrowsCount);
         }
-        void OnPlayerStateChangeDying (object sender, EventArgs e)
+        void OnPlayerStateChangeDying(object sender, EventArgs e)
         {
             Player.OnStateChangeDying -= OnPlayerStateChangeDying;
         }
 
-
+        //Enemy Callbacks.
         void OnEnemyStateChangeDying(object sender, EventArgs e)
         {
             var gameObj = sender as Enemy;
             gameObj.OnStateChangeDying -= OnEnemyStateChangeDying;
+
+            AliveEnemies--;
         }
 
         void OnEnemyStateChangeDead(object sender, EventArgs e)
@@ -198,6 +214,7 @@ namespace com.amazingcow.BowAndArrow
             gameObj.OnStateChangeDead -= OnEnemyStateChangeDead;
         }
 
+        //Arrow Callbacks.
         void OnArrowStateChangedDead(object sender, EventArgs e)
         {
             var arrow = sender as Arrow;
@@ -239,6 +256,8 @@ namespace com.amazingcow.BowAndArrow
 
                 Enemies.Add(balloon);
             }
+
+            AliveEnemies = kMaxBalloonsCount;
         }
 
         private void InitPlayer()
@@ -246,7 +265,7 @@ namespace com.amazingcow.BowAndArrow
             var viewport = GameManager.Instance.GraphicsDevice.Viewport;
 
             //Initialize the Player.
-            int initialPlayerX = 100;
+            int initialPlayerX = 100; //COWTODO: Remove the magic constants.
             int initialPlayerY = viewport.Height / 2;
 
             Player = new Archer(new Vector2(initialPlayerX, initialPlayerY));
