@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 #endregion //Usings
 
 
-namespace com.amazingcow.BowAndArrow
+namespace cow.amazingcow.BowAndArrow
 {
     public class Archer : GameObject
     {
@@ -26,6 +26,7 @@ namespace com.amazingcow.BowAndArrow
         }
 
         public const int kMaxArrowsCount = 20;
+        public const int kMaxEnemyHits   = 5;
 
         private const int kChangeStateInterval = 200;
         #endregion //Enums
@@ -35,9 +36,6 @@ namespace com.amazingcow.BowAndArrow
         public int ArrowsCount
         { get; private set; }
 
-        public BowState CurrentBowState
-        { get; private set; }
-
         public Vector2 ArrowPosition
         {
             get {
@@ -45,6 +43,12 @@ namespace com.amazingcow.BowAndArrow
                                    this.Position.Y + 41); //COWTODO: Remove magic number
             }
         }
+
+        public BowState CurrentBowState
+        { get; private set; }
+
+        public int EnemyHits
+        { get; private set; }
         #endregion //Public Properties
 
 
@@ -67,8 +71,9 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList = AliveTexturesList;
 
             //Init the Properties.
-            CurrentBowState = BowState.Stand;
             ArrowsCount     = kMaxArrowsCount;
+            CurrentBowState = BowState.Stand;
+            EnemyHits       = 0;
 
             //Init the timers.
             _changeStateClock = new Clock(kChangeStateInterval, 1);
@@ -112,6 +117,14 @@ namespace com.amazingcow.BowAndArrow
             //Already Dead - Don't do anything else...
             if(CurrentState != State.Alive)
                 return;
+
+            CurrentState = State.Dead;
+        }
+        public void Hit()
+        {
+            ++EnemyHits;
+            if(EnemyHits == kMaxEnemyHits)
+                Kill();
         }
         #endregion //Public Methods
 
