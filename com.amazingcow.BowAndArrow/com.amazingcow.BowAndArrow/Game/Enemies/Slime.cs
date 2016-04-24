@@ -1,1 +1,108 @@
-﻿/*#region Usings//Systemusing System;using System.Collections.Generic;//Xnausing Microsoft.Xna.Framework;#endregion //Usingsnamespace com.amazingcow.BowAndArrow{    public class Slime : Enemy    {        #region Public Properties         public override Vector2 Position        {            get { return CurrentSprite.Position; }            set             {                  foreach(var sprite in _spriteList)                    sprite.Position = value;             }        }        #endregion //Public Properties         #region Constants         private const int kSpriteIndexAlive = 0;        private const int kSpriteIndexDying = 1;        private const int kSpriteIndexSize  = 2;        #endregion        #region iVars         List<Sprite> _spriteList;        Clock        _dieClock;        #endregion //iVars        #region CTOR        public Slime() :             base()        {            //Initialize the Sprites.            _spriteList = new List<Sprite>(kSpriteIndexSize);            _spriteList.Add(new Sprite("slime"));            _spriteList.Add(new Sprite("slime_dead"));            CurrentSprite = _spriteList[kSpriteIndexAlive];            //Initialize the Timers.            _dieClock = new Clock(500, 1);            _dieClock.OnTick += onDieClockTick;        }        #endregion //CTOR        #region Update / Draw        public override void Update(GameTime gt)        {            //Ballon is already dead - Don't need to do anything else.            if(CurrentState == State.Dead)                return;            //Update the timers.            _dieClock.Update(gt.ElapsedGameTime.Milliseconds);            //Update the position.            Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));            //On State.Alive - Slime only goes to left...            if(CurrentState == State.Alive &&               Position.X + CurrentSprite.BoundingBox.Width <= 0)             {                //Die...            }        }        public override void Draw(GameTime gt)        {            if(CurrentState == State.Dead)                return;            CurrentSprite.Draw(gt);        }        #endregion //Update / Draw        #region Public Methods         public override void Kill()        {            if(CurrentState != State.Alive)                return;            CurrentState  = State.Dying;            CurrentSprite = _spriteList[kSpriteIndexDying];            _dieClock.Start();            Speed = Vector2.Zero;        }        #endregion //Public Methods         void onDieClockTick(object sender, EventArgs e)        {            //Remove the listner, stop the clock             //and set that this monster is dead.            _dieClock.OnTick -= onDieClockTick;            _dieClock.Stop();            CurrentState = State.Dead;        }    }}*/
+﻿#region Usings
+//System
+using System;
+using System.Collections.Generic;
+//Xna
+using Microsoft.Xna.Framework;
+#endregion //Usings
+
+
+namespace cow.amazingcow.BowAndArrow
+{
+    public class Slime : Enemy
+    {
+        #region Constants
+        public const int kSpeedMinSlime = 120;
+        public const int kSpeedMaxSlime = 250;
+        public const int kSlimeHeight   = 49;
+        public const int kSlimeWidth    = 39;
+        #endregion
+
+
+        #region iVars
+        private Clock _dyingClock;
+        #endregion //iVars
+
+
+        #region CTOR
+        public Slime(Vector2 position)
+            : base(position, Vector2.Zero, 0)
+        {
+            //Initialize the textures...
+            var resMgr = ResourcesManager.Instance;
+            AliveTexturesList.Add(resMgr.GetTexture("slime"));
+            DyingTexturesList.Add(resMgr.GetTexture("slime_dead"));
+
+            //Init the Speed...
+            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinSlime,
+                                                                kSpeedMaxSlime);
+            Speed = new Vector2(-xSpeed, 0);
+
+            //Init the timers...
+            _dyingClock = new Clock(500, 1);
+            _dyingClock.OnTick += OnDyingClockTick;
+        }
+        #endregion //CTOR
+
+
+        #region Update / Draw
+        public override void Update(GameTime gt)
+        {
+            //Slime is already dead - Don't need to do anything else.
+            if(CurrentState == State.Dead)
+                return;
+
+            _dyingClock.Update(gt.ElapsedGameTime.Milliseconds);
+
+            //Just move in alive - Dying it will only glow.
+            if(CurrentState == State.Alive)
+                MoveAlive(gt);
+        }
+        #endregion //Update / Draw
+
+
+        #region Public Methods
+        public override void Kill()
+        {
+            //Already Dead - Don't do anything else...
+            if(CurrentState != State.Alive)
+                return;
+
+            CurrentState  = State.Dying;
+            _dyingClock.Start();
+
+            Speed = Vector2.Zero;
+        }
+
+        public override bool CheckCollisionPlayer(Archer archer)
+        {
+            if(CurrentState != State.Alive)
+                return false;
+
+            return archer.BoundingBox.Intersects(this.BoundingBox);
+        }
+        #endregion //Public Methods
+
+
+        #region Private Methods
+        private void MoveAlive(GameTime gt)
+        {
+            //Update the position.
+            Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
+
+            if(BoundingBox.Right <= 0)
+                CurrentState = State.Dead;
+        }
+        #endregion //Private Methods
+
+
+        #region Timers Callbacks
+        void OnDyingClockTick(object sender, EventArgs e)
+        {
+            CurrentState = State.Dead;
+        }
+        #endregion //Timers Callbacks
+
+    }//Class Slime
+}//namespace com.amazingcow.BowAndArrow
+
