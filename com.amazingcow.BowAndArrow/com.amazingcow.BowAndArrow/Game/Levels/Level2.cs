@@ -12,9 +12,21 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //COWTODO: Check the correct values.
-        private const int kMaxYellowBalloonsCount = 5;
-        private const int kMaxRedBalloonsCount    = 15;
+        const int kMaxYellowBalloonsCount = 5;
+        const int kMaxRedBalloonsCount    = 15;
         #endregion //Constants
+
+
+        #region Public Properties 
+        public override String PaperStringIntro 
+        { get { return kPaperIntroString; } }
+
+        public override String PaperStringGameOver
+        { get { return kPaperGameOverString; } }
+
+        public override String LevelTitle        
+        { get { return kLevelTitle; } }
+        #endregion //Public Properties 
 
 
         #region Init
@@ -24,17 +36,17 @@ namespace com.amazingcow.BowAndArrow
             var rndGen   = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minBalloonX = viewport.Width  / 2;
-            int maxBalloonX = viewport.Width - Balloon.kBalloonWidth;
+            int minX = viewport.Width  / 2;
+            int maxX = viewport.Width - Balloon.kWidth;
             //Makes the enemies came from bottom of screen.
-            int minBalloonY = viewport.Height;
-            int maxBalloonY = 2 * viewport.Height;
+            int minY = viewport.Height;
+            int maxY = 2 * viewport.Height;
 
             //RedBalloons.
             for(int i = 0; i < kMaxRedBalloonsCount; ++i)
             {
-                var x = rndGen.Next(minBalloonX, maxBalloonX);
-                var y = rndGen.Next(minBalloonY, maxBalloonY);
+                var x = rndGen.Next(minX, maxX);
+                var y = rndGen.Next(minY, maxY);
 
                 var balloon = new RedBalloon(new Vector2(x, y));
                 balloon.OnStateChangeDead  += OnEnemyStateChangeDead;
@@ -46,8 +58,8 @@ namespace com.amazingcow.BowAndArrow
             //YellowBalloons.
             for(int i = 0; i < kMaxRedBalloonsCount; ++i)
             {
-                var x = rndGen.Next(minBalloonX, maxBalloonX);
-                var y = rndGen.Next(minBalloonY, maxBalloonY);
+                var x = rndGen.Next(minX, maxX);
+                var y = rndGen.Next(minY, maxY);
 
                 var balloon = new YellowBalloon(new Vector2(x, y));
                 balloon.OnStateChangeDead  += OnEnemyStateChangeDead;
@@ -57,13 +69,6 @@ namespace com.amazingcow.BowAndArrow
             }
 
             AliveEnemies = kMaxRedBalloonsCount;
-        }
-
-        protected override void InitPapers()
-        {
-            Papers.Add(new Paper("Intro", ""));
-            Papers.Add(new Paper("Paused", ""));
-            Papers.Add(new Paper("GameOver", ""));
         }
         #endregion //Init
 
@@ -83,9 +88,24 @@ namespace com.amazingcow.BowAndArrow
 
             //Level 2 is only about RedBalloons.
             if(sender is RedBalloon)
-            --AliveEnemies;
+                --AliveEnemies;
         }
         #endregion //Game Objects Callbacks
+     
+
+        #region Paper Strings
+        //Intro
+        const String kPaperIntroString = @"
+Ok, you got the basics
+Now let's shot at more balloons";
+
+        //GameOver
+        const String kPaperGameOverString = @"
+Game over.
+";
+        //Level
+        const String kLevelTitle = "Level 2 - More balloons.";
+        #endregion //Paper Strings 
 
     }//class Level2
 }//namespace com.amazingcow.BowAndArrow
