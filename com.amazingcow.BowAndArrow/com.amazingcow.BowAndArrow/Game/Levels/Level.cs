@@ -25,8 +25,8 @@ namespace com.amazingcow.BowAndArrow
         protected const int kPaperIndexPaused   =  1;
         protected const int kPaperIndexGameOver =  2;
 
-        private const int kEnemiesHintCount = 20;
-        private const int kPapersHintCount  =  3;
+        const int kEnemiesHintCount = 20;
+        const int kPapersHintCount  =  3;
         #endregion //Enums / Constants
 
 
@@ -48,6 +48,11 @@ namespace com.amazingcow.BowAndArrow
 
         public int AliveEnemies
         { get; protected set; }
+
+
+        public abstract String PaperStringIntro    { get; }
+        public abstract String PaperStringGameOver { get; }
+        public abstract String LevelTitle          { get; }
         #endregion //Public Properties
 
 
@@ -83,7 +88,7 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected abstract void LevelCompleted();
 
-        private void CheckGameOver()
+        void CheckGameOver()
         {
             if(Player.CurrentState == GameObject.State.Dying &&
                Player.ArrowsCount  == 0 &&
@@ -96,7 +101,7 @@ namespace com.amazingcow.BowAndArrow
                 CurrentState = State.GameOver;
             }
         }
-        private void CheckVictory()
+        void CheckVictory()
         {
             if(AliveEnemies == 0)
                 LevelCompleted();
@@ -105,12 +110,12 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Init
-        protected virtual void  InitPlayer()
+        protected virtual void InitPlayer()
         {
             var viewport = GameManager.Instance.GraphicsDevice.Viewport;
 
             //Initialize the Player.
-            int initialPlayerX = 100; //COWTODO: Remove the magic constants.
+            int initialPlayerX = 10; //COWTODO: Remove the magic constants.
             int initialPlayerY = viewport.Height / 2;
 
             Player = new Archer(new Vector2(initialPlayerX, initialPlayerY));
@@ -119,7 +124,13 @@ namespace com.amazingcow.BowAndArrow
         }
 
         protected abstract void InitEnemies();
-        protected abstract void InitPapers ();
+
+        protected virtual void InitPapers()
+        {
+            Papers.Add(new Paper(LevelTitle, PaperStringIntro));
+            Papers.Add(new Paper(LevelTitle,   ""));
+            Papers.Add(new Paper(LevelTitle, PaperStringGameOver));
+        }
         #endregion //Init
 
 
@@ -218,7 +229,6 @@ namespace com.amazingcow.BowAndArrow
 
             CheckGameOver();
             CheckVictory();
-
         }
 
         protected virtual void UpdatePaused(GameTime gt)
