@@ -144,7 +144,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Private Methods
-        private void ChangeState(State state)
+        void ChangeState(State state)
         {
             _currentState = state;
 
