@@ -33,15 +33,12 @@ namespace com.amazingcow.BowAndArrow
             //Init the Sprite Fonts.
             _spriteFont = resMgr.GetFont("coolvetica");
 
-            //Set the position to center of screen.
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
+            var lvl = GameManager.Instance.CurrentLevel;
 
-            var x = (viewport.Width / 2) - (BoundingBox.Width / 2);
-            var y = (viewport.Height / 2) - (BoundingBox.Height / 2);
+            var x = lvl.PlayField.Center.X - BoundingBox.Center.X;
+            var y = lvl.PlayField.Center.Y - BoundingBox.Center.Y;
 
             Position = new Vector2(x, y);
-
-
         }
         #endregion
 
@@ -52,7 +49,7 @@ namespace com.amazingcow.BowAndArrow
         }
 
 
-        public override void Draw (GameTime gt)
+        public override void Draw(GameTime gt)
         {
             base.Draw(gt);
         
