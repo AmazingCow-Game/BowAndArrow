@@ -31,7 +31,7 @@ namespace com.amazingcow.BowAndArrow
             if(CurrentState != State.Alive)
                 return false;
 
-            return this.HitBox.Contains(arrow.HeadPoint);
+            return HitBox.Contains(arrow.HeadPoint);
         }
         #endregion //Public Methods
 
