@@ -16,7 +16,8 @@ namespace com.amazingcow.BowAndArrow
         #region iVars
         ContentManager _contentManager;
 
-        Dictionary<String, Texture2D> _texturesDict;
+        Dictionary<String, Texture2D>  _texturesDict;
+        Dictionary<String, SpriteFont> _fontsDict;
         #endregion
 
 
@@ -39,7 +40,9 @@ namespace com.amazingcow.BowAndArrow
         {
             //Empty...
             _contentManager = GameManager.Instance.Content;
-            _texturesDict   = new Dictionary<String, Texture2D>();
+
+            _texturesDict = new Dictionary<String, Texture2D >();
+            _fontsDict    = new Dictionary<String, SpriteFont>();
         }
         #endregion //CTOR
 
@@ -55,6 +58,18 @@ namespace com.amazingcow.BowAndArrow
 
             return texture;
         }
+
+        public SpriteFont GetFont(String name)
+        {
+            if(_fontsDict.ContainsKey(name))
+                return _fontsDict[name];
+            
+            var font = _contentManager.Load<SpriteFont>("fonts/" + name);
+            _fontsDict.Add(name, font);
+
+            return font;
+        }
+
         #endregion //Public Methods
     }
 }
