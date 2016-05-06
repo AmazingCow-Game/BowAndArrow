@@ -11,10 +11,13 @@ namespace com.amazingcow.BowAndArrow
     public class Slime : Enemy
     {
         #region Constants
-        public const int kSpeedMinSlime = 120;
-        public const int kSpeedMaxSlime = 250;
-        public const int kSlimeHeight   = 49;
-        public const int kSlimeWidth    = 39;
+        //Public
+        public const int kHeight = 49;
+        //Private
+        const int kSpeedMin    =  80;
+        const int kSpeedMax    = 150;
+        const int kWidth       =  39;
+        const int kTimeToDieMs = 500;
         #endregion
 
 
@@ -33,12 +36,12 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("slime_dead"));
 
             //Init the Speed...
-            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinSlime,
-                                                                kSpeedMaxSlime);
+            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMin,
+                                                                kSpeedMax);
             Speed = new Vector2(-xSpeed, 0);
 
             //Init the timers...
-            _dyingClock = new Clock(500, 1);
+            _dyingClock = new Clock(kTimeToDieMs, 1);
             _dyingClock.OnTick += OnDyingClockTick;
         }
         #endregion //CTOR
@@ -50,7 +53,7 @@ namespace com.amazingcow.BowAndArrow
             //Slime is already dead - Don't need to do anything else.
             if(CurrentState == State.Dead)
                 return;
-
+            
             _dyingClock.Update(gt.ElapsedGameTime.Milliseconds);
 
             //Just move in alive - Dying it will only glow.
@@ -67,7 +70,8 @@ namespace com.amazingcow.BowAndArrow
             if(CurrentState != State.Alive)
                 return;
 
-            CurrentState  = State.Dying;
+            //Star the clock and stop the slime.
+            CurrentState = State.Dying;
             _dyingClock.Start();
 
             Speed = Vector2.Zero;
@@ -78,7 +82,7 @@ namespace com.amazingcow.BowAndArrow
             if(CurrentState != State.Alive)
                 return false;
 
-            return archer.BoundingBox.Intersects(this.BoundingBox);
+            return archer.HitBox.Intersects(this.BoundingBox);
         }
         #endregion //Public Methods
 
@@ -89,6 +93,7 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
+            //Goes off the screen - Kill it.
             if(BoundingBox.Right <= 0)
                 CurrentState = State.Dead;
         }
@@ -98,6 +103,7 @@ namespace com.amazingcow.BowAndArrow
         #region Timers Callbacks
         void OnDyingClockTick(object sender, EventArgs e)
         {
+            //Glow for enough time already.
             CurrentState = State.Dead;
         }
         #endregion //Timers Callbacks
