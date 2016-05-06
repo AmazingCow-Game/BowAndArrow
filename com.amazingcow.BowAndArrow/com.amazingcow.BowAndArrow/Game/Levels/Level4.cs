@@ -10,10 +10,21 @@ namespace com.amazingcow.BowAndArrow
 {
     public class Level4 : Level
     {
-        #region Constants
-        //COWTODO: Check the correct values.
-        private const int kMaxSlimesCount = 15;
+        #region Constants      
+        const int kMaxSlimesCount = 15;
         #endregion //Constants
+
+
+        #region Public Properties 
+        public override String PaperStringIntro 
+        { get { return kPaperIntroString; } }
+
+        public override String PaperStringGameOver
+        { get { return kPaperGameOverString; } }
+
+        public override String LevelTitle        
+        { get { return kLevelTitle; } }
+        #endregion //Public Properties 
 
 
         #region Init
@@ -23,16 +34,16 @@ namespace com.amazingcow.BowAndArrow
             var rndGen   = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minSlimeY = Slime.kSlimeHeight;
-            int maxSlimeY = viewport.Height - Slime.kSlimeHeight;
+            const int minY = Slime.kHeight;
+            int maxY = viewport.Height - Slime.kHeight;
             //Makes the enemies came from right of screen.
-            int minSlimeX = viewport.Width;
-            int maxSlimeX = 2 * viewport.Width;
+            int minX = viewport.Width;
+            int maxX = 2 * viewport.Width;
 
             for(int i = 0; i < kMaxSlimesCount; ++i)
             {
-                var x = rndGen.Next(minSlimeX, maxSlimeX);
-                var y = rndGen.Next(minSlimeY, maxSlimeY);
+                var x = rndGen.Next(minX, maxX);
+                var y = rndGen.Next(minY, maxY);
 
                 var slime = new Slime(new Vector2(x, y));
                 slime.OnStateChangeDead  += OnEnemyStateChangeDead;
@@ -42,24 +53,32 @@ namespace com.amazingcow.BowAndArrow
             }
 
             AliveEnemies = kMaxSlimesCount;
-        }
-
-        protected override void InitPapers()
-        {
-            Papers.Add(new Paper("Intro", ""));
-            Papers.Add(new Paper("Paused", ""));
-            Papers.Add(new Paper("GameOver", ""));
-        }
+        }            
         #endregion //Init
 
 
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level1());
+            GameManager.Instance.ChangeLevel(new Level5());
         }
         #endregion
 
-    }//class Level2
+
+        #region Paper Strings
+        //Intro 
+        const String kPaperIntroString = @"
+The slimes are comming!
+Don't let their pass!";
+
+        //Game Over
+        const String kPaperGameOverString = @"
+Game over.
+";
+        //Title
+        const String kLevelTitle = @"Level 4";
+        #endregion
+
+    }//class Level4
 }//namespace com.amazingcow.BowAndArrow
 
