@@ -11,11 +11,12 @@ namespace com.amazingcow.BowAndArrow
     public class Balloon : Enemy
     {
         #region Constants
-        public  const int kBalloonWidth        = 25;
-        public  const int kBalloonHeight       = 39;
-        private const int kBalloonStringHeight = 12;
+        //Public 
+        public const int kWidth  = 25;
+        public const int kHeight = 39;
+        //Private
+        const int kStringHeight = 12;
         #endregion
-
 
         #region Public Properties
         public override Rectangle HitBox
@@ -24,7 +25,7 @@ namespace com.amazingcow.BowAndArrow
                 return new Rectangle(BoundingBox.X,
                                      BoundingBox.Y,
                                      BoundingBox.Width,
-                                     BoundingBox.Height - kBalloonStringHeight);
+                                     BoundingBox.Height - kStringHeight);
             }
         }
         #endregion //Public Properties
