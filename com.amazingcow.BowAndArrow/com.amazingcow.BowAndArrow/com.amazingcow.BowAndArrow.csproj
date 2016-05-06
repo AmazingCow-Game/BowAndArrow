@@ -10,8 +10,6 @@
     <AssemblyName>com.amazingcow.BowAndArrow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +69,14 @@
     <Compile Include="Game\Levels\Level2.cs" />
     <Compile Include="Game\Levels\Level3.cs" />
     <Compile Include="Game\Levels\Level4.cs" />
+    <Compile Include="Game\Levels\Level5.cs" />
+    <Compile Include="Game\Enemies\BullsEye.cs" />
+    <Compile Include="Game\Levels\Level6.cs" />
+    <Compile Include="Game\Levels\Level7.cs" />
+    <Compile Include="Game\Levels\Level8.cs" />
+    <Compile Include="Game\Enemies\Fireball.cs" />
+    <Compile Include="Game\Enemies\Vulture.cs" />
+    <Compile Include="Game\Enemies\Wind.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
