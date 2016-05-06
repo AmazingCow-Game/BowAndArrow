@@ -25,7 +25,7 @@ namespace com.amazingcow.BowAndArrow
 
         public Arrow(Vector2 position) :
             base(position,
-                 new Vector2(120, 0), //COWTODO: Change the magic numbers.
+                 new Vector2(150, 0), //COWTODO: Change the magic numbers.
                  0)
         {
             //Init the textures.
