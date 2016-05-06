@@ -29,7 +29,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Singleton
-        private static GameManager s_instance;
+        static GameManager s_instance;
         public static GameManager Instance
         {
             get { return s_instance; }
@@ -41,12 +41,12 @@ namespace com.amazingcow.BowAndArrow
         public GameManager()
         {
             //Init the iVars...
-            _clearColor    = Color.CornflowerBlue;
+            _clearColor   = Color.CornflowerBlue;
             _graphics     = new GraphicsDeviceManager(this);
 
             //Init the Properties...
             Content.RootDirectory = "Content";
-            RandomNumGen          = new Random(10); //COWTODO:
+            RandomNumGen          = new Random(); //COWTODO:
             IsMouseVisible        = true;
             IsFixedTimeStep       = true;
 
@@ -54,8 +54,8 @@ namespace com.amazingcow.BowAndArrow
             s_instance = this;
 
             //Setup the graphics...
-            _graphics.PreferredBackBufferWidth  = 800; //COWTODO:
-            _graphics.PreferredBackBufferHeight = 600; //COWTODO:
+            _graphics.PreferredBackBufferWidth  = 640; //COWTODO:
+            _graphics.PreferredBackBufferHeight = 480; //COWTODO:
         }
         #endregion //CTOR
 
@@ -64,7 +64,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void LoadContent()
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
-            ChangeLevel(new Level4());
+            ChangeLevel(new Level1());
         }
         #endregion //Init / Load
 
@@ -85,9 +85,9 @@ namespace com.amazingcow.BowAndArrow
 
             //COWTODO: Implement the correctly handling...
             if(gameTime.IsRunningSlowly)
-                _clearColor = Color.Red;
+                _clearColor = new Color(128, 0, 128);
             else
-                _clearColor = Color.CornflowerBlue;
+                _clearColor = new Color(0, 128, 0);
 
             base.Update(gameTime);
         }
