@@ -12,7 +12,7 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         const int kMaxBalloonsCount = 15;
-        #endregion //Constants
+        #endregion // Constants
 
 
         #region Public Properties 
@@ -24,17 +24,15 @@ namespace com.amazingcow.BowAndArrow
 
         public override String LevelTitle        
         { get { return kLevelTitle; } }
-        #endregion //Public Properties 
+        #endregion // Public Properties 
 
 
         #region Init
         protected override void InitEnemies()
-        {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-
+        {            
             //Initialize the Enemies.
-            int startX = viewport.Width - (Balloon.kWidth) - 20; //Just little to left.
-            int startY = viewport.Height + 10; //Just little off of screen
+            int startX = PlayField.Right - (Balloon.kWidth) - 20;
+            int startY = PlayField.Top + 10;
 
             //Constructs the balloons from right to left.
             for(int i = 0; i < kMaxBalloonsCount; ++i)
@@ -88,7 +86,7 @@ GameOver
 
         //Title
         const String kLevelTitle = "Level 1 - Training";
-        #endregion //Paper Strings
+        #endregion // Paper Strings
 
     }//class Level1
 }//namespace com.amazingcow.BowAndArrow

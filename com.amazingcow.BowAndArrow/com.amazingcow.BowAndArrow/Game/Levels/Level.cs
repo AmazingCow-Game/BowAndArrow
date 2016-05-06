@@ -5,6 +5,9 @@ using System.Collections.Generic;
 //XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Text;
+
+
 #endregion //Usings
 
 
@@ -13,6 +16,7 @@ namespace com.amazingcow.BowAndArrow
     public abstract class Level
     {
         #region Enums / Constants
+        //Public
         public enum State
         {
             Intro,   //
@@ -21,16 +25,27 @@ namespace com.amazingcow.BowAndArrow
             GameOver //
         }
 
-        protected const int kPaperIndexIntro    =  0;
-        protected const int kPaperIndexPaused   =  1;
-        protected const int kPaperIndexGameOver =  2;
+        //Private
+        const int kPaperIndexIntro    =  0;
+        const int kPaperIndexPaused   =  1;
+        const int kPaperIndexGameOver =  2;
 
         const int kEnemiesHintCount = 20;
         const int kPapersHintCount  =  3;
         #endregion //Enums / Constants
 
 
-        #region Public Properties
+        #region Public Properties       
+        //Window and PlayField bounds
+        public Rectangle PlayField 
+        { get; private set; }
+
+        public Rectangle WindowRect
+        {
+            get { return GameManager.Instance.GraphicsDevice.Viewport.Bounds; }
+        }
+
+
         public State CurrentState
         { get; protected set; }
 
@@ -53,7 +68,11 @@ namespace com.amazingcow.BowAndArrow
         public abstract String PaperStringIntro    { get; }
         public abstract String PaperStringGameOver { get; }
         public abstract String LevelTitle          { get; }
+
+
+        public Hud TopHud { get; private set; }
         #endregion //Public Properties
+
 
 
         #region CTOR
@@ -74,9 +93,19 @@ namespace com.amazingcow.BowAndArrow
         #region Load / Unload
         public virtual void Load()
         {
-            InitEnemies();
-            InitPlayer ();
+            InitHud();
+        
+            PlayField = new Rectangle(
+                WindowRect.Left,
+                WindowRect.Top + TopHud.BoundingBox.Height,
+                WindowRect.Right,
+                WindowRect.Bottom - TopHud.BoundingBox.Height
+            );
+
+
             InitPapers ();
+            InitPlayer ();
+            InitEnemies();
         }
         public virtual void Unload()
         {
@@ -112,11 +141,9 @@ namespace com.amazingcow.BowAndArrow
         #region Init
         protected virtual void InitPlayer()
         {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-
             //Initialize the Player.
             int initialPlayerX = 10; //COWTODO: Remove the magic constants.
-            int initialPlayerY = viewport.Height / 2;
+            int initialPlayerY = PlayField.Center.Y;
 
             Player = new Archer(new Vector2(initialPlayerX, initialPlayerY));
             Player.OnArcherShootArrow += OnPlayerShootArrow;
@@ -131,16 +158,17 @@ namespace com.amazingcow.BowAndArrow
             Papers.Add(new Paper(LevelTitle,   ""));
             Papers.Add(new Paper(LevelTitle, PaperStringGameOver));
         }
+
+        protected virtual void InitHud()
+        {
+            TopHud = new Hud();
+        }
         #endregion //Init
 
 
         #region Update
         public void Update(GameTime gt)
-        {
-            //COWTODO: Remove this
-            if(InputHandler.Instance.CurrentKeyboardState.IsKeyDown(Keys.Enter))
-                AliveEnemies = 0;
-
+        {            
             switch(CurrentState)
             {
                 case State.Intro   : UpdateIntro   (gt); break;
@@ -257,6 +285,8 @@ namespace com.amazingcow.BowAndArrow
                 case State.Paused  : DrawPaused  (gt); break;
                 case State.GameOver: DrawGameOver(gt); break;
             }
+
+            DrawHud(gt);
         }
 
         protected virtual void DrawIntro(GameTime gt)
@@ -287,6 +317,11 @@ namespace com.amazingcow.BowAndArrow
         protected virtual void DrawGameOver(GameTime gt)
         {
             Papers[kPaperIndexGameOver].Draw(gt);
+        }
+
+        protected virtual void DrawHud(GameTime gt)
+        {
+            TopHud.Draw(gt);
         }
         #endregion // Draw
 

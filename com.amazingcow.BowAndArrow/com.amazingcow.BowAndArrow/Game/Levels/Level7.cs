@@ -31,15 +31,14 @@ namespace com.amazingcow.BowAndArrow
         #region Init
         protected override void InitEnemies()
         {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minWindY = Wind.kWindHeight;
-            int maxWindY = viewport.Height - Wind.kWindHeight;
+            int minWindY = PlayField.Top    - Wind.kWindHeight;
+            int maxWindY = PlayField.Bottom - Wind.kWindHeight;
             //Makes the enemies came from right of screen.
-            int minWindX = viewport.Width;
-            int maxWindX = 2 * viewport.Width;
+            int minWindX = PlayField.Right;
+            int maxWindX = 2 * PlayField.Right;
 
             for(int i = 0; i < kMaxWindsCount; ++i)
             {

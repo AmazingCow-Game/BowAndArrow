@@ -60,11 +60,14 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            var winHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
+            var lvl = GameManager.Instance.CurrentLevel;
 
             //Just reverses the direction if reach the screen border.
-            if(BoundingBox.Top <= 0 || BoundingBox.Bottom >= winHeight)
+            if(BoundingBox.Top <= lvl.PlayField.Top || 
+               BoundingBox.Bottom >= lvl.PlayField.Bottom)
+            {
                 Speed *= -1;
+            }
         }
 
         public override void Draw(GameTime gt)

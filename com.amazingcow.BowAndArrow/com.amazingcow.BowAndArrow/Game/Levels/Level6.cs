@@ -31,15 +31,14 @@ namespace com.amazingcow.BowAndArrow
         #region Init
         protected override void InitEnemies()
         {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minFireballY = Fireball.kFireballHeight;
-            int maxFireballY = viewport.Height - Fireball.kFireballHeight;
+            int minFireballY = PlayField.Top    - Fireball.kFireballHeight;
+            int maxFireballY = PlayField.Bottom - Fireball.kFireballHeight;
             //Makes the enemies came from right of screen.
-            int minFireballX = viewport.Width;
-            int maxFireballX = 2 * viewport.Width;
+            int minFireballX = PlayField.Right;
+            int maxFireballX = 2 * PlayField.Right;
 
             for(int i = 0; i < kMaxFireballsCount; ++i)
             {

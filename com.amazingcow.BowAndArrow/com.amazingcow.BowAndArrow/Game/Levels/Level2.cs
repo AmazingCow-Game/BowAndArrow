@@ -3,6 +3,7 @@
 using System;
 //XNA
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 #endregion //Usings
 
 
@@ -31,16 +32,15 @@ namespace com.amazingcow.BowAndArrow
 
         #region Init
         protected override void InitEnemies()
-        {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+        {            
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minX = viewport.Width  / 2;
-            int maxX = viewport.Width - Balloon.kWidth;
+            int minX = PlayField.Center.X;
+            int maxX = PlayField.Right - Balloon.kWidth;
             //Makes the enemies came from bottom of screen.
-            int minY = viewport.Height;
-            int maxY = 2 * viewport.Height;
+            int minY = PlayField.Bottom;
+            int maxY = 2 * PlayField.Bottom;
 
             //RedBalloons.
             for(int i = 0; i < kMaxRedBalloonsCount; ++i)
@@ -56,7 +56,7 @@ namespace com.amazingcow.BowAndArrow
             }
 
             //YellowBalloons.
-            for(int i = 0; i < kMaxRedBalloonsCount; ++i)
+            for(int i = 0; i < kMaxYellowBalloonsCount; ++i)
             {
                 var x = rndGen.Next(minX, maxX);
                 var y = rndGen.Next(minY, maxY);
@@ -76,19 +76,19 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level1());
+            GameManager.Instance.ChangeLevel(new Level3());
         }
         #endregion
 
 
         #region Game Objects Callbacks
-        protected override void OnEnemyStateChangeDying(object sender, EventArgs e)
-        {
-            base.OnEnemyStateChangeDying(sender, e);
-
+        protected override void OnEnemyStateChangeDead(object sender, EventArgs e)
+        {            
             //Level 2 is only about RedBalloons.
             if(sender is RedBalloon)
                 --AliveEnemies;
+            
+            Debug.WriteLine("Alive Enemies: {0}", AliveEnemies);
         }
         #endregion //Game Objects Callbacks
      

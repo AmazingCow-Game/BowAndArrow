@@ -86,15 +86,14 @@ namespace com.amazingcow.BowAndArrow
                 CurrentState = State.Dead;
         }
 
-        private void MoveAlive(GameTime gt)
+        void MoveAlive(GameTime gt)
         {
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            var winHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
-
-            if(BoundingBox.Bottom <= 0)
-                Position = new Vector2(Position.X, winHeight);
+            var lvl = GameManager.Instance.CurrentLevel;
+            if(BoundingBox.Bottom <= lvl.PlayField.Top)
+                Position = new Vector2(Position.X, lvl.PlayField.Bottom);
         }
         #endregion //Private Methods
 

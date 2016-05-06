@@ -30,16 +30,15 @@ namespace com.amazingcow.BowAndArrow
 
         #region Init
         protected override void InitEnemies()
-        {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+        {            
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minVultureY = Vulture.kVultureHeight;
-            int maxVultureY = viewport.Height - Vulture.kVultureHeight;
+            int minVultureY = PlayField.Top    - Vulture.kVultureHeight;
+            int maxVultureY = PlayField.Bottom - Vulture.kVultureHeight;
             //Makes the enemies came from right of screen.
-            int minVultureX = viewport.Width;
-            int maxVultureX = 2 * viewport.Width;
+            int minVultureX = PlayField.Right;
+            int maxVultureX = 2 * PlayField.Right;
 
             for(int i = 0; i < kMaxVulturesCount; ++i)
             {

@@ -29,16 +29,15 @@ namespace com.amazingcow.BowAndArrow
 
         #region Init
         protected override void InitEnemies()
-        {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+        {            
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            const int minY = Slime.kHeight;
-            int maxY = viewport.Height - Slime.kHeight;
+            int minY = PlayField.Top    - Slime.kHeight;
+            int maxY = PlayField.Bottom - Slime.kHeight;
             //Makes the enemies came from right of screen.
-            int minX = viewport.Width;
-            int maxX = 2 * viewport.Width;
+            int minX = PlayField.Right;
+            int maxX = 2 * PlayField.Right;
 
             for(int i = 0; i < kMaxSlimesCount; ++i)
             {

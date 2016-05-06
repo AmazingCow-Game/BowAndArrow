@@ -29,16 +29,15 @@ namespace com.amazingcow.BowAndArrow
 
         #region Init
         protected override void InitEnemies()
-        {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-            var rndGen   = GameManager.Instance.RandomNumGen;
+        {            
+            var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minX = (viewport.Width / 2) - 100;
-            int maxX = viewport.Width - Butterfly.kWidth;
+            int minX = PlayField.Center.X - 100;
+            int maxX = PlayField.Right - Butterfly.kWidth;
             //Makes the enemies came from bottom of screen.
-            int minY = viewport.Height;
-            int maxY = 2 * viewport.Height;
+            int minY = PlayField.Bottom;
+            int maxY = 2 * PlayField.Bottom;
 
             for(int i = 0; i < kMaxButterfliesCount; ++i)
             {

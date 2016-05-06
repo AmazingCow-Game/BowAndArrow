@@ -3,6 +3,9 @@
 using System;
 //Xna
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+
 #endregion //Usings
 
 
@@ -44,8 +47,8 @@ namespace com.amazingcow.BowAndArrow
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
             //Check if Arrow went out of screen.
-            var windowWidth = GameManager.Instance.GraphicsDevice.Viewport.Width;
-            if(Position.X >= windowWidth)
+            var width = GameManager.Instance.CurrentLevel.PlayField.Width;
+            if(Position.X >= width)
                 CurrentState = State.Dead;
         }
         #endregion //Update / Draw

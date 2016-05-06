@@ -50,20 +50,20 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
+            var lvl = GameManager.Instance.CurrentLevel;
 
             //On State.Alive -> If Balloon goes up of top of window
             //reset it to the bottom of the window.
             if(CurrentState == State.Alive &&
-               BoundingBox.Bottom <= 0)
+               BoundingBox.Bottom <= lvl.PlayField.Top)
             {
-                Position = new Vector2(Position.X, windowHeight);
+                Position = new Vector2(Position.X, lvl.PlayField.Bottom);
             }
 
             //On State.Dying -> If Balloon goes down of the window's
             //bottom, set the state to died.
             else if(CurrentState == State.Dying &&
-                    Position.Y >= windowHeight)
+                    Position.Y >= lvl.PlayField.Bottom)
             {
                 Speed        = Vector2.Zero;
                 CurrentState = State.Dead;

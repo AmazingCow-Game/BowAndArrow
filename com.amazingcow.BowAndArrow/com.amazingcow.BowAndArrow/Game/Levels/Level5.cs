@@ -26,11 +26,9 @@ namespace com.amazingcow.BowAndArrow
         #region Init
         protected override void InitEnemies()
         {
-            var viewport = GameManager.Instance.GraphicsDevice.Viewport;
-
             //Initialize the enemy.
-            int startX = 200;//viewport.Width - 100;  //A bit of offset to left.
-            int startY = (viewport.Height / 2) - BullsEye.kHeight / 2; //Center.
+            int startX = PlayField.Right - 200;
+            int startY = PlayField.Center.Y - (BullsEye.kHeight / 2);
 
             var bullsEye = new BullsEye(new Vector2(startX, startY));
             bullsEye.OnStateChangeDead  += OnEnemyStateChangeDead;
