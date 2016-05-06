@@ -35,9 +35,10 @@ namespace com.amazingcow.BowAndArrow
         }
         #endregion //Enums
 
+
         #region iVars
         State _currentState;
-        #endregion iVars
+        #endregion //iVars
 
 
         #region Public Properties
@@ -59,19 +60,13 @@ namespace com.amazingcow.BowAndArrow
 
         public virtual Rectangle HitBox
         {
-            get {
-                return BoundingBox;
-            }
+            get { return BoundingBox; }
         }
 
         public State CurrentState
         {
-            get {
-                return _currentState;
-            }
-            protected set {
-                ChangeState(value);
-            }
+            get { return _currentState; }
+            protected set { ChangeState(value); }
         }
 
         public List<Texture2D> AliveTexturesList
@@ -82,9 +77,7 @@ namespace com.amazingcow.BowAndArrow
 
         public Texture2D CurrentTexture
         {
-            get {
-                return CurrentTexturesList[CurrentTextureIndex];
-            }
+            get { return CurrentTexturesList[CurrentTextureIndex]; }
         }
 
         public List<Texture2D> CurrentTexturesList
@@ -96,23 +89,33 @@ namespace com.amazingcow.BowAndArrow
         public Clock TextureAnimationTimer
         { get; protected set; }
 
+
+        public Color TintColor
+        { get; protected set; }
         #endregion //Public Properties
 
 
         #region CTOR
-        public GameObject(Vector2 position, Vector2 speed,
-                          float msToChangeTexture)
+        protected GameObject(Vector2 position, Vector2 speed,
+                             float msToChangeTexture)
         {
+            //House keeping
             Position     = position;
             Speed        = speed;
             CurrentState = State.Alive;
+            TintColor    = Color.White;
 
+            //Textures
             AliveTexturesList     = new List<Texture2D>(kAliveTexturesListHintSize);
             DyingTexturesList     = new List<Texture2D>(kDyingTexturesListHintSize);
             CurrentTexturesList   = AliveTexturesList;
             CurrentTextureIndex   = 0;
+
+            //Animation.
             TextureAnimationTimer = new Clock(msToChangeTexture,
                                               Clock.kRepeatForever);
+            TextureAnimationTimer.OnTick += OnTextureAnimationTimerTick;
+            TextureAnimationTimer.Start();
         }
         #endregion //CTOR
 
@@ -120,7 +123,7 @@ namespace com.amazingcow.BowAndArrow
         #region Update / Draw
         public virtual void Update(GameTime gt)
         {
-
+            TextureAnimationTimer.Update(gt.ElapsedGameTime.Milliseconds);
         }
         public virtual void Draw(GameTime gt)
         {
@@ -128,9 +131,9 @@ namespace com.amazingcow.BowAndArrow
                 return;
 
             GameManager.Instance.CurrentSpriteBatch.Draw(
-                CurrentTexture,
-                Position
-            );
+                CurrentTexture, 
+                Position, 
+                TintColor);
         }
         #endregion //Update / Draw
 
@@ -155,6 +158,12 @@ namespace com.amazingcow.BowAndArrow
                 CurrentTexturesList = DyingTexturesList;
                 CurrentTextureIndex = 0;
             }
+        }
+            
+        void OnTextureAnimationTimerTick(object sender, EventArgs e)
+        {
+            int count = CurrentTexturesList.Count;
+            CurrentTextureIndex = (CurrentTextureIndex + 1) % count;
         }
         #endregion //Private Methods
 
