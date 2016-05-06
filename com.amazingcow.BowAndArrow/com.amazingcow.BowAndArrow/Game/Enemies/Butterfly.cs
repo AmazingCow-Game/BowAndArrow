@@ -11,9 +11,11 @@ namespace com.amazingcow.BowAndArrow
     public class Butterfly : Enemy
     {
         #region Constants
-        public const int kSpeedMinButterfly = 35;
-        public const int kSpeedMaxButterfly = 45;
-        public const int kButterflyWidth    = 32;
+        //Public
+        public const int kWidth = 32;  
+        //Private
+        const int kSpeedMin = 35;
+        const int kSpeedMax = 45;
         #endregion
 
 
@@ -31,8 +33,8 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("butterfly"));
 
             //Init the Speed...
-            int ySpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinButterfly,
-                                                                kSpeedMaxButterfly);
+            int ySpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMin,
+                                                                kSpeedMax);
             Speed = new Vector2(0, -ySpeed);
         }
         #endregion //CTOR
@@ -67,8 +69,8 @@ namespace com.amazingcow.BowAndArrow
             var rndGen = GameManager.Instance.RandomNumGen;
 
             //Makes go towards the Top Left of screen.
-            Speed = new Vector2(-rndGen.Next(kSpeedMinButterfly, kSpeedMaxButterfly),
-                                -rndGen.Next(kSpeedMinButterfly, kSpeedMaxButterfly));
+            Speed = new Vector2(-rndGen.Next(kSpeedMin, kSpeedMax),
+                                -rndGen.Next(kSpeedMin, kSpeedMax));
         }
         #endregion //Public Methods
 
@@ -79,8 +81,9 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
+            //It got out of upper bound of screen.
             if(BoundingBox.Bottom <= 0)
-                CurrentState = State.Dead;;
+                CurrentState = State.Dead;
         }
 
         private void MoveAlive(GameTime gt)
@@ -88,10 +91,10 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            var windowHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
+            var winHeight = GameManager.Instance.GraphicsDevice.Viewport.Height;
 
             if(BoundingBox.Bottom <= 0)
-                Position = new Vector2(Position.X, windowHeight);
+                Position = new Vector2(Position.X, winHeight);
         }
         #endregion //Private Methods
 
