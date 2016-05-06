@@ -1,7 +1,6 @@
 ﻿#region Usings
 //System
 using System;
-using System.Diagnostics;
 //Xna
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -17,19 +16,24 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Events
 
 
-        #region Enums / Constants
+        #region Enums
         public enum BowState
         {
             Stand,  //Bow has an arrow but is not pulled.
             Armed,  //Bow has an arrow AND is pulled.
             Unarmed //Bow hasn't an arrow.
         }
+        #endregion //Enums
 
+        #region Constants
+        //Public
         public const int kMaxArrowsCount = 20;
         public const int kMaxEnemyHits   = 5;
-
-        private const int kChangeStateInterval = 200;
-        #endregion //Enums
+        //Private
+        const int kChangeBowStateInterval = 200;
+        const int kHitGlowInterval        = 50;
+        const int kHitGlowRepeatCount     = 8;
+        #endregion //Constants
 
 
         #region Public Properties
@@ -39,8 +43,8 @@ namespace com.amazingcow.BowAndArrow
         public Vector2 ArrowPosition
         {
             get {
-                return new Vector2(this.Position.X + 47, //COWTODO: Remove magic number
-                                   this.Position.Y + 41); //COWTODO: Remove magic number
+                return new Vector2(Position.X + 47, //COWTODO: Remove magic number
+                                   Position.Y + 41); //COWTODO: Remove magic number
             }
         }
 
@@ -53,7 +57,8 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region iVars
-        private Clock _changeStateClock;
+        readonly Clock _changeBowStateClock;
+        readonly Clock _hitGlowClock;
         #endregion //iVars
 
 
@@ -76,9 +81,12 @@ namespace com.amazingcow.BowAndArrow
             EnemyHits       = 0;
 
             //Init the timers.
-            _changeStateClock = new Clock(kChangeStateInterval, 1);
-            _changeStateClock.OnTick += OnChangeStateClockTick;
-        }
+            _changeBowStateClock = new Clock(kChangeBowStateInterval, 1);
+            _changeBowStateClock.OnTick += OnChangeStateClockTick;
+
+            _hitGlowClock = new Clock(kHitGlowInterval, kHitGlowRepeatCount);
+            _hitGlowClock.OnTick += OnHitGlowClockTick;
+        }            
         #endregion //CTOR
 
 
@@ -90,10 +98,10 @@ namespace com.amazingcow.BowAndArrow
                 return;
 
             //Update the timers.
-            _changeStateClock.Update(gt.ElapsedGameTime.Milliseconds);
+            _changeBowStateClock.Update(gt.ElapsedGameTime.Milliseconds);
+            _hitGlowClock.Update(gt.ElapsedGameTime.Milliseconds);
 
-            var mouseState = InputHandler.Instance.CurrentMouseState;
-
+            var mouseState = Mouse.GetState();
             //Change the Bow State.
             if(mouseState.RightButton == ButtonState.Pressed)
                 TryChangeBowState(BowState.Stand);
@@ -120,9 +128,18 @@ namespace com.amazingcow.BowAndArrow
 
             CurrentState = State.Dead;
         }
+
         public void Hit()
         {
             ++EnemyHits;
+
+            //Reset the Glow Timer.
+            _hitGlowClock.Stop();
+            _hitGlowClock.Start();
+
+            //Make glows imediatelly.
+            OnHitGlowClockTick(null, null);
+
             if(EnemyHits == kMaxEnemyHits)
                 Kill();
         }
@@ -130,9 +147,10 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Helper Methods
-        private void TryChangeBowState(BowState targetBowState)
+        //BowState.
+        void TryChangeBowState(BowState targetBowState)
         {
-            if(_changeStateClock.IsEnabled)
+            if(_changeBowStateClock.IsEnabled)
                 return;
 
             if(CurrentState == State.Dying)
@@ -160,8 +178,8 @@ namespace com.amazingcow.BowAndArrow
             }
         }
 
-
-        private void Shoot()
+        //Bow Actions.
+        void Shoot()
         {
             if(ArrowsCount > 0)
             {
@@ -177,25 +195,25 @@ namespace com.amazingcow.BowAndArrow
             CurrentBowState     = BowState.Unarmed;
             CurrentTextureIndex = (int)CurrentBowState;
 
-            _changeStateClock.Start();
+            _changeBowStateClock.Start();
         }
-        private void Arm()
+        void Arm()
         {
             CurrentBowState     = BowState.Armed;
             CurrentTextureIndex = (int)CurrentBowState;
 
-            _changeStateClock.Start();
+            _changeBowStateClock.Start();
         }
-        private void Stand()
+        void Stand()
         {
             CurrentBowState     = BowState.Stand;
             CurrentTextureIndex = (int)CurrentBowState;
 
-            _changeStateClock.Start();
+            _changeBowStateClock.Start();
         }
 
-
-        private void CalculateMovementSpeed()
+        //Movement.
+        void CalculateMovementSpeed()
         {
             var mouseState = InputHandler.Instance.CurrentMouseState;
 
@@ -206,21 +224,36 @@ namespace com.amazingcow.BowAndArrow
                 return;
 
             var mouseY      = mouseState.Y;
-            var boundingBox = this.BoundingBox;
+            var boundingBox = BoundingBox;
 
             //COWTODO: Remove the magic numbers.
             if(mouseY - 20 < boundingBox.Top)
-                Speed = new Vector2(0, -100);
+                Speed = new Vector2(0, -200);
             if(mouseY + 20 > boundingBox.Bottom)
-                Speed = new Vector2(0, 100);
+                Speed = new Vector2(0, 200);
         }
         #endregion //Helper Methods
 
 
         #region Timers Callbacks
-        private void OnChangeStateClockTick(object sender, EventArgs e)
+        void OnChangeStateClockTick(object sender, EventArgs e)
         {
-            _changeStateClock.Stop();
+            _changeBowStateClock.Stop();
+        }
+
+        void OnHitGlowClockTick(object sender, EventArgs e)
+        {
+            if(_hitGlowClock.TickCount == kHitGlowRepeatCount)
+            {
+                TintColor = Color.White;
+                _hitGlowClock.Stop();
+            }
+            else
+            {
+                TintColor = (_hitGlowClock.TickCount % 2 == 0) 
+                             ? Color.Red 
+                             : Color.White;
+            }    
         }
         #endregion //Timers Callbacks
     }
