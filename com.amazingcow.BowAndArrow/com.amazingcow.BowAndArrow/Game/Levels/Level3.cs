@@ -11,9 +11,20 @@ namespace com.amazingcow.BowAndArrow
     public class Level3 : Level
     {
         #region Constants
-        //COWTODO: Check the correct values.
-        private const int kMaxButterfliesCount = 15;
+        const int kMaxButterfliesCount = 15;
         #endregion //Constants
+
+
+        #region Public Properties 
+        public override String PaperStringIntro 
+        { get { return kPaperIntroString; } }
+
+        public override String PaperStringGameOver
+        { get { return kPaperGameOverString; } }
+
+        public override String LevelTitle        
+        { get { return kLevelTitle; } }
+        #endregion //Public Properties 
 
 
         #region Init
@@ -23,16 +34,16 @@ namespace com.amazingcow.BowAndArrow
             var rndGen   = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minButterflyX = viewport.Width  / 2;
-            int maxButterflyX = viewport.Width - Butterfly.kButterflyWidth;
+            int minX = (viewport.Width / 2) - 100;
+            int maxX = viewport.Width - Butterfly.kWidth;
             //Makes the enemies came from bottom of screen.
-            int minButterflyY = viewport.Height;
-            int maxButterflyY = 2 * viewport.Height;
+            int minY = viewport.Height;
+            int maxY = 2 * viewport.Height;
 
             for(int i = 0; i < kMaxButterfliesCount; ++i)
             {
-                var x = rndGen.Next(minButterflyX, maxButterflyX);
-                var y = rndGen.Next(minButterflyY, maxButterflyY);
+                var x = rndGen.Next(minX, maxX);
+                var y = rndGen.Next(minY, maxY);
 
                 var butterfly = new Butterfly(new Vector2(x, y));
                 butterfly.OnStateChangeDead  += OnEnemyStateChangeDead;
@@ -43,23 +54,31 @@ namespace com.amazingcow.BowAndArrow
 
             AliveEnemies = kMaxButterfliesCount;
         }
-
-        protected override void InitPapers()
-        {
-            Papers.Add(new Paper("Intro", ""));
-            Papers.Add(new Paper("Paused", ""));
-            Papers.Add(new Paper("GameOver", ""));
-        }
         #endregion //Init
 
 
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level1());
+            GameManager.Instance.ChangeLevel(new Level4());
         }
         #endregion
 
-    }//class Level2
+
+        #region Paper Strings
+        //Intro
+        const String kPaperIntroString = @"
+You are a good guy
+Free the butterflies!";
+
+        //Game Over
+        const String kPaperGameOverString = @"
+Game over.
+";
+        //Title
+        const String kLevelTitle = "Level 3";
+        #endregion
+
+    }//class Level3
 }//namespace com.amazingcow.BowAndArrow
 
