@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
-
-
 #endregion //Usings
 
 
@@ -68,6 +66,7 @@ namespace com.amazingcow.BowAndArrow
         public abstract String PaperStringIntro    { get; }
         public abstract String PaperStringGameOver { get; }
         public abstract String LevelTitle          { get; }
+        public abstract String LevelDescription    { get; }
 
 
         public Hud TopHud { get; private set; }

@@ -25,6 +25,9 @@ namespace com.amazingcow.BowAndArrow
 
         public override String LevelTitle        
         { get { return kLevelTitle; } }
+
+        public override String LevelDescription        
+        { get { return kLevelDescription; } }
         #endregion //Public Properties 
 
 
@@ -76,7 +79,8 @@ Free the butterflies!";
 Game over.
 ";
         //Title
-        const String kLevelTitle = "Level 7";
+        const String kLevelTitle        = "Level 7";
+        const String kLevelDescription  = "Training";
         #endregion
 
     }//class Level7
