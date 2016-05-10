@@ -4,6 +4,9 @@ using System;
 //XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
+
+
 #endregion //Usings
 
 
@@ -65,13 +68,12 @@ namespace com.amazingcow.BowAndArrow
     
                 var pos = new Vector2(paperCenterX - (strSize.X / 2),
                                       paperTopY);
-                
+
                 pos.Y += strSize.Y * i;
                 sbatch.DrawString(_spriteFont, currStr, pos, Color.Black);
             }
-
-        
         }
-    }//class IntroPaper
+              
+    }//class Paper
 }//namespace com.amazingcow.BowAndArrow
 
