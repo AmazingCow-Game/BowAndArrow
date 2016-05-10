@@ -35,7 +35,7 @@ namespace com.amazingcow.BowAndArrow
         {            
             //Initialize the Enemies.
             int startX = PlayField.Right - (Balloon.kWidth) - 20;
-            int startY = PlayField.Top + 10;
+            int startY = PlayField.Bottom + 10;
 
             //Constructs the balloons from right to left.
             for(int i = 0; i < kMaxBalloonsCount; ++i)
