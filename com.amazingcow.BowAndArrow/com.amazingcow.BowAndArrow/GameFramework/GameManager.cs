@@ -103,7 +103,7 @@ namespace com.amazingcow.BowAndArrow
             base.Draw(gameTime);
 
         }
-        #endregion // Update/Draw
+        #endregion // Update / Draw
 
 
         #region Level Management
