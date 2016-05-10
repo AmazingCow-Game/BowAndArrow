@@ -36,7 +36,7 @@ namespace com.amazingcow.BowAndArrow
             var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minY = PlayField.Top    - Slime.kHeight;
+            int minY = PlayField.Top    + Slime.kHeight;
             int maxY = PlayField.Bottom - Slime.kHeight;
             //Makes the enemies came from right of screen.
             int minX = PlayField.Right;
@@ -71,7 +71,19 @@ namespace com.amazingcow.BowAndArrow
         //Intro 
         const String kPaperIntroString = @"
 The slimes are comming!
-Don't let their pass!";
+Don't let their pass!
+---
+
+You can enjoy freely this game.
+This means that you can share,
+study and hack it anytime and
+way that you want.
+
+Check our other free software
+projects at:
+
+opensource.amazingcow.com
+";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -79,7 +91,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = @"Level 4";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "SLIMED!";
         #endregion
 
     }//class Level4

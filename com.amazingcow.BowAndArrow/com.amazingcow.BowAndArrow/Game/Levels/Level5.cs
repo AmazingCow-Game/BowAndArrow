@@ -30,7 +30,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void InitEnemies()
         {
             //Initialize the enemy.
-            int startX = PlayField.Right - 200;
+            int startX = PlayField.Right - 400;
             int startY = PlayField.Center.Y - (BullsEye.kHeight / 2);
 
             var bullsEye = new BullsEye(new Vector2(startX, startY));
@@ -55,8 +55,14 @@ namespace com.amazingcow.BowAndArrow
         #region Paper Strings
         //Intro 
         const String kPaperIntroString = @"
-The slimes are comming!
-Don't let their pass!";
+The tests begin
+You Need a Bull's Eye to Continue...
+---
+
+Let's turn world a better place ;D
+
+One smile at time...
+";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -64,7 +70,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = @"Level 5";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "Bull's Eye";
         #endregion
 
     }//class Level2
