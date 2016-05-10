@@ -63,7 +63,7 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level5());
+            GameManager.Instance.ChangeLevel(new Level7());
         }
         #endregion
 
@@ -71,8 +71,21 @@ namespace com.amazingcow.BowAndArrow
         #region Paper Strings
         //Intro 
         const String kPaperIntroString = @"
-The slimes are comming!
-Don't let their pass!";
+Let's heat this a bit..
+Don't get burned.
+--- 
+
+I'm sure that you like your hair.
+We like ours too ;D
+
+So let's share it with people
+of Instituto Mario Penna.
+
+They accept hair donation to
+people that lost it in chemo!
+
+See you at baber shop.
+";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -80,7 +93,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = @"Level 6";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "FIREBALLS";
         #endregion
 
     }//class Level6

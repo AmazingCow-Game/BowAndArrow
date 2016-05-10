@@ -63,7 +63,7 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level5());
+            GameManager.Instance.ChangeLevel(new Level8());
         }
         #endregion
 
@@ -71,8 +71,19 @@ namespace com.amazingcow.BowAndArrow
         #region Paper Strings
         //Intro
         const String kPaperIntroString = @"
-You are a good guy
-Free the butterflies!";
+Beware with the wind!
+It could cut your head off!
+---
+
+Instituto Mario Penna accepts
+medice donation too.
+
+That's nice hun? 
+
+Check out ther site ;D
+
+http://www.mariopenna.org.br
+";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -80,7 +91,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = "Level 7";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "Wind";
         #endregion
 
     }//class Level7

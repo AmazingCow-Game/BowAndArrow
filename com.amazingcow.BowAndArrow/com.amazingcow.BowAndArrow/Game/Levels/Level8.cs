@@ -63,7 +63,7 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level5());
+            GameManager.Instance.ChangeLevel(new Level1());
         }
         #endregion
 
