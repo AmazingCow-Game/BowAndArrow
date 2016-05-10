@@ -100,15 +100,24 @@ namespace com.amazingcow.BowAndArrow
         //Intro
         const String kPaperIntroString = @"
 Ok, you got the basics
-Now let's shot at more balloons";
+Now let's shot at more balloons
+---
+
+Did you know that Instituto Mario Penna
+helps people with cancer?
+
+Why not save a few minutes to 
+check out their site? 
+
+http://www.mariopenna.org.br";
 
         //GameOver
         const String kPaperGameOverString = @"
 Game over.
 ";
         //Level
-        const String kLevelTitle        = "Level 2 - More balloons.";
-        const String kLevelDescription  = "Training";
+        const String kLevelTitle        = "Level 2";
+        const String kLevelDescription  = "More balloons";
         #endregion //Paper Strings 
 
     }//class Level2

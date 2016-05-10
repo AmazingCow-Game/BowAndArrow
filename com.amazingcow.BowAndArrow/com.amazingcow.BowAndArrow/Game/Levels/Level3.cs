@@ -71,7 +71,16 @@ namespace com.amazingcow.BowAndArrow
         //Intro
         const String kPaperIntroString = @"
 You are a good guy
-Free the butterflies!";
+Free the butterflies!
+---
+
+You always can donate money,
+but if you are short on it
+you can donate other things:
+
+Like your Time, your Smile,
+and help spread the good that
+they do :D";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -79,7 +88,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = "Level 3";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "Butterflies";
         #endregion
 
     }//class Level3
