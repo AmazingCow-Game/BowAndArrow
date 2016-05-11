@@ -4,10 +4,9 @@ using System;
 //XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 #endregion //Usings
 
-//COWTODO: Check if there is a need of implement a more efficient way \
+//COWHACK: Check if there is a need of implement a more efficient way \
 //         of draw the strings...
 namespace com.amazingcow.BowAndArrow
 {
@@ -77,17 +76,27 @@ namespace com.amazingcow.BowAndArrow
         {            
             var sb = GameManager.Instance.CurrentSpriteBatch;
 
-            DrawBackground      (sb);
-            DrawLevelTitle      (sb);
-            DrawLevelDescription(sb);
-            DrawScore           (sb);
-            DrawHighScore       (sb);
-            DrawArrowsCount     (sb);
-            DrawArrowsIcons     (sb);
+            DrawBackground(sb);
+            DrawLevelTitle(sb);
+
+            switch(_lvl.CurrentState)
+            {
+                case Level.State.Intro    : DrawIntroMessage    (sb); break;
+                case Level.State.Playing  : DrawLevelDescription(sb); break;
+                case Level.State.Paused   : DrawPauseMessage    (sb); break;
+                case Level.State.GameOver : DrawGameOverMessage (sb); break;
+            }
+
+            DrawScore    (sb);
+            DrawHighScore(sb);
+
+            DrawArrowsCount(sb);
+            DrawArrowsIcons(sb);
         }
+        #endregion //Draw
 
 
-
+        #region Draw Background
         void DrawBackground(SpriteBatch sb)
         {
             //Left
@@ -108,7 +117,10 @@ namespace com.amazingcow.BowAndArrow
                      new Vector2(BoundingBox.Right - _hudRight.Width, 
                                  BoundingBox.Top));                           
         }
+        #endregion //Draw Background
 
+
+        #region Draw Title / Description
         void DrawLevelTitle(SpriteBatch sb)
         {
             var name = _lvl.LevelTitle;
@@ -128,11 +140,47 @@ namespace com.amazingcow.BowAndArrow
 
             sb.DrawString(_spriteFont, desc, pos, Color.Black);
         }
+        #endregion //Draw Title / Description
 
+
+        #region Draw States Message 
+        void DrawIntroMessage(SpriteBatch sb)
+        {
+            var desc = "Press [Enter] to Play!";
+            var size = _spriteFont.MeasureString(desc);
+            var pos  =  new Vector2(BoundingBox.Center.X - (size.X / 2),
+                                    BoundingBox.Bottom - size.Y - kPaddingToBackground);
+
+            sb.DrawString(_spriteFont, desc, pos, Color.Black);
+        }
+
+        void DrawPauseMessage(SpriteBatch sb)
+        {
+            var desc = "PAUSED - Press [Space] to Resume!";
+            var size = _spriteFont.MeasureString(desc);
+            var pos  =  new Vector2(BoundingBox.Center.X - (size.X / 2),
+                                    BoundingBox.Bottom - size.Y - kPaddingToBackground);
+
+            sb.DrawString(_spriteFont, desc, pos, Color.Black);
+        }
+
+        void DrawGameOverMessage(SpriteBatch sb)
+        {
+            var desc = "GAME OVER - Press [Enter] to Start Again!";
+            var size = _spriteFont.MeasureString(desc);
+            var pos  =  new Vector2(BoundingBox.Center.X - (size.X / 2),
+                                    BoundingBox.Bottom - size.Y - kPaddingToBackground);
+
+            sb.DrawString(_spriteFont, desc, pos, Color.Black);
+        }
+        #endregion //Draw States Message 
+
+
+        #region Draw Score / High Score
         void DrawScore(SpriteBatch sb)
         {
             var score = String.Format("Score: {0}",
-                                      GameManager.Instance.HighScore);
+                                      GameManager.Instance.CurrentScore);
 
             var pos   = new Vector2(BoundingBox.Left + kPaddingToBackground, 
                                     BoundingBox.Top  + kPaddingToBackground);
@@ -150,8 +198,11 @@ namespace com.amazingcow.BowAndArrow
                                     BoundingBox.Bottom - kPaddingToBackground - size.Y);
 
             sb.DrawString(_spriteFont, score, pos, Color.Black);
-        }
+        }       
+        #endregion //Draw Score / High Score
 
+
+        #region Draw Arrows Info
         void DrawArrowsCount(SpriteBatch sb)
         {
             var count = String.Format("Arrows: {0}", _lvl.Player.ArrowsCount);
@@ -174,7 +225,7 @@ namespace com.amazingcow.BowAndArrow
                 sb.Draw(_littleArrowTexture, new Vector2(x, y), Color.White);
             }
         }
-        #endregion //Draw
+        #endregion //Draw Arrows Info
               
     }//class Hud
 }//namespace com.amazingcow.BowAndArrow
