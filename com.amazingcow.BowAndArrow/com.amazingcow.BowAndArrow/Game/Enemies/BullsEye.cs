@@ -1,12 +1,10 @@
 ﻿#region Usings
 //System
 using System;
+using System.Collections.Generic;
 //Xna
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-
-
 #endregion //Usings
 
 
@@ -16,26 +14,29 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //Public
-        public const int kHeight = 49;
+        public const int kHeight     = 49;
+        public const int kScoreValue = 500;
         //Private
         static readonly Vector2 kSpeed = new Vector2(0, 50);
         #endregion
 
 
         #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
+
         public override Rectangle HitBox {
             get {
                 return new Rectangle(BoundingBox.X, 
-                                     BoundingBox.Y + 20,
+                                     BoundingBox.Y + 10,
                                      BoundingBox.Width, 
-                                     BoundingBox.Height - 20);
+                                     14);
             }
         }
         #endregion //Public Properties
 
         #region iVars
-        Texture2D     _arrowTexture;
-        List<Vector2> _arrowHitPoints;
+        Texture2D   _arrowTexture;
+        List<float> _arrowHitPoints;
         #endregion //iVars
 
 
@@ -47,9 +48,8 @@ namespace com.amazingcow.BowAndArrow
             var resMgr = ResourcesManager.Instance;
             AliveTexturesList.Add(resMgr.GetTexture("bulls_eye"));
 
-
             _arrowTexture   = ResourcesManager.Instance.GetTexture("arrow");
-            _arrowHitPoints = new List<Vector2>();
+            _arrowHitPoints = new List<float>();
         }
         #endregion //CTOR
 
@@ -76,10 +76,10 @@ namespace com.amazingcow.BowAndArrow
 
             foreach(var hitpoint in _arrowHitPoints)
             {
-
                 GameManager.Instance.CurrentSpriteBatch.Draw(
                     _arrowTexture, 
-                    hitpoint + Position
+                    new Vector2(BoundingBox.Left - _arrowTexture.Bounds.Width + 5,
+                                BoundingBox.Top + hitpoint)
                 );
             }
         }
@@ -97,8 +97,17 @@ namespace com.amazingcow.BowAndArrow
         }
 
         public override bool CheckCollisionArrow(Arrow arrow)
-        {
-            var hit = base.CheckCollisionArrow(arrow); 
+        {            
+            if(BoundingBox.Contains(arrow.HeadPoint))
+            {
+                var hitY = arrow.HeadPoint.Y - BoundingBox.Top;
+                _arrowHitPoints.Add(hitY);
+
+                if(HitBox.Contains(arrow.HeadPoint))
+                    return true;                
+
+                arrow.Kill();
+            }
             return false;
         }
         #endregion //Public Methods
