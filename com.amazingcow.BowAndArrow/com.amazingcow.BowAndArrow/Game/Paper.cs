@@ -28,7 +28,7 @@ namespace com.amazingcow.BowAndArrow
             AliveTexturesList.Add(resMgr.GetTexture("paper"));
                       
             //Init the Sprite Fonts.
-            _spriteFont = resMgr.GetFont("coolvetica");
+            _spriteFont = resMgr.GetFont("arial");
 
             var lvl = GameManager.Instance.CurrentLevel;
 

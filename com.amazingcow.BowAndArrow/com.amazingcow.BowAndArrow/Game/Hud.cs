@@ -58,7 +58,7 @@ namespace com.amazingcow.BowAndArrow
             _littleArrowTexture   = resMgr.GetTexture("little_arrow");
 
             //Init the Sprite Fonts.
-            _spriteFont = resMgr.GetFont("coolvetica");
+            _spriteFont = resMgr.GetFont("arial");
         }
         #endregion //CTOR
 
