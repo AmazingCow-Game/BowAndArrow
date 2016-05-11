@@ -1,7 +1,4 @@
 ﻿#region Usings
-//System
-using System;
-using System.Collections.Generic;
 //Xna
 using Microsoft.Xna.Framework;
 #endregion //Usings
@@ -13,6 +10,12 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         public const int kSpeedRedBalloon = -40;
+        public const int kScoreValue      = 100;
+        #endregion
+
+
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
         #endregion
 
 
