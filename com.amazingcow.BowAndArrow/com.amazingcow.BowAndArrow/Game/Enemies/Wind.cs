@@ -15,11 +15,15 @@ namespace com.amazingcow.BowAndArrow
         public const int kSpeedMaxWind = 250;
         public const int kWindHeight   = 49;
         public const int kWindWidth    = 39;
+        public const int kScoreValue   = 700;
         #endregion
 
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
+        #endregion
 
         #region iVars
-        private Clock _dyingClock;
+        Clock _dyingClock;
         #endregion //iVars
 
 
