@@ -3,9 +3,6 @@
 using System;
 //Xna
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-
 #endregion //Usings
 
 
@@ -13,11 +10,15 @@ namespace com.amazingcow.BowAndArrow
 {
     public class Arrow : GameObject
     {
+        #region Constants 
+        const int kSpeed = 150;
+        #endregion //Constants
+
+
         #region Public Properties
         public Vector2 HeadPoint
         {
-            get
-            {
+            get {
                 return new Vector2(BoundingBox.Right,
                                    Position.Y);
             }
@@ -25,15 +26,14 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Public Properties
 
 
-
+        #region CTOR
         public Arrow(Vector2 position) :
-            base(position,
-                 new Vector2(150, 0), //COWTODO: Change the magic numbers.
-                 0)
+            base(position, new Vector2(kSpeed, 0), 0)
         {
             //Init the textures.
             AliveTexturesList.Add(ResourcesManager.Instance.GetTexture("arrow"));
         }
+        #endregion //CTOR
 
 
         #region Update / Draw
@@ -65,6 +65,6 @@ namespace com.amazingcow.BowAndArrow
         }
         #endregion //Public Methods
 
-    }
-}
+    }//class Arrow
+}//namespace com.amazingcow.BowAndArrow
 
