@@ -11,6 +11,12 @@ namespace com.amazingcow.BowAndArrow
         #region Constants
         public const int kSpeedMinYellonBalloon = 45;
         public const int kSpeedMaxYellowBalloon = 55;
+        public const int kScoreValue            = 150;
+        #endregion
+
+
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
         #endregion
 
 
