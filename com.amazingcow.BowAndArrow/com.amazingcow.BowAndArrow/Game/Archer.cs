@@ -27,9 +27,14 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Public Constants
+        //Public
         public const int kMaxArrowsCount = 15;
         public const int kMaxEnemyHits   = 5;
+        //Private
+        const int kSpeed          = 200;
+        const int kMouseThreshold = 20;
         #endregion //Public Constants
+
 
         #region Private Constants
         //Timer
@@ -44,7 +49,7 @@ namespace com.amazingcow.BowAndArrow
 
         #region Public Properties
         public int ArrowsCount
-        { get; private set; }
+        { get; set; }
 
         public Vector2 ArrowPosition
         {
@@ -107,18 +112,8 @@ namespace com.amazingcow.BowAndArrow
             _changeBowStateClock.Update(gt.ElapsedGameTime.Milliseconds);
             _hitGlowClock.Update(gt.ElapsedGameTime.Milliseconds);
 
-            var inputState = InputHandler.Instance.CurrentMouseState;
-
-            //Change the Bow State.
-            if(inputState.RightButton == ButtonState.Pressed)
-                TryChangeBowState(BowState.Stand);
-            else if(inputState.LeftButton == ButtonState.Released)
-                TryChangeBowState(BowState.Unarmed);
-            else if(inputState.LeftButton == ButtonState.Pressed)
-                TryChangeBowState(BowState.Armed);
-
-            //Try move...
-            CalculateMovementSpeed();
+            CheckTryChangeBowState();
+            CheckMovementSpeed();
 
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
@@ -155,6 +150,48 @@ namespace com.amazingcow.BowAndArrow
 
         #region Helper Methods
         //BowState.
+        void CheckTryChangeBowState()
+        {
+            if(!CheckTryChangeBowStateKeyboard())
+                CheckTryChangeBowStateMouse();
+        }
+        bool CheckTryChangeBowStateKeyboard ()
+        {
+            var curr = InputHandler.Instance.CurrentKeyboardState;
+            var prev = InputHandler.Instance.PreviousKeyboardState;
+            var usedKeyboard = false;
+                    
+            //Change the Bow State.
+            if(curr.IsKeyDown(Keys.LeftAlt) && prev.IsKeyUp(Keys.LeftAlt))
+            {
+                TryChangeBowState(BowState.Stand);
+                usedKeyboard = true;
+            }
+            else if(curr.IsKeyUp(Keys.LeftControl) && prev.IsKeyDown(Keys.LeftControl))
+            {
+                TryChangeBowState(BowState.Unarmed);
+                usedKeyboard = true;
+            }   
+            else if(curr.IsKeyDown(Keys.LeftControl))
+            {
+                TryChangeBowState(BowState.Armed);
+                usedKeyboard = true;
+            }
+
+            return usedKeyboard;
+        }
+        void CheckTryChangeBowStateMouse()
+        {
+            var mouseState = InputHandler.Instance.CurrentMouseState;
+
+            //Change the Bow State.
+            if(mouseState.RightButton == ButtonState.Pressed)
+                TryChangeBowState(BowState.Stand);
+            else if(mouseState.LeftButton == ButtonState.Released)
+                TryChangeBowState(BowState.Unarmed);
+            else if(mouseState.LeftButton == ButtonState.Pressed)
+                TryChangeBowState(BowState.Armed);
+        }
         void TryChangeBowState(BowState targetBowState)
         {
             if(_changeBowStateClock.IsEnabled)
@@ -219,12 +256,38 @@ namespace com.amazingcow.BowAndArrow
             _changeBowStateClock.Start();
         }
 
+
         //Movement.
-        void CalculateMovementSpeed()
+        void CheckMovementSpeed()
+        {
+            Speed = Vector2.Zero;
+            if(!CheckMovementSpeedKeyboard())
+                CheckMovementSpeedMouse();
+        }
+        bool CheckMovementSpeedKeyboard()
+        {
+            var keyboardState = InputHandler.Instance.CurrentKeyboardState;
+            var lvl           = GameManager.Instance.CurrentLevel;
+            var usedKeyboard  = false;
+
+            if(keyboardState.IsKeyDown(Keys.Up) && 
+               BoundingBox.Top > lvl.PlayField.Top)
+            {
+                Speed = new Vector2(0, -kSpeed);
+                usedKeyboard = true;
+            }
+            if(keyboardState.IsKeyDown(Keys.Down) && 
+               BoundingBox.Bottom < lvl.PlayField.Bottom)
+            {
+                Speed = new Vector2(0, kSpeed);
+                usedKeyboard = true;
+            }
+
+            return usedKeyboard;
+        }
+        void CheckMovementSpeedMouse()
         {
             var mouseState = InputHandler.Instance.CurrentMouseState;
-
-            Speed = Vector2.Zero;
 
             //Archer only move when button is pressed.
             if(mouseState.LeftButton != ButtonState.Pressed)
@@ -233,16 +296,15 @@ namespace com.amazingcow.BowAndArrow
             var mouseY = mouseState.Y;
             var lvl    = GameManager.Instance.CurrentLevel;
 
-            //COWTODO: Remove the magic numbers.
-            if(mouseY - 20 < BoundingBox.Top &&
+            if(mouseY - kMouseThreshold < BoundingBox.Top &&
                BoundingBox.Top > lvl.PlayField.Top)
             {
-                Speed = new Vector2(0, -200);
+                Speed = new Vector2(0, -kSpeed);
             }
-            if(mouseY + 20 > BoundingBox.Bottom &&
+            if(mouseY + kMouseThreshold > BoundingBox.Bottom &&
                BoundingBox.Bottom < lvl.PlayField.Bottom)
             {
-                Speed = new Vector2(0, 200);
+                Speed = new Vector2(0, kSpeed);
             }
         }
         #endregion //Helper Methods
