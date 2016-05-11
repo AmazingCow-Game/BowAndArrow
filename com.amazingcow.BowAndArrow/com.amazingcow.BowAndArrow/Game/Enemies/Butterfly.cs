@@ -12,15 +12,17 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //Public
-        public const int kWidth = 32;  
+        public const int kWidth      = 32;  
+        public const int kScoreValue = 200;
         //Private
         const int kSpeedMin = 35;
         const int kSpeedMax = 45;
         #endregion
 
 
-        #region Public Properties
-        #endregion //Public Properties
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
+        #endregion
 
 
         #region CTOR
