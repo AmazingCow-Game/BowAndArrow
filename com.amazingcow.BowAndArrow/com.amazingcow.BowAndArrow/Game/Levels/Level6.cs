@@ -11,7 +11,6 @@ namespace com.amazingcow.BowAndArrow
     public class Level6 : Level
     {
         #region Constants
-        //COWTODO: Check the correct values.
         const int kMaxFireballsCount = 15;
         #endregion //Constants
 
@@ -39,9 +38,11 @@ namespace com.amazingcow.BowAndArrow
             //Initialize the Enemies.
             int minFireballY = PlayField.Top    - Fireball.kHeight;
             int maxFireballY = PlayField.Bottom - Fireball.kHeight;
+
             //Makes the enemies came from right of screen.
             int minFireballX = PlayField.Right;
             int maxFireballX = 2 * PlayField.Right;
+
 
             for(int i = 0; i < kMaxFireballsCount; ++i)
             {
@@ -75,7 +76,7 @@ Let's heat this a bit..
 Don't get burned.
 --- 
 
-I'm sure that you like your hair.
+We're sure that you like your hair.
 We like ours too ;D
 
 So let's share it with people
