@@ -103,7 +103,8 @@ Ok, you got the basics
 Now let's shot at more balloons
 ---
 
-Did you know that Instituto Mario Penna
+Did you know that 
+Instituto Mario Penna
 helps people with cancer?
 
 Why not save a few minutes to 
