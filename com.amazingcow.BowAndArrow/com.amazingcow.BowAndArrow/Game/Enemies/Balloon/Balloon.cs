@@ -1,6 +1,4 @@
 ﻿#region Usings
-//System
-using System;
 //Xna
 using Microsoft.Xna.Framework;
 #endregion //Usings
@@ -8,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace com.amazingcow.BowAndArrow
 {
-    public class Balloon : Enemy
+    public abstract class Balloon : Enemy
     {
         #region Constants
         //Public 
@@ -32,7 +30,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region CTOR
-        public Balloon(Vector2 position, Vector2 speed)
+        protected Balloon(Vector2 position, Vector2 speed)
             : base(position, speed, 0)
         {
             //Empty...
