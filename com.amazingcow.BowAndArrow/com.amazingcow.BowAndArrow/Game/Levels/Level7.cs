@@ -11,7 +11,6 @@ namespace com.amazingcow.BowAndArrow
     public class Level7 : Level
     {
         #region Constants
-        //COWTODO: Check the correct values.
         const int kMaxWindsCount = 15;
         #endregion //Constants
 
@@ -37,11 +36,12 @@ namespace com.amazingcow.BowAndArrow
             var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minWindY = PlayField.Top    - Wind.kWindHeight;
-            int maxWindY = PlayField.Bottom - Wind.kWindHeight;
+            int minWindY = PlayField.Top    - Wind.kHeight;
+            int maxWindY = PlayField.Bottom - Wind.kHeight;
+
             //Makes the enemies came from right of screen.
             int minWindX = PlayField.Right;
-            int maxWindX = 2 * PlayField.Right;
+            int maxWindX = 3 * PlayField.Right;
 
             for(int i = 0; i < kMaxWindsCount; ++i)
             {

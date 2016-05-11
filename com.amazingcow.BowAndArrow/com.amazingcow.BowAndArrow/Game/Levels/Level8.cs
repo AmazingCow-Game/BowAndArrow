@@ -11,7 +11,6 @@ namespace com.amazingcow.BowAndArrow
     public class Level8 : Level
     {
         #region Constants
-        //COWTODO: Check the correct values.
         const int kMaxVulturesCount = 15;
         #endregion //Constants
 
@@ -37,16 +36,18 @@ namespace com.amazingcow.BowAndArrow
             var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minVultureY = PlayField.Top    - Vulture.kVultureHeight;
-            int maxVultureY = PlayField.Bottom - Vulture.kVultureHeight;
+            int minY = PlayField.Top    + Vulture.kHeight;
+            int maxY = PlayField.Bottom - Vulture.kHeight;
+
             //Makes the enemies came from right of screen.
-            int minVultureX = PlayField.Right;
-            int maxVultureX = 2 * PlayField.Right;
+            int minX = PlayField.Right;
+            int maxX = 3 * PlayField.Right;
+
 
             for(int i = 0; i < kMaxVulturesCount; ++i)
             {
-                var x = rndGen.Next(minVultureX, maxVultureX);
-                var y = rndGen.Next(minVultureY, maxVultureY);
+                var x = rndGen.Next(minX, maxX);
+                var y = rndGen.Next(minY, maxY);
 
                 var vulture = new Vulture(new Vector2(x, y));
                 vulture.OnStateChangeDead  += OnEnemyStateChangeDead;
@@ -63,7 +64,7 @@ namespace com.amazingcow.BowAndArrow
         #region Helper Methods
         protected override void LevelCompleted()
         {
-            GameManager.Instance.ChangeLevel(new Level1());
+            GameManager.Instance.ChangeLevel(new LevelCredits());
         }
         #endregion
 
@@ -71,8 +72,17 @@ namespace com.amazingcow.BowAndArrow
         #region Paper Strings
         //Intro
         const String kPaperIntroString = @"
-You are a good guy
-Free the butterflies!";
+Your journey is ending...
+Take this last challenge 
+with care.
+---
+
+Don't forget, we believe
+in you to make this a 
+better world.
+
+<3
+";
 
         //Game Over
         const String kPaperGameOverString = @"
@@ -80,7 +90,7 @@ Game over.
 ";
         //Title
         const String kLevelTitle        = "Level 8";
-        const String kLevelDescription  = "Training";
+        const String kLevelDescription  = "Vultures";
         #endregion
 
     }//class Level8
