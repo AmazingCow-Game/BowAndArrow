@@ -11,15 +11,23 @@ namespace com.amazingcow.BowAndArrow
     public class Fireball : Enemy
     {
         #region Constants
-        public const int kSpeedMinFireball = 120;
-        public const int kSpeedMaxFireball = 250;
-        public const int kFireballHeight   = 49;
-        public const int kFireballWidth    = 39;
+        //Public 
+        public const int kHeight     = 49;
+        public const int kWidth      = 39;
+        public const int kScoreValue = 600;
+        //Private
+        const int kSpeedMin = 120;
+        const int kSpeedMax = 180;       
+        #endregion
+
+
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
         #endregion
 
 
         #region iVars
-        private Clock _dyingClock;
+        Clock _dyingClock;
         #endregion //iVars
 
 
@@ -34,8 +42,8 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("fire_dead"));
 
             //Init the Speed...
-            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinFireball,
-                                                                kSpeedMaxFireball);
+            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMin,
+                                                                kSpeedMax);
             Speed = new Vector2(-xSpeed, 0);
 
             //Init the timers...
@@ -87,13 +95,14 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Private Methods
-        private void MoveAlive(GameTime gt)
+        void MoveAlive(GameTime gt)
         {
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            if(BoundingBox.Right <= 0)
-                CurrentState = State.Dead;
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            if(BoundingBox.Right <  bounds.Left)
+                ResetPosition();
         }
         #endregion //Private Methods
 
@@ -104,6 +113,21 @@ namespace com.amazingcow.BowAndArrow
             CurrentState = State.Dead;
         }
         #endregion //Timers Callbacks
+
+
+        #region Helper Methods 
+        void ResetPosition()
+        {
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            var rnd    = GameManager.Instance.RandomNumGen;
+
+            var x = rnd.Next(bounds.Right, bounds.Right * 2);
+            var y = rnd.Next(bounds.Top    + BoundingBox.Height, 
+                             bounds.Bottom - BoundingBox.Height);
+
+            Position = new Vector2(x, y);
+        }
+        #endregion //Helper Methods 
 
     }//Class Fireball
 }//namespace com.amazingcow.BowAndArrow
