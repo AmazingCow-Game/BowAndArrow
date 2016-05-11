@@ -20,7 +20,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Singleton
-        private static InputHandler s_instance = null;
+        static InputHandler s_instance = null;
         public static InputHandler Instance
         {
             get {
@@ -33,7 +33,7 @@ namespace com.amazingcow.BowAndArrow
 
 
         #region Private CTOR
-        private InputHandler()
+        InputHandler()
         {
             CurrentMouseState    = Mouse.GetState();
             CurrentKeyboardState = Keyboard.GetState();
@@ -51,6 +51,7 @@ namespace com.amazingcow.BowAndArrow
             CurrentKeyboardState = Keyboard.GetState();
         }
         #endregion //Update
+
     }//class InputHandler
 }//namespace com.amazingcow.BowAndArrow
 
