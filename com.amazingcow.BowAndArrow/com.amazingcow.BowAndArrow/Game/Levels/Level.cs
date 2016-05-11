@@ -145,6 +145,7 @@ namespace com.amazingcow.BowAndArrow
             Player = new Archer(new Vector2(initialPlayerX, initialPlayerY));
             Player.OnArcherShootArrow += OnPlayerShootArrow;
             Player.OnStateChangeDying += OnPlayerStateChangeDying;
+            Player.OnStateChangeDead  += OnPlayerStateChangeDead;
         }
 
         protected abstract void InitEnemies();
@@ -332,10 +333,17 @@ namespace com.amazingcow.BowAndArrow
 
             PlayerArrows.Add(arrow);
         }
+
         protected virtual void OnPlayerStateChangeDying(object sender, EventArgs e)
         {
             Player.OnStateChangeDying -= OnPlayerStateChangeDying;
         }
+
+        protected virtual void OnPlayerStateChangeDead(object sender, EventArgs e)
+        {
+            Player.OnStateChangeDying -= OnPlayerStateChangeDying;
+        }
+
 
         //Enemy Callbacks.
         protected virtual void OnEnemyStateChangeDying(object sender, EventArgs e)
