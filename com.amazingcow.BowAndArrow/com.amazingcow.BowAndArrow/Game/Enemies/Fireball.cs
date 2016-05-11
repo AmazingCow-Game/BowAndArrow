@@ -17,7 +17,7 @@ namespace com.amazingcow.BowAndArrow
         public const int kScoreValue = 600;
         //Private
         const int kSpeedMin = 120;
-        const int kSpeedMax = 180;       
+        const int kSpeedMax = 180;
         #endregion
 
 
