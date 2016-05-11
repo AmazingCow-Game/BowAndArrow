@@ -25,14 +25,20 @@ namespace com.amazingcow.BowAndArrow
         }
         #endregion //Enums
 
-        #region Constants
-        //Public
-        public const int kMaxArrowsCount = 20;
+
+        #region Public Constants
+        public const int kMaxArrowsCount = 15;
         public const int kMaxEnemyHits   = 5;
-        //Private
+        #endregion //Public Constants
+
+        #region Private Constants
+        //Timer
         const int kChangeBowStateInterval = 200;
         const int kHitGlowInterval        = 50;
         const int kHitGlowRepeatCount     = 8;
+        //Arrow
+        const int kArrowPositionOffsetX = 47;
+        const int kArrowPositionOffsetY = 41;
         #endregion //Constants
 
 
@@ -43,8 +49,8 @@ namespace com.amazingcow.BowAndArrow
         public Vector2 ArrowPosition
         {
             get {
-                return new Vector2(Position.X + 47, //COWTODO: Remove magic number
-                                   Position.Y + 41); //COWTODO: Remove magic number
+                return new Vector2(Position.X + kArrowPositionOffsetX, 
+                                   Position.Y + kArrowPositionOffsetY);
             }
         }
 
@@ -93,7 +99,7 @@ namespace com.amazingcow.BowAndArrow
         #region Update / Draw
         public override void Update(GameTime gt)
         {
-            //Arrow is already dead - Don't need to do anything else.
+            //Archer is already dead - Don't need to do anything else.
             if(CurrentState == State.Dead)
                 return;
 
@@ -101,13 +107,14 @@ namespace com.amazingcow.BowAndArrow
             _changeBowStateClock.Update(gt.ElapsedGameTime.Milliseconds);
             _hitGlowClock.Update(gt.ElapsedGameTime.Milliseconds);
 
-            var mouseState = Mouse.GetState();
+            var inputState = InputHandler.Instance.CurrentMouseState;
+
             //Change the Bow State.
-            if(mouseState.RightButton == ButtonState.Pressed)
+            if(inputState.RightButton == ButtonState.Pressed)
                 TryChangeBowState(BowState.Stand);
-            else if(mouseState.LeftButton == ButtonState.Released)
+            else if(inputState.LeftButton == ButtonState.Released)
                 TryChangeBowState(BowState.Unarmed);
-            else if(mouseState.LeftButton == ButtonState.Pressed)
+            else if(inputState.LeftButton == ButtonState.Pressed)
                 TryChangeBowState(BowState.Armed);
 
             //Try move...
@@ -223,14 +230,20 @@ namespace com.amazingcow.BowAndArrow
             if(mouseState.LeftButton != ButtonState.Pressed)
                 return;
 
-            var mouseY      = mouseState.Y;
-            var boundingBox = BoundingBox;
+            var mouseY = mouseState.Y;
+            var lvl    = GameManager.Instance.CurrentLevel;
 
             //COWTODO: Remove the magic numbers.
-            if(mouseY - 20 < boundingBox.Top)
+            if(mouseY - 20 < BoundingBox.Top &&
+               BoundingBox.Top > lvl.PlayField.Top)
+            {
                 Speed = new Vector2(0, -200);
-            if(mouseY + 20 > boundingBox.Bottom)
+            }
+            if(mouseY + 20 > BoundingBox.Bottom &&
+               BoundingBox.Bottom < lvl.PlayField.Bottom)
+            {
                 Speed = new Vector2(0, 200);
+            }
         }
         #endregion //Helper Methods
 
