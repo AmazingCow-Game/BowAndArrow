@@ -25,6 +25,8 @@ namespace com.amazingcow.BowAndArrow
         public SpriteBatch CurrentSpriteBatch { get; private set; }
         public Level       CurrentLevel       { get; private set; }
         public Random      RandomNumGen       { get; private set; }
+        public int         CurrentScore       { get; private set; }
+        public int         HighScore          { get; private set; }
         #endregion //Public Properties
 
 
@@ -116,6 +118,25 @@ namespace com.amazingcow.BowAndArrow
             CurrentLevel.Load();
         }
         #endregion //Level Management
+
+
+        #region Score
+        void LoadHighScore()
+        {
+
+        }
+        void SaveHighScore()
+        {
+
+        }
+
+        public void IncrementScore(int value)
+        {
+            CurrentScore += value;
+            if(CurrentScore > HighScore)
+                HighScore = CurrentScore;
+        }
+        #endregion //Score
     }
 }
 
