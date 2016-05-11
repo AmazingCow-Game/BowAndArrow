@@ -24,11 +24,12 @@ namespace com.amazingcow.BowAndArrow
 
         //Private
         const int kPaperIndexIntro    =  0;
-        const int kPaperIndexPaused   =  1;
-        const int kPaperIndexGameOver =  2;
+        const int kPaperIndexGameOver =  1;
 
         const int kEnemiesHintCount = 20;
-        const int kPapersHintCount  =  3;
+        const int kPapersHintCount  =  2;
+
+        const int kInitialPlayerX = 10;
         #endregion //Enums / Constants
 
 
@@ -60,6 +61,9 @@ namespace com.amazingcow.BowAndArrow
         { get; protected set; }
 
         public int AliveEnemies
+        { get; protected set; }
+
+        public int DyingEnemies
         { get; protected set; }
 
         public Hud TopHud { get; private set; }
@@ -106,7 +110,7 @@ namespace com.amazingcow.BowAndArrow
         }
         public virtual void Unload()
         {
-            //COWTODO: We need to unsubscribe the events?
+            //COWHACK: We need to unsubscribe the events?
         }
         #endregion //Load / Unload
 
@@ -115,13 +119,14 @@ namespace com.amazingcow.BowAndArrow
         protected abstract void LevelCompleted();
 
         void CheckGameOver()
-        {
+        {            
             if(Player.CurrentState == GameObject.State.Dying &&
-               Player.ArrowsCount  == 0 &&
-               PlayerArrows.Count  == 0)
+               PlayerArrows.Count  == 0 &&
+               DyingEnemies        == 0)
             {
                 CurrentState = State.GameOver;
             }
+
             else if(Player.CurrentState == GameObject.State.Dead)
             {
                 CurrentState = State.GameOver;
@@ -139,10 +144,9 @@ namespace com.amazingcow.BowAndArrow
         protected virtual void InitPlayer()
         {
             //Initialize the Player.
-            int initialPlayerX = 10; //COWTODO: Remove the magic constants.
             int initialPlayerY = PlayField.Center.Y;
 
-            Player = new Archer(new Vector2(initialPlayerX, initialPlayerY));
+            Player = new Archer(new Vector2(kInitialPlayerX, initialPlayerY));
             Player.OnArcherShootArrow += OnPlayerShootArrow;
             Player.OnStateChangeDying += OnPlayerStateChangeDying;
             Player.OnStateChangeDead  += OnPlayerStateChangeDead;
@@ -152,9 +156,8 @@ namespace com.amazingcow.BowAndArrow
 
         protected virtual void InitPapers()
         {
-            Papers.Add(new Paper(LevelTitle, PaperStringIntro));
-            Papers.Add(new Paper(LevelTitle,   ""));
-            Papers.Add(new Paper(LevelTitle, PaperStringGameOver));
+            Papers.Add(new Paper(PaperStringIntro));
+            Papers.Add(new Paper(PaperStringGameOver));
         }
 
         protected virtual void InitHud()
@@ -178,12 +181,11 @@ namespace com.amazingcow.BowAndArrow
 
         protected virtual void UpdateIntro(GameTime gt)
         {
-            //Just waits for a space press to start the game.
-            var prev = InputHandler.Instance.PreviousMouseState;
-            var curr = InputHandler.Instance.CurrentMouseState;
+            //Just waits for a enter press to start the game.
+            var prev = InputHandler.Instance.PreviousKeyboardState;
+            var curr = InputHandler.Instance.CurrentKeyboardState;
 
-            if(prev.LeftButton == ButtonState.Pressed &&
-               curr.LeftButton == ButtonState.Pressed)
+            if(prev.IsKeyDown(Keys.Enter) && curr.IsKeyUp(Keys.Enter))
             {
                 CurrentState = State.Playing;
             }
@@ -268,7 +270,13 @@ namespace com.amazingcow.BowAndArrow
 
         protected virtual void UpdateGameOver(GameTime gt)
         {
+            var prev = InputHandler.Instance.PreviousKeyboardState;
+            var curr = InputHandler.Instance.CurrentKeyboardState;
 
+            if(prev.IsKeyDown(Keys.Enter) && curr.IsKeyUp(Keys.Enter))
+            {
+                GameManager.Instance.NewGame();
+            }
         }
         #endregion //Update
 
@@ -309,7 +317,6 @@ namespace com.amazingcow.BowAndArrow
         protected virtual void DrawPaused(GameTime gt)
         {
             DrawPlaying(gt);
-            Papers[kPaperIndexPaused].Draw(gt);
         }
 
         protected virtual void DrawGameOver(GameTime gt)
@@ -352,6 +359,7 @@ namespace com.amazingcow.BowAndArrow
             gameObj.OnStateChangeDying -= OnEnemyStateChangeDying;
 
             GameManager.Instance.IncrementScore(gameObj.ScoreValue);
+            ++DyingEnemies;
         }
         protected virtual void OnEnemyStateChangeDead(object sender, EventArgs e)
         {
@@ -359,6 +367,7 @@ namespace com.amazingcow.BowAndArrow
             gameObj.OnStateChangeDead -= OnEnemyStateChangeDead;
 
             --AliveEnemies;
+            --DyingEnemies;
         }
 
         //Arrow Callbacks.
