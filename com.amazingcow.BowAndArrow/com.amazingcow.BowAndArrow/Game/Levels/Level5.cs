@@ -30,7 +30,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void InitEnemies()
         {
             //Initialize the enemy.
-            int startX = PlayField.Right - 400;
+            int startX = PlayField.Right - 100;
             int startY = PlayField.Center.Y - (BullsEye.kHeight / 2);
 
             var bullsEye = new BullsEye(new Vector2(startX, startY));
