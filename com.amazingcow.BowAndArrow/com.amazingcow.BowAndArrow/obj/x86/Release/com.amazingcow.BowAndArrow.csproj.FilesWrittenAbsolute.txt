@@ -32,3 +32,9 @@
 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/MonoGame.Framework.dll
 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/OpenTK.dll
 /home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/NVorbis.dll
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/fonts/arial.xnb
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/sprites/hud.xnb
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/sprites/hud_center.xnb
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/sprites/hud_left.xnb
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/sprites/hud_right.xnb
+/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow/bin/Release/Content/sprites/little_arrow.xnb
