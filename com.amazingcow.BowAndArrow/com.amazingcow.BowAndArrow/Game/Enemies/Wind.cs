@@ -11,16 +11,19 @@ namespace com.amazingcow.BowAndArrow
     public class Wind : Enemy
     {
         #region Constants
-        public const int kSpeedMinWind = 120;
-        public const int kSpeedMaxWind = 250;
-        public const int kWindHeight   = 49;
-        public const int kWindWidth    = 39;
+        public const int kHeight   = 49;
+        public const int kWidth    = 39;
         public const int kScoreValue   = 700;
+        //Private
+        const int kSpeedMin = 130;
+        const int kSpeedMax = 190;
         #endregion
+
 
         #region Public Properties 
         public override int ScoreValue { get { return kScoreValue; } }
         #endregion
+
 
         #region iVars
         Clock _dyingClock;
@@ -38,8 +41,8 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("wind_dead"));
 
             //Init the Speed...
-            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinWind,
-                                                                kSpeedMaxWind);
+            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMin,
+                                                                kSpeedMax);
             Speed = new Vector2(-xSpeed, 0);
 
             //Init the timers...
@@ -96,8 +99,9 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            if(BoundingBox.Right <= 0)
-                CurrentState = State.Dead;
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            if(BoundingBox.Right <  bounds.Left)
+                ResetPosition();
         }
         #endregion //Private Methods
 
@@ -108,6 +112,21 @@ namespace com.amazingcow.BowAndArrow
             CurrentState = State.Dead;
         }
         #endregion //Timers Callbacks
+
+
+        #region Helper Methods 
+        void ResetPosition()
+        {
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            var rnd    = GameManager.Instance.RandomNumGen;
+
+            var x = rnd.Next(bounds.Right, bounds.Right * 2);
+            var y = rnd.Next(bounds.Top    + BoundingBox.Height, 
+                             bounds.Bottom - BoundingBox.Height);
+
+            Position = new Vector2(x, y);
+        }
+        #endregion //Helper Methods 
 
     }//Class Wind
 }//namespace com.amazingcow.BowAndArrow

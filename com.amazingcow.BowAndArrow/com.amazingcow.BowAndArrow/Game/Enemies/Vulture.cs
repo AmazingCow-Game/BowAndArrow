@@ -11,21 +11,29 @@ namespace com.amazingcow.BowAndArrow
     public class Vulture : Enemy
     {
         #region Constants
-        public const int kSpeedMinVulture = 120;
-        public const int kSpeedMaxVulture = 250;
-        public const int kVultureHeight   = 49;
-        public const int kVultureWidth    = 39;
+        //Public
+        public const int kScoreValue  = 800;
+        public const int kHeight      = 49;
+        public const int kWidth       = 39;
+        //Private
+        const int kSpeedMin = 140;
+        const int kSpeedMax = 210;
+        #endregion
+
+
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
         #endregion
 
 
         #region iVars
-        private Clock _dyingClock;
+        Clock _dyingClock;
         #endregion //iVars
 
 
         #region CTOR
         public Vulture(Vector2 position)
-            : base(position, Vector2.Zero, 0)
+            : base(position, Vector2.Zero, 120)
         {
             //Initialize the textures...
             var resMgr = ResourcesManager.Instance;
@@ -34,8 +42,8 @@ namespace com.amazingcow.BowAndArrow
             DyingTexturesList.Add(resMgr.GetTexture("vulture_dead"));
 
             //Init the Speed...
-            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMinVulture,
-                                                                kSpeedMaxVulture);
+            int xSpeed = GameManager.Instance.RandomNumGen.Next(kSpeedMin,
+                                                                kSpeedMax);
             Speed = new Vector2(-xSpeed, 0);
 
             //Init the timers...
@@ -92,8 +100,9 @@ namespace com.amazingcow.BowAndArrow
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
-            if(BoundingBox.Right <= 0)
-                CurrentState = State.Dead;
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            if(BoundingBox.Right <= bounds.Left)
+                ResetPosition();
         }
         #endregion //Private Methods
 
@@ -104,6 +113,21 @@ namespace com.amazingcow.BowAndArrow
             CurrentState = State.Dead;
         }
         #endregion //Timers Callbacks
+
+
+        #region Helper Methods 
+        void ResetPosition()
+        {
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            var rnd    = GameManager.Instance.RandomNumGen;
+
+            var x = rnd.Next(bounds.Right, bounds.Right * 2);
+            var y = rnd.Next(bounds.Top    + BoundingBox.Height, 
+                             bounds.Bottom - BoundingBox.Height);
+
+            Position = new Vector2(x, y);
+        }
+        #endregion //Helper Methods 
 
     }//Class Vulture
 }//namespace com.amazingcow.BowAndArrow
