@@ -8,9 +8,14 @@ namespace com.amazingcow.BowAndArrow
 {
     public abstract class Enemy : GameObject
     {
+        #region Public Properties 
+        public abstract int ScoreValue { get; }
+        #endregion
+
+
         #region CTOR
-        public Enemy(Vector2 position, Vector2 speed,
-                     float msToChangeTexture) :
+        protected Enemy(Vector2 position, Vector2 speed, 
+                        float msToChangeTexture) :
             base(position, speed, msToChangeTexture)
         {
             //Empty...
