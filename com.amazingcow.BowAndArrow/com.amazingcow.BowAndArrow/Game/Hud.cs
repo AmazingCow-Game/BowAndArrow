@@ -93,7 +93,9 @@ namespace com.amazingcow.BowAndArrow
 
         void DrawScore(SpriteBatch sb, Rectangle bounds)
         {
-            var score = String.Format("Score: {0}", 1234);
+            var score = String.Format("Score: {0}",
+                                      GameManager.Instance.HighScore);
+
             var pos   = new Vector2(bounds.Left + kPaddingToBackground, 
                                     bounds.Top  + kPaddingToBackground);
 
@@ -102,7 +104,9 @@ namespace com.amazingcow.BowAndArrow
 
         void DrawHighScore(SpriteBatch sb, Rectangle bounds)
         {
-            var score = String.Format("High Score: {0}", 1234);
+            var score = String.Format("High Score: {0}", 
+                                      GameManager.Instance.HighScore);
+
             var size  = _spriteFont.MeasureString(score);
             var pos   = new Vector2(bounds.Left   + kPaddingToBackground, 
                                     bounds.Bottom - kPaddingToBackground - size.Y);
