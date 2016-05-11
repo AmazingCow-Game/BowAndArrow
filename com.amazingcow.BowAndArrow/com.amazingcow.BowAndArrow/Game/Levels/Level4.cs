@@ -40,7 +40,7 @@ namespace com.amazingcow.BowAndArrow
             int maxY = PlayField.Bottom - Slime.kHeight;
             //Makes the enemies came from right of screen.
             int minX = PlayField.Right;
-            int maxX = 2 * PlayField.Right;
+            int maxX = 3 * PlayField.Right;
 
             for(int i = 0; i < kMaxSlimesCount; ++i)
             {

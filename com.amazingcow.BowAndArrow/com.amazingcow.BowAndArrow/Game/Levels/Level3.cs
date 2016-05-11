@@ -40,7 +40,7 @@ namespace com.amazingcow.BowAndArrow
             int maxX = PlayField.Right - Butterfly.kWidth;
             //Makes the enemies came from bottom of screen.
             int minY = PlayField.Bottom;
-            int maxY = 2 * PlayField.Bottom;
+            int maxY = 3 * PlayField.Bottom;
 
             for(int i = 0; i < kMaxButterfliesCount; ++i)
             {
