@@ -46,7 +46,7 @@ namespace com.amazingcow.BowAndArrow
         public Vector2 Speed
         { get; protected set; }
 
-        public Rectangle BoundingBox
+        public virtual Rectangle BoundingBox
         {
             get {
                 return new Rectangle((int)Position.X,
