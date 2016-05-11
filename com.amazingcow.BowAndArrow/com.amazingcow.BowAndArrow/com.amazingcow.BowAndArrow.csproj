@@ -52,7 +52,6 @@
     <Compile Include="Game\Arrow.cs" />
     <Compile Include="GameFramework\GameManager.cs" />
     <Compile Include="Game\Enums.cs" />
-    <Compile Include="GameFramework\Sprite.cs" />
     <Compile Include="GameFramework\ResourcesManager.cs" />
     <Compile Include="Game\Enemies\Enemy.cs" />
     <Compile Include="Game\Levels\Level.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="Game\Enemies\Balloon\YellowBalloon.cs" />
     <Compile Include="Game\Enemies\Balloon\Balloon.cs" />
     <Compile Include="GameFramework\GameObject.cs" />
-    <Compile Include="Game\IntroPaper.cs" />
     <Compile Include="GameFramework\InputHandler.cs" />
     <Compile Include="Game\Levels\Level2.cs" />
     <Compile Include="Game\Levels\Level3.cs" />
@@ -77,6 +75,9 @@
     <Compile Include="Game\Enemies\Fireball.cs" />
     <Compile Include="Game\Enemies\Vulture.cs" />
     <Compile Include="Game\Enemies\Wind.cs" />
+    <Compile Include="Game\Hud.cs" />
+    <Compile Include="Game\Paper.cs" />
+    <Compile Include="Game\Levels\LevelCredits.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
