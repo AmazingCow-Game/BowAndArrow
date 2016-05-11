@@ -12,7 +12,8 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //Public
-        public const int kHeight = 49;
+        public const int kHeight     = 49;
+        public const int kScoreValue = 400;
         //Private
         const int kSpeedMin    =  80;
         const int kSpeedMax    = 150;
@@ -21,8 +22,12 @@ namespace com.amazingcow.BowAndArrow
         #endregion
 
 
+        #region Public Properties 
+        public override int ScoreValue { get { return kScoreValue; } }
+        #endregion
+
         #region iVars
-        private Clock _dyingClock;
+        Clock _dyingClock;
         #endregion //iVars
 
 
@@ -94,7 +99,8 @@ namespace com.amazingcow.BowAndArrow
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
 
             //Goes off the screen - Kill it.
-            if(BoundingBox.Right <= 0)
+            var bounds = GameManager.Instance.CurrentLevel.PlayField;
+            if(BoundingBox.Right <= bounds.Left)
                 CurrentState = State.Dead;
         }
         #endregion //Private Methods
