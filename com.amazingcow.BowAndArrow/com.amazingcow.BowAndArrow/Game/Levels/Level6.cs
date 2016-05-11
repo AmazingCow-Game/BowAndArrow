@@ -37,8 +37,8 @@ namespace com.amazingcow.BowAndArrow
             var rndGen = GameManager.Instance.RandomNumGen;
 
             //Initialize the Enemies.
-            int minFireballY = PlayField.Top    - Fireball.kFireballHeight;
-            int maxFireballY = PlayField.Bottom - Fireball.kFireballHeight;
+            int minFireballY = PlayField.Top    - Fireball.kHeight;
+            int maxFireballY = PlayField.Bottom - Fireball.kHeight;
             //Makes the enemies came from right of screen.
             int minFireballX = PlayField.Right;
             int maxFireballX = 2 * PlayField.Right;
