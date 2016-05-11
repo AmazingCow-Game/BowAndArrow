@@ -89,13 +89,24 @@ namespace com.amazingcow.BowAndArrow
             if(CurrentState != State.Alive)
                 return false;
 
-            return archer.BoundingBox.Intersects(this.BoundingBox);
+            return archer.BoundingBox.Intersects(BoundingBox);
+        }
+
+        public override bool CheckCollisionArrow(Arrow arrow)
+        {            
+            if(BoundingBox.Contains(arrow.HeadPoint))
+            {
+                arrow.Kill();
+                return true;
+            }            
+
+            return false;
         }
         #endregion //Public Methods
 
 
         #region Private Methods
-        private void MoveAlive(GameTime gt)
+        void MoveAlive(GameTime gt)
         {
             //Update the position.
             Position += (Speed * (gt.ElapsedGameTime.Milliseconds / 1000f));
