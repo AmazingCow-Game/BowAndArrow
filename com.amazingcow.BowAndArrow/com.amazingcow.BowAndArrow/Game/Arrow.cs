@@ -60,6 +60,8 @@ namespace com.amazingcow.BowAndArrow
             //Already Dead - Don't do anything else...
             if(CurrentState != State.Alive)
                 return;
+
+            CurrentState = State.Dead;
         }
         #endregion //Public Methods
 
