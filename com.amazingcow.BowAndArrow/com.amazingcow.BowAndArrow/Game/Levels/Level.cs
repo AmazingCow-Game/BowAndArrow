@@ -5,7 +5,6 @@ using System.Collections.Generic;
 //XNA
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Text;
 #endregion //Usings
 
 
@@ -43,10 +42,11 @@ namespace com.amazingcow.BowAndArrow
             get { return GameManager.Instance.GraphicsDevice.Viewport.Bounds; }
         }
 
-
+        //State 
         public State CurrentState
         { get; protected set; }
 
+        //Game Objects
         public List<Enemy> Enemies
         { get; protected set; }
 
@@ -62,16 +62,14 @@ namespace com.amazingcow.BowAndArrow
         public int AliveEnemies
         { get; protected set; }
 
+        public Hud TopHud { get; private set; }
 
+        //Strings
         public abstract String PaperStringIntro    { get; }
         public abstract String PaperStringGameOver { get; }
         public abstract String LevelTitle          { get; }
         public abstract String LevelDescription    { get; }
-
-
-        public Hud TopHud { get; private set; }
         #endregion //Public Properties
-
 
 
         #region CTOR
@@ -344,6 +342,8 @@ namespace com.amazingcow.BowAndArrow
         {
             var gameObj = sender as Enemy;
             gameObj.OnStateChangeDying -= OnEnemyStateChangeDying;
+
+            GameManager.Instance.IncrementScore(gameObj.ScoreValue);
         }
         protected virtual void OnEnemyStateChangeDead(object sender, EventArgs e)
         {
