@@ -90,8 +90,8 @@ namespace com.amazingcow.BowAndArrow
             //Level 2 is only about RedBalloons.
             if(sender is RedBalloon)
                 --AliveEnemies;
-            
-            Debug.WriteLine("Alive Enemies: {0}", AliveEnemies);
+
+            --DyingEnemies;
         }
         #endregion //Game Objects Callbacks
      
