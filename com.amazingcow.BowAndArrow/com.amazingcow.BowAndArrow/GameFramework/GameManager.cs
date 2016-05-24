@@ -1,4 +1,43 @@
-﻿#region Usings
+﻿//----------------------------------------------------------------------------//
+//               █      █                                                     //
+//               ████████                                                     //
+//             ██        ██                                                   //
+//            ███  █  █  ███        GameManager.cs                            //
+//            █ █        █ █        Game_BowAndArrow                          //
+//             ████████████                                                   //
+//           █              █       Copyright (c) 2016                        //
+//          █     █    █     █      AmazingCow - www.AmazingCow.com           //
+//          █     █    █     █                                                //
+//           █              █       N2OMatt - n2omatt@amazingcow.com          //
+//             ████████████         www.amazingcow.com/n2omatt                //
+//                                                                            //
+//                  This software is licensed as GPLv3                        //
+//                 CHECK THE COPYING FILE TO MORE DETAILS                     //
+//                                                                            //
+//    Permission is granted to anyone to use this software for any purpose,   //
+//   including commercial applications, and to alter it and redistribute it   //
+//               freely, subject to the following restrictions:               //
+//                                                                            //
+//     0. You **CANNOT** change the type of the license.                      //
+//     1. The origin of this software must not be misrepresented;             //
+//        you must not claim that you wrote the original software.            //
+//     2. If you use this software in a product, an acknowledgment in the     //
+//        product IS HIGHLY APPRECIATED, both in source and binary forms.     //
+//        (See opensource.AmazingCow.com/acknowledgment.html for details).    //
+//        If you will not acknowledge, just send us a email. We'll be         //
+//        *VERY* happy to see our work being used by other people. :)         //
+//        The email is: acknowledgment_opensource@AmazingCow.com              //
+//     3. Altered source versions must be plainly marked as such,             //
+//        and must not be misrepresented as being the original software.      //
+//     4. This notice may not be removed or altered from any source           //
+//        distribution.                                                       //
+//     5. Most important, you must have fun. ;)                               //
+//                                                                            //
+//      Visit opensource.amazingcow.com for more open-source projects.        //
+//                                                                            //
+//                                  Enjoy :)                                  //
+//----------------------------------------------------------------------------//
+#region Usings
 //System
 using System;
 using System.IO;
@@ -13,7 +52,7 @@ namespace com.amazingcow.BowAndArrow
 {
     public class GameManager : Game
     {
-        #region Constants 
+        #region Constants
         //Private
         readonly Color kBackgroundColor = new Color(0, 128, 0);
         #endregion
@@ -37,10 +76,10 @@ namespace com.amazingcow.BowAndArrow
         static GameManager s_instance;
         public static GameManager Instance
         {
-            get { 
+            get {
                 if(s_instance == null)
                     s_instance = new GameManager();
-                return s_instance; 
+                return s_instance;
             }
         }
         #endregion //Singleton
@@ -57,7 +96,7 @@ namespace com.amazingcow.BowAndArrow
             Content.RootDirectory = "Content";
             //COWTODO: In next version let the user pass the \
             //         seed from command line.
-            RandomNumGen          = new Random(); 
+            RandomNumGen          = new Random();
             IsMouseVisible        = true;
             IsFixedTimeStep       = true;
 
@@ -89,7 +128,7 @@ namespace com.amazingcow.BowAndArrow
 
         #region Update / Draw
         protected override void Update(GameTime gameTime)
-        {            
+        {
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -110,10 +149,10 @@ namespace com.amazingcow.BowAndArrow
                 if(k.IsKeyDown(Keys.F9)) ChangeLevel(new LevelCredits());
             #endif
 
-            //In development time we want visual clues that 
+            //In development time we want visual clues that
             //the game is slow.
             #if DEBUG
-                _clearColor = (gameTime.IsRunningSlowly) 
+                _clearColor = (gameTime.IsRunningSlowly)
                                ? Color.Red
                                : kBackgroundColor;
             #endif
@@ -158,7 +197,7 @@ namespace com.amazingcow.BowAndArrow
             try {
                 var contents = File.ReadAllText(GetWriteableScorePath());
                 HighScore = int.Parse(contents);
-            } 
+            }
             catch (Exception) {
                 HighScore = 0;
             }

@@ -1,4 +1,43 @@
-﻿#region Usings
+﻿//----------------------------------------------------------------------------//
+//               █      █                                                     //
+//               ████████                                                     //
+//             ██        ██                                                   //
+//            ███  █  █  ███        Hud.cs                                    //
+//            █ █        █ █        Game_BowAndArrow                          //
+//             ████████████                                                   //
+//           █              █       Copyright (c) 2016                        //
+//          █     █    █     █      AmazingCow - www.AmazingCow.com           //
+//          █     █    █     █                                                //
+//           █              █       N2OMatt - n2omatt@amazingcow.com          //
+//             ████████████         www.amazingcow.com/n2omatt                //
+//                                                                            //
+//                  This software is licensed as GPLv3                        //
+//                 CHECK THE COPYING FILE TO MORE DETAILS                     //
+//                                                                            //
+//    Permission is granted to anyone to use this software for any purpose,   //
+//   including commercial applications, and to alter it and redistribute it   //
+//               freely, subject to the following restrictions:               //
+//                                                                            //
+//     0. You **CANNOT** change the type of the license.                      //
+//     1. The origin of this software must not be misrepresented;             //
+//        you must not claim that you wrote the original software.            //
+//     2. If you use this software in a product, an acknowledgment in the     //
+//        product IS HIGHLY APPRECIATED, both in source and binary forms.     //
+//        (See opensource.AmazingCow.com/acknowledgment.html for details).    //
+//        If you will not acknowledge, just send us a email. We'll be         //
+//        *VERY* happy to see our work being used by other people. :)         //
+//        The email is: acknowledgment_opensource@AmazingCow.com              //
+//     3. Altered source versions must be plainly marked as such,             //
+//        and must not be misrepresented as being the original software.      //
+//     4. This notice may not be removed or altered from any source           //
+//        distribution.                                                       //
+//     5. Most important, you must have fun. ;)                               //
+//                                                                            //
+//      Visit opensource.amazingcow.com for more open-source projects.        //
+//                                                                            //
+//                                  Enjoy :)                                  //
+//----------------------------------------------------------------------------//
+#region Usings
 //System
 using System;
 //XNA
@@ -63,17 +102,17 @@ namespace com.amazingcow.BowAndArrow
         #endregion //CTOR
 
 
-        #region Public Methods 
+        #region Public Methods
         public override void Kill()
         {
             //Do nothing...
         }
         #endregion //Public Methods
 
-                      
+
         #region Draw
         public override void Draw(GameTime gt)
-        {            
+        {
             var sb = GameManager.Instance.CurrentSpriteBatch;
 
             DrawBackground(sb);
@@ -102,20 +141,20 @@ namespace com.amazingcow.BowAndArrow
             //Left
             sb.Draw(_hudLeft, new Vector2(BoundingBox.Left, BoundingBox.Top));
             //Center
-            sb.Draw(_hudCenter, 
+            sb.Draw(_hudCenter,
                     new Vector2(_hudLeft.Width, BoundingBox.Top),
-                    null, 
                     null,
-                    null, 
-                    0, 
+                    null,
+                    null,
+                    0,
                     new Vector2(BoundingBox.Width - _hudRight.Width, 1),
                     null,
                     SpriteEffects.None,
                     0);
-            //Right                   
-            sb.Draw(_hudRight, 
-                     new Vector2(BoundingBox.Right - _hudRight.Width, 
-                                 BoundingBox.Top));                           
+            //Right
+            sb.Draw(_hudRight,
+                     new Vector2(BoundingBox.Right - _hudRight.Width,
+                                 BoundingBox.Top));
         }
         #endregion //Draw Background
 
@@ -143,7 +182,7 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Draw Title / Description
 
 
-        #region Draw States Message 
+        #region Draw States Message
         void DrawIntroMessage(SpriteBatch sb)
         {
             var desc = "Press [Enter] to Play!";
@@ -173,7 +212,7 @@ namespace com.amazingcow.BowAndArrow
 
             sb.DrawString(_spriteFont, desc, pos, Color.Black);
         }
-        #endregion //Draw States Message 
+        #endregion //Draw States Message
 
 
         #region Draw Score / High Score
@@ -182,7 +221,7 @@ namespace com.amazingcow.BowAndArrow
             var score = String.Format("Score: {0}",
                                       GameManager.Instance.CurrentScore);
 
-            var pos   = new Vector2(BoundingBox.Left + kPaddingToBackground, 
+            var pos   = new Vector2(BoundingBox.Left + kPaddingToBackground,
                                     BoundingBox.Top  + kPaddingToBackground);
 
             sb.DrawString(_spriteFont, score, pos, Color.Black);
@@ -190,15 +229,15 @@ namespace com.amazingcow.BowAndArrow
 
         void DrawHighScore(SpriteBatch sb)
         {
-            var score = String.Format("High Score: {0}", 
+            var score = String.Format("High Score: {0}",
                                       GameManager.Instance.HighScore);
 
             var size  = _spriteFont.MeasureString(score);
-            var pos   = new Vector2(BoundingBox.Left   + kPaddingToBackground, 
+            var pos   = new Vector2(BoundingBox.Left   + kPaddingToBackground,
                                     BoundingBox.Bottom - kPaddingToBackground - size.Y);
 
             sb.DrawString(_spriteFont, score, pos, Color.Black);
-        }       
+        }
         #endregion //Draw Score / High Score
 
 
@@ -207,7 +246,7 @@ namespace com.amazingcow.BowAndArrow
         {
             var count = String.Format("Arrows: {0}", _lvl.Player.ArrowsCount);
             var size  = _spriteFont.MeasureString(count);
-            var pos   = new Vector2(BoundingBox.Right - size.X - kPaddingToBackground, 
+            var pos   = new Vector2(BoundingBox.Right - size.X - kPaddingToBackground,
                                     BoundingBox.Top   + kPaddingToBackground);
 
             sb.DrawString(_spriteFont, count, pos, Color.Black);
@@ -226,7 +265,7 @@ namespace com.amazingcow.BowAndArrow
             }
         }
         #endregion //Draw Arrows Info
-              
+
     }//class Hud
 }//namespace com.amazingcow.BowAndArrow
 
