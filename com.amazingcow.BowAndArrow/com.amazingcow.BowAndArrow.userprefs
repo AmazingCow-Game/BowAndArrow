@@ -1,32 +1,6 @@
 ﻿<Properties StartupItem="com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="com.amazingcow.BowAndArrow/Game/Levels/LevelCredits.cs">
-    <Files>
-      <File FileName="com.amazingcow.BowAndArrow/Game/Levels/LevelCredits.cs" Line="77" Column="3" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Levels/Level.cs" Line="370" Column="15" />
-      <File FileName="com.amazingcow.BowAndArrow/Game/Archer.cs" Line="52" Column="16" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="com.amazingcow.BowAndArrow" expanded="True">
-            <Node name="com.amazingcow.BowAndArrow" expanded="True">
-              <Node name="Content" expanded="True" />
-              <Node name="Game" expanded="True">
-                <Node name="Enemies" expanded="True">
-                  <Node name="Balloon" expanded="True" />
-                </Node>
-                <Node name="Levels" expanded="True">
-                  <Node name="LevelCredits.cs" selected="True" />
-                </Node>
-              </Node>
-              <Node name="GameFramework" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
