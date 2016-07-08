@@ -37,6 +37,9 @@
 //                                                                            //
 //                                  Enjoy :)                                  //
 //----------------------------------------------------------------------------//
+using System.Collections.Generic;
+using System.Diagnostics;
+
 #region Usings
 //System
 using System;
@@ -54,10 +57,13 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //Private
-        readonly Color kBackgroundColor = new Color(0, 128, 0);
+        const    String kVersion         = "1.0.0";
+        readonly Color  kBackgroundColor = new Color(0, 128, 0);
         #endregion
 
+
         #region iVars
+        List<String>          _assetsSearchPaths;
         GraphicsDeviceManager _graphics;
         Color                 _clearColor;
         #endregion //iVars
@@ -92,19 +98,54 @@ namespace com.amazingcow.BowAndArrow
             _clearColor   = kBackgroundColor;
             _graphics     = new GraphicsDeviceManager(this);
 
-            //Init the Properties...
-            Content.RootDirectory = "Content";
+            //Init the Search Paths...
+            _assetsSearchPaths = new List<String> () {
+                Path.Combine(Environment.CurrentDirectory, "Content"),
+                "/usr/local/amazingcow_game_bow_and_arrow/Content"
+            };
+
+            String selectedSearchPath = null;
+            foreach(var searchPath in _assetsSearchPaths)
+            {
+                if(Directory.Exists(searchPath))
+                {
+                    Debug.WriteLine("Select Asset Search Path: " + searchPath);
+                    selectedSearchPath = searchPath;
+                    break;
+                }
+            }
+
+            //COWTODO: This is NOT portable, but i guess     \
+            //that we aren't target the mobile right now, so \
+            //this is the easy fix :S
+            if(selectedSearchPath == null)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    "Cannot find the assets folder - Sorry :(",
+                    "Amazing Cow - Bow & Arrow"
+                );
+                Environment.Exit(1);
+            }
+
+            Content.RootDirectory = selectedSearchPath;
+
+
             //COWTODO: In next version let the user pass the \
             //         seed from command line.
-            RandomNumGen          = new Random();
-            IsMouseVisible        = true;
-            IsFixedTimeStep       = true;
+            RandomNumGen     = new Random();
+            IsMouseVisible   = true;
+            IsFixedTimeStep  = true;
 
             //Setup the graphics...
             //COWTODO: In the next version let the user select \
             //         the screen resolution.
             _graphics.PreferredBackBufferWidth  = 640;
             _graphics.PreferredBackBufferHeight = 480;
+
+
+            var caption = String.Format("Amazing Cow - Bow & Arrow v{0}",
+                                        kVersion);
+            Window.Title = caption;
 
             LoadHighScore();
         }
@@ -202,6 +243,7 @@ namespace com.amazingcow.BowAndArrow
                 HighScore = 0;
             }
         }
+
         void SaveHighScore()
         {
             try {
