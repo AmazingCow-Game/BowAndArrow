@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="com.amazingcow.BowAndArrow/com.amazingcow.BowAndArrow.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
   <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <AuthorInfo Name="N2OMatt - AmazingCow" Email="n2omatt@amazingcow.com" Copyright="AmazingCow - 2016" Company="AmazingCow" Trademark="AmazingCow" />
 </Properties>
