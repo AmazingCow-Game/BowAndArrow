@@ -1,11 +1,12 @@
-# This should be enabled later.
-*.png
 
 # This is to ignore ever.
+*Debug/
+*Release/
 *.xnb
 *.dll
 *.exe
 *.exe.*
 *.mgcontent
+
 
 
