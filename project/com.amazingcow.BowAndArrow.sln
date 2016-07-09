@@ -14,4 +14,11 @@ Global
 		{FD701C41-ABE6-4343-A3E4-A74B5A2145BB}.Release|x86.ActiveCfg = Release|x86
 		{FD701C41-ABE6-4343-A3E4-A74B5A2145BB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		outputpath = .
+	EndGlobalSection
 EndGlobal

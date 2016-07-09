@@ -101,7 +101,7 @@ namespace com.amazingcow.BowAndArrow
             //Init the Search Paths...
             _assetsSearchPaths = new List<String> () {
                 Path.Combine(Environment.CurrentDirectory, "Content"),
-                "/usr/local/amazingcow_game_bow_and_arrow/Content"
+                "/usr/local/share/amazingcow_game_bow_and_arrow/Content"
             };
 
             String selectedSearchPath = null;

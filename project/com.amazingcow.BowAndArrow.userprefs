@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="GameFramework/GameManager.cs">
     <Files>
       <File FileName="GameFramework/ResourcesManager.cs" Line="1" Column="1" />
-      <File FileName="GameFramework/GameManager.cs" Line="34" Column="34" />
+      <File FileName="GameFramework/GameManager.cs" Line="28" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
