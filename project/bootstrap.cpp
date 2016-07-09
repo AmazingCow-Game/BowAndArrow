@@ -2,7 +2,7 @@
 //               █      █                                                     //
 //               ████████                                                     //
 //             ██        ██                                                   //
-//            ███  █  █  ███        Archer.cs                                 //
+//            ███  █  █  ███        bootstrap.cpp                             //
 //            █ █        █ █        Game_BowAndArrow                          //
 //             ████████████                                                   //
 //           █              █       Copyright (c) 2016                        //
@@ -38,9 +38,28 @@
 //                                  Enjoy :)                                  //
 //----------------------------------------------------------------------------//
 
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
+#include <string>
+
 
 int main()
 {
-    system("exec /usr/bin/mono /usr/local/share/amazingcow_game_bow_and_arrow/com.amazingcow.BowAndArrow.exe");
+    std::string mono_cmd  = "exec /usr/bin/mono ";
+    std::string usr_dir   = " /usr/local/share/amazingcow_game_bow_and_arrow/com.amazingcow.BowAndArrow.exe";
+    std::string local_dir = " com.amazingcow.BowAndArrow.exe";
+
+
+    std::string usr_cmd   = (mono_cmd + usr_dir);
+    std::string local_cmd = (mono_cmd + local_dir);
+
+    //std::cout << "Using: " << usr_cmd << std::endl;
+    if(system(usr_cmd.c_str()) != 0)
+    {
+        //std::cout << "Using: " << local_cmd << std::endl;
+        if(system(local_cmd.c_str()) != 0)
+        {
+            std::cout << "Cannot find the game" << std::endl;
+        }
+    }
 }
