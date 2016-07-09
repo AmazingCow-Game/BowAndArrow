@@ -58,7 +58,7 @@ _PROJECT_DIR=./project
 _PROJECT_BIN_DIR=$(_PROJECT_DIR)/bin
 _PROJECT_OBJ_DIR=$(_PROJECT_DIR)/obj
 
-_CC=gcc -Ofast
+_CC=g++ -Ofast
 _XBUILD=xbuild /p:Configuration=Release
 
 
@@ -66,7 +66,7 @@ _XBUILD=xbuild /p:Configuration=Release
 ################################################################################
 ## End user                                                                   ##
 ################################################################################
-install: dev-build
+install:
 	@ echo "---> Installing...".
 
 	@ ## Deleting old stuff...
@@ -85,11 +85,10 @@ install: dev-build
 ################################################################################
 ## Release                                                                    ##
 ################################################################################
-gen-binary: dev-build
+gen-binary:
 	mkdir -p ./bin/$(_GAME_NAME)
 
-	cp -r ./assets/              ./bin/$(_GAME_NAME)/assets
-	cp    ./build/$(_GAME_NAME)  ./bin/$(_GAME_NAME)/$(_GAME_NAME)
+	cp -rf ./build/* ./bin/$(_GAME_NAME)
 	cp AUTHORS.txt   \
 	   CHANGELOG.txt \
 	   COPYING.txt   \
@@ -122,8 +121,8 @@ dev-build:
 	$(_XBUILD) ./project/com.amazingcow.BowAndArrow.csproj
 
 	## Copile the bootstrap
-	$(_CC) ./project/bootstrap.c -o $(_PROJECT_BIN_DIR)/$(_GAME_NAME)
+	$(_CC) ./project/bootstrap.cpp -o $(_PROJECT_BIN_DIR)/$(_GAME_NAME)
 
-	## Move everything to this directory level
-	mv $(_PROJECT_BIN_DIR)/* ./build
+	## Copy everything to this directory level
+	cp -r $(_PROJECT_BIN_DIR)/* ./build
 
