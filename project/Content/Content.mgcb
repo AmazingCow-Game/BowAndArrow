@@ -19,6 +19,9 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/arial.spritefont
 
+#begin sprites/Icon.png
+/copy:sprites/Icon.png
+
 #begin sprites/arrow.png
 /importer:TextureImporter
 /processor:TextureProcessor
