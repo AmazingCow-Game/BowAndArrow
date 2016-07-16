@@ -38,6 +38,11 @@
 //                                  Enjoy :)                                  //
 //----------------------------------------------------------------------------//
 
+////////////////////////////////////////////////////////////////////////////////
+// This file is intended to start the game.                                   //
+// It is needed because Linux has a hard time with C# apps                    //
+// so, with this we start in terminal or with the desktop entry.              //
+////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -45,10 +50,12 @@
 
 int main()
 {
+    //COWTODO: We hard code the paths here... While this matches the \
+    //         paths in Makefile it's fragile and we must change to  \
+    //         a more robust approach soon as possible.
     std::string mono_cmd  = "exec /usr/bin/mono ";
     std::string usr_dir   = " /usr/local/share/amazingcow_game_bow_and_arrow/com.amazingcow.BowAndArrow.exe";
     std::string local_dir = " com.amazingcow.BowAndArrow.exe";
-
 
     std::string usr_cmd   = (mono_cmd + usr_dir);
     std::string local_cmd = (mono_cmd + local_dir);
