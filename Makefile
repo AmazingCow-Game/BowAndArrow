@@ -38,48 +38,67 @@
 ##                                  Enjoy :)                                  ##
 ##----------------------------------------------------------------------------##
 
+##COWTODO: We hard code the paths in bootstrap.cpp  \
+##         While this matches the paths in Makefile \
+##         it's fragile and we must change to       \
+##         a more robust approach soon as possible.
+
+
 ################################################################################
 ## Public Vars                                                                ##
 ################################################################################
-HOST="linux_x64"
+HOST=`uname -s`_`uname -m`
 
 
 ################################################################################
 ## Private Vars                                                               ##
 ################################################################################
-_GAME_NAME=bow_and_arrow
+_GAME_SAFE_NAME=bow_and_arrow
+_GAME_NAME=bow-and-arrow
+_DESKTOP_FILENAME=$(_GAME_SAFE_NAME).desktop
 
-
-_COW_BIN=/usr/local/bin
-_COW_SHARE=/usr/local/share/amazingcow_game_$(_GAME_NAME)
-_GIT_TAG=`git describe --tags --abbrev=0 | tr . _`
+_INSTALL_DIR_BIN=/usr/local/bin
+_INSTALL_DIR_SHARE=/usr/local/share/amazingcow_game_$(_GAME_SAFE_NAME)
+_INSTALL_DIR_DESKTOP=/usr/share/applications
 
 _PROJECT_DIR=./project
-_PROJECT_BIN_DIR=$(_PROJECT_DIR)/bin
-_PROJECT_OBJ_DIR=$(_PROJECT_DIR)/obj
+_PROJECT_DIR_BIN=$(_PROJECT_DIR)/bin
+_PROJECT_DIR_OBJ=$(_PROJECT_DIR)/obj
 
+
+_GIT_TAG=`git describe --tags --abbrev=0 | tr . _`
 _CC=g++ -Ofast
 _XBUILD=xbuild /p:Configuration=Release
 
+SILENT=@
 
 
 ################################################################################
 ## End user                                                                   ##
 ################################################################################
 install:
-	@ echo "---> Installing...".
+	$(SILENT) echo "---> Installing..."
 
-	@ ## Deleting old stuff...
-	@ rm -rf $(_COW_SHARE)
-	@ rm -rf $(_COW_BIN)/$(_GAME_NAME)
 
-	@ ## Install new stuff...
-	@ mkdir -p $(_COW_SHARE)
+	$(SILENT) ## Deleting old stuff...
+	$(SILENT) rm -rf $(_INSTALL_DIR_SHARE)
+	$(SILENT) rm -rf $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
+	$(SILENT) rm -rf $(_INSTALL_DIR_DESKTOP/$(_DESKTOP_FILENAME)
 
-	@ cp -rf ./build/* $(_COW_SHARE)
-	@ ln -s  $(_COW_SHARE)/$(_GAME_NAME) $(_COW_BIN)/$(_GAME_NAME)
+	$(SILENT) ## Create the dir if it doesn't exists...
+	$(SILENT) mkdir -p $(_INSTALL_DIR_SHARE)
 
-	@ echo "---> Done... We **really** hope that you have fun :D"
+	$(SILENT) ## Copy the files to the share
+	$(SILENT) cp -rf ./build/* $(_INSTALL_DIR_SHARE)
+
+	$(SILENT) ## Copy the bootstrap
+	$(SILENT) cp -rf $(_INSTALL_DIR_SHARE)/$(_GAME_NAME) $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
+
+	$(SILENT) ## Copy the desktop entry.
+	$(SILENT) cp -f $(_DESKTOP_FILENAME) $(_INSTALL_DIR_DESKTOP)
+
+
+	$(SILENT) echo "---> Done... We **really** hope that you have fun :D"
 
 
 ################################################################################
@@ -89,11 +108,12 @@ gen-binary:
 	mkdir -p ./bin/$(_GAME_NAME)
 
 	cp -rf ./build/* ./bin/$(_GAME_NAME)
-	cp AUTHORS.txt   \
-	   CHANGELOG.txt \
-	   COPYING.txt   \
-	   README.md     \
-	   TODO.txt      \
+	cp AUTHORS.txt          \
+	   CHANGELOG.txt        \
+	   COPYING.txt          \
+	   README.md            \
+	   TODO.txt             \
+	   $(_DESKTOP_FILENAME) \
 	./bin/$(_GAME_NAME)
 
 	cd ./bin && zip -r ./$(HOST)_$(_GIT_TAG).zip ./$(_GAME_NAME)
@@ -114,15 +134,15 @@ gen-archive:
 dev-build:
 	## Compile the MonogGame Project
 	rm -rf ./build
-	rm -rf $(_PROJECT_BIN_DIR)
-	rm -rf $(_PROJECT_OBJ_DIR)
+	rm -rf $(_PROJECT_DIR_BIN)
+	rm -rf $(_PROJECT_DIR_OBJ)
 	mkdir -p ./build
 
 	$(_XBUILD) ./project/com.amazingcow.BowAndArrow.csproj
 
 	## Copile the bootstrap
-	$(_CC) ./project/bootstrap.cpp -o $(_PROJECT_BIN_DIR)/$(_GAME_NAME)
+	$(_CC) ./project/bootstrap.cpp -o $(_PROJECT_DIR_BIN)/$(_GAME_NAME)
 
 	## Copy everything to this directory level
-	cp -r $(_PROJECT_BIN_DIR)/* ./build
+	cp -r $(_PROJECT_DIR_BIN)/* ./build
 
