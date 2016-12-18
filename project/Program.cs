@@ -37,13 +37,42 @@
 //                                                                            //
 //                                  Enjoy :)                                  //
 //----------------------------------------------------------------------------//
+//Usings
+using System;
+using System.IO;
+
 namespace com.amazingcow.BowAndArrow
 {
     static class Program
     {
         static void Main(string[] args)
         {
-            GameManager.Instance.Run();
+            try {
+                GameManager.Instance.Run();
+            }
+            catch(Exception e){
+                var msg = String.Format(
+                    "Ops.. \nMsg:{0}\nSource:{1}\nStack Trace:{2}",
+                    e.Message,
+                    e.Source,
+                    e.StackTrace
+                );                                  
+
+                var path = Environment.GetFolderPath(
+                    Environment.SpecialFolder.Desktop
+                );
+                var filename = String.Format(
+                    "{0}-{1}-{2}.log",
+                    GameManager.kGameName,
+                    DateTime.Now.ToLongDateString(),
+                    DateTime.Now.ToLongTimeString()
+                );
+                var fullpath = Path.Combine(path, filename);
+
+
+                File.WriteAllText(fullpath, msg);
+                Environment.Exit(1);
+            }
         }
     }
 }
