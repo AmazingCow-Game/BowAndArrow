@@ -1,13 +1,11 @@
 ﻿<Properties StartupItem="com.amazingcow.BowAndArrow.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="GameFramework/GameManager.cs">
-    <Files>
-      <File FileName="GameFramework/ResourcesManager.cs" Line="1" Column="1" />
-      <File FileName="GameFramework/GameManager.cs" Line="28" Column="11" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/project/GameFramework/GameManager.cs" line="204" column="1" />
+      <Breakpoint file="/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/project/GameFramework/GameManager.cs" line="209" column="29" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
