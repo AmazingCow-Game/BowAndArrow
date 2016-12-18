@@ -41,8 +41,9 @@
 //System
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Diagnostics;
 //XNA
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 #endregion //Usings
@@ -72,6 +73,46 @@ namespace com.amazingcow.BowAndArrow
             }
         }
         #endregion //Singleton
+
+
+        #region Static Methods 
+        public static String FindContentDirectoryPath()
+        {
+            //Init the search paths.
+            var pathsList = new List<String> () {
+                Path.Combine(Environment.CurrentDirectory, "Content"),
+                "/usr/local/share/amazingcow_game_bow_and_arrow/Content"
+            };
+
+            //Select the first avaiable path.
+            String selectedSearchPath = null;
+            foreach(var searchPath in pathsList)
+            {
+                if(Directory.Exists(searchPath))
+                {
+                    selectedSearchPath = searchPath;
+                    Debug.WriteLine("Select Asset Search Path: " + searchPath);
+
+                    break;
+                }
+            }
+
+            //COWTODO: This is NOT portable, but i guess     \
+            //that we aren't target the mobile right now, so \
+            //this is the easy fix :S
+            if(selectedSearchPath == null)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    "Cannot find the assets folder - Sorry :(",
+                    GameManager.kGameName
+                );
+
+                Environment.Exit(1);
+            }
+
+            return selectedSearchPath;
+        }
+        #endregion //Static Methods 
 
 
         #region CTOR
