@@ -56,15 +56,15 @@ namespace com.amazingcow.BowAndArrow
     public class GameManager : Game
     {
         #region Constants
+        //Public
+        public const String kVersion  = "1.1.0";
         public const String kGameName = "Bow & Arrow - Amazing Cow Labs";
         //Private
-        const    String kVersion         = "1.0.0";
         readonly Color  kBackgroundColor = new Color(0, 128, 0);
         #endregion
 
 
         #region iVars
-        List<String>          _assetsSearchPaths;
         GraphicsDeviceManager _graphics;
         Color                 _clearColor;
         #endregion //iVars
@@ -96,57 +96,28 @@ namespace com.amazingcow.BowAndArrow
         GameManager()
         {
             //Init the iVars...
-            _clearColor   = kBackgroundColor;
-            _graphics     = new GraphicsDeviceManager(this);
-
-            //Init the Search Paths...
-            _assetsSearchPaths = new List<String> () {
-                Path.Combine(Environment.CurrentDirectory, "Content"),
-                "/usr/local/share/amazingcow_game_bow_and_arrow/Content"
-            };
-
-            String selectedSearchPath = null;
-            foreach(var searchPath in _assetsSearchPaths)
-            {
-                if(Directory.Exists(searchPath))
-                {
-                    Debug.WriteLine("Select Asset Search Path: " + searchPath);
-                    selectedSearchPath = searchPath;
-                    break;
-                }
-            }
-
-            //COWTODO: This is NOT portable, but i guess     \
-            //that we aren't target the mobile right now, so \
-            //this is the easy fix :S
-            if(selectedSearchPath == null)
-            {
-                System.Windows.Forms.MessageBox.Show(
-                    "Cannot find the assets folder - Sorry :(",
-                    "Amazing Cow - Bow & Arrow"
-                );
-                Environment.Exit(1);
-            }
-
-            Content.RootDirectory = selectedSearchPath;
-
+            _clearColor           = kBackgroundColor;
+            IsMouseVisible        = true;
+            IsFixedTimeStep       = true;           
+            Content.RootDirectory = ResourcesManager.FindContentDirectoryPath();;
 
             //COWTODO: In next version let the user pass the \
             //         seed from command line.
             RandomNumGen     = new Random();
-            IsMouseVisible   = true;
-            IsFixedTimeStep  = true;
 
             //Setup the graphics...
             //COWTODO: In the next version let the user select \
             //         the screen resolution.
+            _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth  = 640;
             _graphics.PreferredBackBufferHeight = 480;
 
-
-            var caption = String.Format("Amazing Cow - Bow & Arrow v{0}",
-                                        kVersion);
-            Window.Title = caption;
+            //Set the Window Caption.
+            Window.Title = String.Format(
+                "{0} - {1}", 
+                kGameName, 
+                kVersion
+            );
 
             LoadHighScore();
         }
@@ -158,13 +129,7 @@ namespace com.amazingcow.BowAndArrow
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
             NewGame();
-        }
-        protected override void OnExiting(Object sender, EventArgs args)
-        {
-            base.OnExiting(sender, args);
-
-            SaveHighScore();
-        }
+        }            
         #endregion //Init / Load
 
 
@@ -172,7 +137,7 @@ namespace com.amazingcow.BowAndArrow
         protected override void Update(GameTime gameTime)
         {
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                ExitGame();
 
             InputHandler.Instance.Update();
             CurrentLevel.Update(gameTime);
@@ -232,26 +197,44 @@ namespace com.amazingcow.BowAndArrow
         }
         #endregion //Level Management
 
+        #region Exit
+        private void ExitGame()
+        {
+            Environment.Exit(0);
+        }
+
+        protected override void OnExiting(Object sender, EventArgs args)
+        {
+            SaveHighScore();
+            base.OnExiting(sender, args);
+
+            ExitGame();
+        }
+        #endregion //Exit
+
 
         #region Score
         void LoadHighScore()
         {
+            var path = GetWriteableScorePath();
             try {
-                var contents = File.ReadAllText(GetWriteableScorePath());
+                var contents = File.ReadAllText(path);
                 HighScore = int.Parse(contents);
             }
             catch (Exception) {
+                Debug.WriteLine("Cannot load highscore at:({0})", path);
                 HighScore = 0;
             }
         }
 
         void SaveHighScore()
         {
+            var path = GetWriteableScorePath();
             try {
-                File.WriteAllText(GetWriteableScorePath(), HighScore.ToString());
+                File.WriteAllText(path, HighScore.ToString());
             }
             catch(Exception) {
-                //Do nothing.
+                Debug.WriteLine("Cannot save highscore at:({0})", path);
             }
         }
 
