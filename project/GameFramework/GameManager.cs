@@ -56,6 +56,7 @@ namespace com.amazingcow.BowAndArrow
     public class GameManager : Game
     {
         #region Constants
+        public const String kGameName = "Bow & Arrow - Amazing Cow Labs";
         //Private
         const    String kVersion         = "1.0.0";
         readonly Color  kBackgroundColor = new Color(0, 128, 0);

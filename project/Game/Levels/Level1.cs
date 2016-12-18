@@ -105,7 +105,7 @@ namespace com.amazingcow.BowAndArrow
         //Intro
         const String kPaperIntroString = @"
 - Bow and Arrow -
-Amazing Cow Remake
+Amazing Cow Labs' Remake
 
 This a remake of the old
 Windows 3.1 Bow & Arrow game.
