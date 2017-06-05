@@ -47,23 +47,32 @@
 #include <cstdlib>
 #include <string>
 
+constexpr auto kMono_Cmd        = "mono ";
+constexpr auto kUSR_Dir         = " /usr/local/share/amazingcow_game_bow_and_arrow/";
+constexpr auto kGame_Executable = "com.amazingcow.BowAndArrow.exe";
+
 
 int main()
 {
     //COWTODO: We hard code the paths here... While this matches the \
     //         paths in Makefile it's fragile and we must change to  \
     //         a more robust approach soon as possible.
-    std::string mono_cmd  = "exec /usr/bin/mono ";
-    std::string usr_dir   = " /usr/local/share/amazingcow_game_bow_and_arrow/com.amazingcow.BowAndArrow.exe";
-    std::string local_dir = " com.amazingcow.BowAndArrow.exe";
+    std::string usr_cmd(
+        std::string(kMono_Cmd) + //Need that becuase c++ don't know
+        kUSR_Dir               + //how concat char * directly.
+        kGame_Executable
+    );
 
-    std::string usr_cmd   = (mono_cmd + usr_dir);
-    std::string local_cmd = (mono_cmd + local_dir);
 
-    //std::cout << "Using: " << usr_cmd << std::endl;
+    std::cout << "Using: " << usr_cmd << std::endl;
     if(system(usr_cmd.c_str()) != 0)
     {
-        //std::cout << "Using: " << local_cmd << std::endl;
+        std::string local_cmd(
+            std::string(kMono_Cmd) +
+            kGame_Executable
+        );
+        std::cout << "Using: " << local_cmd << std::endl;
+
         if(system(local_cmd.c_str()) != 0)
         {
             std::cout << "Cannot find the game" << std::endl;
