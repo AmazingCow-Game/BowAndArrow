@@ -44,105 +44,77 @@
 ##         a more robust approach soon as possible.
 
 
-################################################################################
-## Public Vars                                                                ##
-################################################################################
-HOST=`uname -s`_`uname -m`
+
+# HOST=`uname -s`_`uname -m`
+# # _GAME_SAFE_NAME=bow_and_arrow
+# # _DESKTOP_FILENAME=$(_GAME_SAFE_NAME).desktop
+
+# # _INSTALL_DIR_BIN=/usr/local/bin
+# # _INSTALL_DIR_SHARE=/usr/local/share/amazingcow_game_$(_GAME_SAFE_NAME)
+# # _INSTALL_DIR_DESKTOP=/usr/share/applications
+
+# ################################################################################
+# ## Private Vars                                                               ##
+# ################################################################################
 
 
-################################################################################
-## Private Vars                                                               ##
-################################################################################
-_GAME_SAFE_NAME=bow_and_arrow
-_GAME_NAME=bow-and-arrow
-_DESKTOP_FILENAME=$(_GAME_SAFE_NAME).desktop
 
-_INSTALL_DIR_BIN=/usr/local/bin
-_INSTALL_DIR_SHARE=/usr/local/share/amazingcow_game_$(_GAME_SAFE_NAME)
-_INSTALL_DIR_DESKTOP=/usr/share/applications
+# _GIT_TAG=`git describe --tags --abbrev=0 | tr . _`
 
-_PROJECT_DIR=./project
-_PROJECT_DIR_BIN=$(_PROJECT_DIR)/bin
-_PROJECT_DIR_OBJ=$(_PROJECT_DIR)/obj
+# SILENT=@
 
 
-_GIT_TAG=`git describe --tags --abbrev=0 | tr . _`
-_CC=g++ -Ofast
-_XBUILD=xbuild /p:Configuration=Release
-
-SILENT=@
-
-
-################################################################################
-## End user                                                                   ##
-################################################################################
-install:
-	$(SILENT) echo "---> Installing..."
+# ################################################################################
+# ## End user                                                                   ##
+# ################################################################################
+# install:
+# 	$(SILENT) echo "---> Installing..."
 
 
-	$(SILENT) ## Deleting old stuff...
-	$(SILENT) rm -rf $(_INSTALL_DIR_SHARE)
-	$(SILENT) rm -rf $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
-	$(SILENT) rm -rf $(_INSTALL_DIR_DESKTOP/$(_DESKTOP_FILENAME)
+# 	$(SILENT) ## Deleting old stuff...
+# 	$(SILENT) rm -rf $(_INSTALL_DIR_SHARE)
+# 	$(SILENT) rm -rf $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
+# 	$(SILENT) rm -rf $(_INSTALL_DIR_DESKTOP/$(_DESKTOP_FILENAME)
 
-	$(SILENT) ## Create the dir if it doesn't exists...
-	$(SILENT) mkdir -p $(_INSTALL_DIR_SHARE)
+# 	$(SILENT) ## Create the dir if it doesn't exists...
+# 	$(SILENT) mkdir -p $(_INSTALL_DIR_SHARE)
 
-	$(SILENT) ## Copy the files to the share
-	$(SILENT) cp -rf ./build/* $(_INSTALL_DIR_SHARE)
+# 	$(SILENT) ## Copy the files to the share
+# 	$(SILENT) cp -rf ./build/* $(_INSTALL_DIR_SHARE)
 
-	$(SILENT) ## Copy the bootstrap
-	$(SILENT) cp -rf $(_INSTALL_DIR_SHARE)/$(_GAME_NAME) $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
+# 	$(SILENT) ## Copy the bootstrap
+# 	$(SILENT) cp -rf $(_INSTALL_DIR_SHARE)/$(_GAME_NAME) $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
 
-	$(SILENT) ## Copy the desktop entry.
-	$(SILENT) cp -f $(_DESKTOP_FILENAME) $(_INSTALL_DIR_DESKTOP)
-
-
-	$(SILENT) echo "---> Done... We **really** hope that you have fun :D"
+# 	$(SILENT) ## Copy the desktop entry.
+# 	$(SILENT) cp -f $(_DESKTOP_FILENAME) $(_INSTALL_DIR_DESKTOP)
 
 
-################################################################################
-## Release                                                                    ##
-################################################################################
-gen-binary:
-	mkdir -p ./bin/$(_GAME_NAME)
-
-	cp -rf ./build/* ./bin/$(_GAME_NAME)
-	cp AUTHORS.txt          \
-	   CHANGELOG.txt        \
-	   COPYING.txt          \
-	   README.md            \
-	   TODO.txt             \
-	   $(_DESKTOP_FILENAME) \
-	./bin/$(_GAME_NAME)
-
-	cd ./bin && zip -r ./$(HOST)_$(_GIT_TAG).zip ./$(_GAME_NAME)
-	rm -rf ./bin/$(_GAME_NAME)
+# 	$(SILENT) echo "---> Done... We **really** hope that you have fun :D"
 
 
-gen-archive:
-	rm -rf   ./archives
-	mkdir -p ./archives
+# ################################################################################
+# ## Release                                                                    ##
+# ################################################################################
+# gen-binary:
+# 	mkdir -p ./bin/$(_GAME_NAME)
 
-	git-archive-all ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).zip
-	git-archive-all  ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).tar.gz
+# 	cp -rf ./build/* ./bin/$(_GAME_NAME)
+# 	cp AUTHORS.txt          \
+# 	   CHANGELOG.txt        \
+# 	   COPYING.txt          \
+# 	   README.md            \
+# 	   TODO.txt             \
+# 	   $(_DESKTOP_FILENAME) \
+# 	./bin/$(_GAME_NAME)
+
+# 	cd ./bin && zip -r ./$(HOST)_$(_GIT_TAG).zip ./$(_GAME_NAME)
+# 	rm -rf ./bin/$(_GAME_NAME)
 
 
-################################################################################
-## Dev                                                                        ##
-################################################################################
-dev-build:
-	## Compile the MonogGame Project
-	rm -rf ./build
-	rm -rf $(_PROJECT_DIR_BIN)
-	rm -rf $(_PROJECT_DIR_OBJ)
-	mkdir -p ./build
+# gen-archive:
+# 	rm -rf   ./archives
+# 	mkdir -p ./archives
 
-	$(_XBUILD) ./project/com.amazingcow.BowAndArrow.csproj
-
-	## Copile the bootstrap
-	$(_CC) ./project/bootstrap.cpp -o $(_PROJECT_DIR_BIN)/$(_GAME_NAME)
-
-	## Copy everything to this directory level
-	cp -r $(_PROJECT_DIR_BIN)/* ./build
+# 	git-archive-all ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).zip
+# 	git-archive-all  ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).tar.gz
 
