@@ -91,7 +91,7 @@ namespace com.amazingcow.BowAndArrow
 
         #region Paper Strings
         //Intro
-        const String kPaperIntroString = @"
+        static readonly String kPaperIntroString = String.Format(@"
 We hope that you had
 a great time playing this game.
 
@@ -100,15 +100,14 @@ We had making it :D
 Dev: N2OMatt
 <n2omatt@amazingcow.com>
 
-Amazing Cow - 2016 - GPLv3
+{0} (GPLv3)
 
 Dedicate to all people
 fighting against cancer!
 
 Thank you...
 
-PS: You have only 1 arrow...
-";
+PS: You have only 1 arrow...", GameManager.kCopyright);
 
         const String kPaperGameOverString = @"
 Oh noooooo....

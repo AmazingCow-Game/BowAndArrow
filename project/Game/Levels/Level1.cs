@@ -103,7 +103,7 @@ namespace com.amazingcow.BowAndArrow
 
         #region Paper Strings
         //Intro
-        const String kPaperIntroString = @"
+        static readonly String kPaperIntroString = String.Format(@"
 - Bow and Arrow -
 Amazing Cow Labs' Remake
 
@@ -116,10 +116,10 @@ John di Troia.
 This version is free sofware (GPLv3)
 You can study, hack and share it ;D
 
-Amazing Cow - 2016
+{0}
 www.amazingcow.com
 
-Enjoy...";
+Enjoy...", GameManager.kCopyright);
 
         //GameOver
         const String kPaperGameOverString = @"
