@@ -56,8 +56,11 @@ namespace com.amazingcow.BowAndArrow
     {
         #region Constants
         //Public
-        public const String kVersion  = "1.1.0";
-        public const String kGameName = "Bow & Arrow - Amazing Cow Labs";
+        //COWTODO: We need a better way to specify the version number \
+        //         in the command line. Maybe a define...
+        public const String kVersion   = "1.2.0";
+        public const String kCopyright = "Copyright (c) Amazing Cow\n 2016, 2017";
+        public const String kGameName  = "Bow & Arrow - Amazing Cow Labs";
         //Private
         readonly Color kBackgroundColor = new Color(0, 128, 0);
         #endregion
