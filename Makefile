@@ -38,83 +38,39 @@
 ##                                  Enjoy :)                                  ##
 ##----------------------------------------------------------------------------##
 
-##COWTODO: We hard code the paths in bootstrap.cpp  \
-##         While this matches the paths in Makefile \
-##         it's fragile and we must change to       \
-##         a more robust approach soon as possible.
+
+################################################################################
+## User targets                                                               ##
+################################################################################
+all: build-release generate-release-package
+
+install:
+	./release/bow-and-arrow/install.sh
 
 
 
-# HOST=`uname -s`_`uname -m`
-# # _GAME_SAFE_NAME=bow_and_arrow
-# # _DESKTOP_FILENAME=$(_GAME_SAFE_NAME).desktop
+################################################################################
+## Dev targets                                                                ##
+################################################################################
+.PHONY: clean
+clean:
+	rm -rf archives;
+	rm -rf build;
+	rm -rf release;
 
-# # _INSTALL_DIR_BIN=/usr/local/bin
-# # _INSTALL_DIR_SHARE=/usr/local/share/amazingcow_game_$(_GAME_SAFE_NAME)
-# # _INSTALL_DIR_DESKTOP=/usr/share/applications
+.PHONY: build-debug
+build-debug:
+	./scripts/build.sh Debug;
 
-# ################################################################################
-# ## Private Vars                                                               ##
-# ################################################################################
+.PHONY: build-release
+build-release:
+	./scripts/build.sh Release;
 
+.PHONY: generate-archive
+generate-archive:
+	./scripts/generate_archive.sh;
 
-
-# _GIT_TAG=`git describe --tags --abbrev=0 | tr . _`
-
-# SILENT=@
-
-
-# ################################################################################
-# ## End user                                                                   ##
-# ################################################################################
-# install:
-# 	$(SILENT) echo "---> Installing..."
-
-
-# 	$(SILENT) ## Deleting old stuff...
-# 	$(SILENT) rm -rf $(_INSTALL_DIR_SHARE)
-# 	$(SILENT) rm -rf $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
-# 	$(SILENT) rm -rf $(_INSTALL_DIR_DESKTOP/$(_DESKTOP_FILENAME)
-
-# 	$(SILENT) ## Create the dir if it doesn't exists...
-# 	$(SILENT) mkdir -p $(_INSTALL_DIR_SHARE)
-
-# 	$(SILENT) ## Copy the files to the share
-# 	$(SILENT) cp -rf ./build/* $(_INSTALL_DIR_SHARE)
-
-# 	$(SILENT) ## Copy the bootstrap
-# 	$(SILENT) cp -rf $(_INSTALL_DIR_SHARE)/$(_GAME_NAME) $(_INSTALL_DIR_BIN)/$(_GAME_NAME)
-
-# 	$(SILENT) ## Copy the desktop entry.
-# 	$(SILENT) cp -f $(_DESKTOP_FILENAME) $(_INSTALL_DIR_DESKTOP)
-
-
-# 	$(SILENT) echo "---> Done... We **really** hope that you have fun :D"
-
-
-# ################################################################################
-# ## Release                                                                    ##
-# ################################################################################
-# gen-binary:
-# 	mkdir -p ./bin/$(_GAME_NAME)
-
-# 	cp -rf ./build/* ./bin/$(_GAME_NAME)
-# 	cp AUTHORS.txt          \
-# 	   CHANGELOG.txt        \
-# 	   COPYING.txt          \
-# 	   README.md            \
-# 	   TODO.txt             \
-# 	   $(_DESKTOP_FILENAME) \
-# 	./bin/$(_GAME_NAME)
-
-# 	cd ./bin && zip -r ./$(HOST)_$(_GIT_TAG).zip ./$(_GAME_NAME)
-# 	rm -rf ./bin/$(_GAME_NAME)
-
-
-# gen-archive:
-# 	rm -rf   ./archives
-# 	mkdir -p ./archives
-
-# 	git-archive-all ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).zip
-# 	git-archive-all  ./archives/source_$(_GAME_NAME)_$(_GIT_TAG).tar.gz
+.PHONY: generate-release-package
+generate-release-package:
+	./scripts/generate_release_package.sh;
 
