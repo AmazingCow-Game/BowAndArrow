@@ -37,13 +37,12 @@
 //                                                                            //
 //                                  Enjoy :)                                  //
 //----------------------------------------------------------------------------//
-using System.Collections.Generic;
-using System.Diagnostics;
-
 #region Usings
 //System
 using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Diagnostics;
 //XNA
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
