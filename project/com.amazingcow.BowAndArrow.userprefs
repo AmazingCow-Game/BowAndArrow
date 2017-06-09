@@ -1,10 +1,29 @@
 ﻿<Properties StartupItem="com.amazingcow.BowAndArrow.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GameFramework/GameManager.cs">
+    <Files>
+      <File FileName="GameFramework/GameManager.cs" Line="108" Column="25" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="com.amazingcow.BowAndArrow" expanded="True">
+            <Node name="com.amazingcow.BowAndArrow" expanded="True">
+              <Node name="Game" expanded="True">
+                <Node name="Levels" expanded="True" />
+              </Node>
+              <Node name="GameFramework" expanded="True">
+                <Node name="GameManager.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/project/GameFramework/GameManager.cs" line="204" column="1" />
-      <Breakpoint file="/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/project/GameFramework/GameManager.cs" line="209" column="29" />
+      <Breakpoint file="/home/n2omatt/Documents/Projects/AmazingCow/AmazingCow-Game/Game_BowAndArrow/project/GameFramework/GameManager.cs" line="201" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
