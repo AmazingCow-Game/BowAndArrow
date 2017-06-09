@@ -94,18 +94,24 @@ namespace com.amazingcow.BowAndArrow
 
             var sbatch       = GameManager.Instance.CurrentSpriteBatch;
             var paperCenterX = BoundingBox.Center.X;
-            var paperTopY    = BoundingBox.Top + 20;
+            var offsetY      = BoundingBox.Top + 25.0f;
 
             var splitedString = _contents.Split('\n');
+
             for(int i = 1; i < splitedString.Length; i++)
             {
                 var currStr = splitedString[i];
                 var strSize = _spriteFont.MeasureString(currStr);
 
-                var pos = new Vector2(paperCenterX - (strSize.X / 2),
-                                      paperTopY);
+                var pos = new Vector2(
+                    paperCenterX - (strSize.X / 2),
+                    offsetY
+                );
 
-                pos.Y += strSize.Y * i;
+                offsetY += String.IsNullOrEmpty(currStr)
+                            ? 18 //COWTODO: Remove the magic value.
+                            : strSize.Y;
+
                 sbatch.DrawString(_spriteFont, currStr, pos, Color.Black);
             }
         }
