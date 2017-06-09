@@ -60,7 +60,7 @@ namespace com.amazingcow.BowAndArrow
         public const String kVersion  = "1.1.0";
         public const String kGameName = "Bow & Arrow - Amazing Cow Labs";
         //Private
-        readonly Color  kBackgroundColor = new Color(0, 128, 0);
+        readonly Color kBackgroundColor = new Color(0, 128, 0);
         #endregion
 
 
@@ -98,12 +98,12 @@ namespace com.amazingcow.BowAndArrow
             //Init the iVars...
             _clearColor           = kBackgroundColor;
             IsMouseVisible        = true;
-            IsFixedTimeStep       = true;           
-            Content.RootDirectory = ResourcesManager.FindContentDirectoryPath();;
+            IsFixedTimeStep       = true;
+            Content.RootDirectory = ResourcesManager.FindContentDirectoryPath();
 
             //COWTODO: In next version let the user pass the \
             //         seed from command line.
-            RandomNumGen     = new Random();
+            RandomNumGen = new Random();
 
             //Setup the graphics...
             //COWTODO: In the next version let the user select \
@@ -114,8 +114,8 @@ namespace com.amazingcow.BowAndArrow
 
             //Set the Window Caption.
             Window.Title = String.Format(
-                "{0} - {1}", 
-                kGameName, 
+                "{0} - {1}",
+                kGameName,
                 kVersion
             );
 
@@ -129,7 +129,7 @@ namespace com.amazingcow.BowAndArrow
         {
             CurrentSpriteBatch = new SpriteBatch(GraphicsDevice);
             NewGame();
-        }            
+        }
         #endregion //Init / Load
 
 
