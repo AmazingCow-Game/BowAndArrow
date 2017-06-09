@@ -75,7 +75,7 @@ namespace com.amazingcow.BowAndArrow
         #endregion //Singleton
 
 
-        #region Static Methods 
+        #region Static Methods
         public static String FindContentDirectoryPath()
         {
             //Init the search paths.
@@ -102,17 +102,31 @@ namespace com.amazingcow.BowAndArrow
             //this is the easy fix :S
             if(selectedSearchPath == null)
             {
-                System.Windows.Forms.MessageBox.Show(
+                var errorMessage = String.Format(
+                    "{0}\n{1}\n{2}\n\nTried to find on:\n{3}",
                     "Cannot find the assets folder - Sorry :(",
-                    GameManager.kGameName
+                    "Current Working Directory:",
+                    Environment.CurrentDirectory,
+                    "/usr/local/share/amazingcow_game_bow_and_arrow/Content"
                 );
+
+                var bnt = System.Windows.Forms.MessageBox.Show(
+                    errorMessage,
+                    GameManager.kGameName,
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.None,
+                    System.Windows.Forms.MessageBoxDefaultButton.Button1,
+                    System.Windows.Forms.MessageBoxOptions.RightAlign,
+                    true
+                );
+
 
                 Environment.Exit(1);
             }
 
             return selectedSearchPath;
         }
-        #endregion //Static Methods 
+        #endregion //Static Methods
 
 
         #region CTOR
@@ -149,7 +163,6 @@ namespace com.amazingcow.BowAndArrow
 
             return font;
         }
-
         #endregion //Public Methods
     }
 }
