@@ -1,6 +1,19 @@
 ################################################################################
 ## Version 1.x.x                                                              ##
 ################################################################################
+Version 1.2.0 - Jun 11, 2017
+    - Updated the README.
+    - Updated the copyright years on touched files.
+    - Replaced hardcoded values with constants.
+    - Improved the error messagebox when the game cannot load the assets.
+    - Some cosmetic changes on files.
+    - Updated the placement and spacement on the Info Papers before the levels.
+    - Reworked the Makefile. Now we have some individual scripts to do the tasks
+      and Makefile only call them. This helps to make the stuff more maintainable.
+    - Updated the project structure.
+    - Improved the bootstrap.cpp.
+
+--------------------------------------------------------------------------------
 Version 1.1.0 - Dec 18, 2016
     - Fix the bug that wasn't letting the application exit correctly.
     - Change the "ownership" of the application to Amazing Cow Labs.
